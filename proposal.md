@@ -3,22 +3,21 @@
 ## Description
 
 A classic Nintendo game: Animal Crossing Reboot
-Player is set out to be a villager in their own islands where they can interact with other villagers, trade, build spaces and special activities!
+Player is set out to be a villager in their own islands where they can interact with other villagers, trade, build spaces and enjoy special activities!
 
 ## Must Have List
 
-- 5 villagers: Tom Nook, Isabelle, Blathers, Gulliver, K.K SLider
+- 4 villagers: Tom Nook, Isabelle, Blathers, K.K SLider
 - grid map to place items
 - dialouges with villagers -> multiple choices answers
 - welcoming introduction (tent,etc) and building character (tailored to your true self)
-- bells currency 
+- bells currency to buy and pay debt
 - pick up food and belongings
-- storage
+- inventory spaces
 - building spaces function
 - trading centre (selling and buying)
-- activities to gain items ->
+- activities to gain items -> talking to villagers, catching fish
 - catch fish and bugs
-- get friendship points and items from villager
 - music and sfx
 
  - UI/UX: bag coin, friendship pts up left, storage, inventory on the right

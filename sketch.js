@@ -2,6 +2,8 @@
 // Monica Trinh
 // November 16th, 2021
 
+/* key/functions available: 'x' to hide menu, click on player to show menu */
+
 let grid;
 let gridSize = 30;
 let cellWidth, cellHeight;
@@ -15,11 +17,13 @@ let bg;
 let mouseCursor;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound;
+let penmanship, acFont;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
   grassPale = loadImage("assets/background/grass2.jpg");
   chooseSound = loadSound('assets/sound/choose.wav');
+  penmanship = loadFont('assets/background/penmanship.ttf');
 }
 
 function setup() {
@@ -93,26 +97,19 @@ function draw() {
 
   displayGrid();
 
-  // zooming camera
-  // if (mouseIsPressed) {
-  //   camera.zoom = 2;
-  // }
-  if (keyCode === 32) {
-    camera.zoom = 0.2;
-  }
-  else if (keyCode === 27) {
-    camera.zoom = 1;
-  }
-
+  camera.zoom = 1;
   //set the camera position to the player position
   camera.position.x = playerFemale.position.x;
   camera.position.y = playerFemale.position.y;
 
-  showMenu();
+
 
   drawSprites(bg);
   drawSprites(menu);
   playerMove();
+  theMap();
+  showMenu();
+
 
   // if (keyIsDown(UP_ARROW)) {
   //   playerFemale.scale += 0.05;
@@ -122,7 +119,6 @@ function draw() {
   //   playerFemale.scale -= 0.05;
   // }
 
-  // ghost.visible = !ghost.mouseIsPressed;
   // asterisk.overlap(collectibles, collect);
 
 }
