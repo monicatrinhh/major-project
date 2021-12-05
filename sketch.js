@@ -14,10 +14,12 @@ let SCENE_H;
 let bg;
 let mouseCursor;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
+let chooseSound;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
   grassPale = loadImage("assets/background/grass2.jpg");
+  chooseSound = loadSound('assets/sound/choose.wav');
 }
 
 function setup() {
@@ -36,7 +38,6 @@ function setup() {
 
   playerFemale.mouseActive = true;
 
-
   //load animation
   playerFemale.addAnimation('normal', 'assets/player/female/player_female.png');
   playerFemale.addAnimation('forward', 'assets/player/female/player_female1.png', 'assets/player/female/player_female2.png', 'assets/player/female/player_female3.png', 'assets/player/female/player_female4.png', 'assets/player/female/player_female5.png');
@@ -54,27 +55,37 @@ function setup() {
   }
 
   menu = new Group();
-  buildMenu = createSprite(playerFemale.x - cellWidth * 1.5, playerFemale.y + cellHeight);
+  buildMenu = createSprite(playerFemale.position.y - 10, playerFemale.position.y - (cellHeight * 1.5));
   buildMenu.addImage(loadImage('assets/functions/buildF.png'));
   menu.add(buildMenu);
 
-  cameraMenu = createSprite(playerFemale.x - cellWidth * 1.25, playerFemale.y + cellHeight);
+  cameraMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
   cameraMenu.addImage(loadImage('assets/functions/cameraF.png'));
   menu.add(cameraMenu);
 
-  catchMenu = createSprite(playerFemale.x - cellWidth, playerFemale.y + cellHeight);
-  catchMenu.addImage(loadImage('assets/functions/cameraF.png'));
+  catchMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
+  catchMenu.addImage(loadImage('assets/functions/catchF.png'));
   menu.add(catchMenu);
 
-  customMenu = createSprite(playerFemale.x, playerFemale.y + cellHeight);
+  customMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
   customMenu.addImage(loadImage('assets/functions/customF.png'));
   menu.add(customMenu);
 
-  shopMenu = createSprite(playerFemale.x + cellWidth * 1.25, playerFemale.y + cellHeight);
+  shopMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
   shopMenu.addImage(loadImage('assets/functions/shopF.png'));
   menu.add(shopMenu);
 
-  menu.visible = false;
+  mapMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
+  mapMenu.addImage(loadImage('assets/functions/mapF.png'));
+  menu.add(mapMenu);
+
+  for (let i = 0; i < menu.length; i++) {
+    menu[i].scale = width / 4000;
+    menu[i].visible = false;
+    menu[i].mouseActive = true;
+    // menu[i].position.y = playerFemale.position.y - (i * 2) - 5;
+    // menu[i].position.x = playerFemale.position.x + i * 25 + 25;
+  }
 }
 
 function draw() {
@@ -82,21 +93,26 @@ function draw() {
 
   displayGrid();
 
-
   // zooming camera
-  if (mouseIsPressed) {
-    camera.zoom = 2;
-  }
-  else if (keyCode === 32) {
+  // if (mouseIsPressed) {
+  //   camera.zoom = 2;
+  // }
+  if (keyCode === 32) {
     camera.zoom = 0.2;
   }
   else if (keyCode === 27) {
     camera.zoom = 1;
   }
 
-  //set the camera position to the ghost position
+  //set the camera position to the player position
   camera.position.x = playerFemale.position.x;
   camera.position.y = playerFemale.position.y;
+
+  showMenu();
+
+  drawSprites(bg);
+  drawSprites(menu);
+  playerMove();
 
   // if (keyIsDown(UP_ARROW)) {
   //   playerFemale.scale += 0.05;
@@ -105,13 +121,6 @@ function draw() {
   // if (keyIsDown(DOWN_ARROW)) {
   //   playerFemale.scale -= 0.05;
   // }
-
-  drawSprites(bg);
-  playerMove();
-
-  if (playerFemale.mouseIsPressed) {
-    menu.visible = true;
-  }
 
   // ghost.visible = !ghost.mouseIsPressed;
   // asterisk.overlap(collectibles, collect);
