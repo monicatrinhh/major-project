@@ -6,18 +6,14 @@ let grid;
 let gridSize = 30;
 let cellWidth, cellHeight;
 let grass, grassPale;
-let water;
 let blathers, isabelle, kk, tomNook;
-let bellImg, coin;
-let bell;
-let fishImg, fishFunction;
-let shopImg, theShop;
 let playerFemale;
 let player;
 let SCENE_W;
 let SCENE_H;
 let bg;
-let cursor;
+let mouseCursor;
+let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -29,34 +25,56 @@ function setup() {
   SCENE_W = width * 3;
   SCENE_H = height * 3;
 
-  cursor = createSprite(mouseX, mouseY);
-  //compact way to add an image
-  cursor.addImage(loadImage('assets/background/cursor.png'));
-
+  // grid
   grid = createEmptyArray(gridSize, gridSize);
   cellWidth = (SCENE_W / gridSize) * 2;
   cellHeight = (SCENE_H / gridSize) * 2;
 
   playerFemale = createSprite(SCENE_W / 2, SCENE_H / 2);
   playerFemale.scale = width / 2000;
+  playerFemale.setCollider('rectangle', 0, 0, 200, 100);
 
+  playerFemale.mouseActive = true;
+
+
+  //load animation
   playerFemale.addAnimation('normal', 'assets/player/female/player_female.png');
-
   playerFemale.addAnimation('forward', 'assets/player/female/player_female1.png', 'assets/player/female/player_female2.png', 'assets/player/female/player_female3.png', 'assets/player/female/player_female4.png', 'assets/player/female/player_female5.png');
   playerFemale.addAnimation('backward', 'assets/player/femaleBack/femaleBack1.png', 'assets/player/femaleBack/femaleBack2.png', 'assets/player/femaleBack/femaleBack3.png', 'assets/player/femaleBack/femaleBack4.png');
-
   playerFemale.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
-  bg = new Group();
 
+  // fossils
+  bg = new Group();
   //create some background for visual reference
   for (let i = 0; i < 100; i++) {
-    //create a sprite and add the 3 animations
     let rock = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2));
     //cycles through rocks 0 1 2
     rock.addAnimation('normal', 'assets/background/fossil.png');
     bg.add(rock);
   }
 
+  menu = new Group();
+  buildMenu = createSprite(playerFemale.x - cellWidth * 1.5, playerFemale.y + cellHeight);
+  buildMenu.addImage(loadImage('assets/functions/buildF.png'));
+  menu.add(buildMenu);
+
+  cameraMenu = createSprite(playerFemale.x - cellWidth * 1.25, playerFemale.y + cellHeight);
+  cameraMenu.addImage(loadImage('assets/functions/cameraF.png'));
+  menu.add(cameraMenu);
+
+  catchMenu = createSprite(playerFemale.x - cellWidth, playerFemale.y + cellHeight);
+  catchMenu.addImage(loadImage('assets/functions/cameraF.png'));
+  menu.add(catchMenu);
+
+  customMenu = createSprite(playerFemale.x, playerFemale.y + cellHeight);
+  customMenu.addImage(loadImage('assets/functions/customF.png'));
+  menu.add(customMenu);
+
+  shopMenu = createSprite(playerFemale.x + cellWidth * 1.25, playerFemale.y + cellHeight);
+  shopMenu.addImage(loadImage('assets/functions/shopF.png'));
+  menu.add(shopMenu);
+
+  menu.visible = false;
 }
 
 function draw() {
@@ -65,6 +83,7 @@ function draw() {
   displayGrid();
 
 
+  // zooming camera
   if (mouseIsPressed) {
     camera.zoom = 2;
   }
@@ -87,12 +106,15 @@ function draw() {
   //   playerFemale.scale -= 0.05;
   // }
 
-
   drawSprites(bg);
   playerMove();
 
-  cursor.position.x = mouseX;
-  cursor.position.y = mouseY;
+  if (playerFemale.mouseIsPressed) {
+    menu.visible = true;
+  }
+
+  // ghost.visible = !ghost.mouseIsPressed;
+  // asterisk.overlap(collectibles, collect);
 
 }
 
