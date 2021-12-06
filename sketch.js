@@ -13,17 +13,22 @@ let playerFemale;
 let player;
 let SCENE_W;
 let SCENE_H;
-let bg;
+let bg, trees;
 let mouseCursor;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound;
-let penmanship, acFont;
+let penmanship, acFont, digitalTech;
+let gameState;
+let currentTime, timeMode;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
   grassPale = loadImage("assets/background/grass2.jpg");
   chooseSound = loadSound('assets/sound/choose.wav');
   penmanship = loadFont('assets/background/penmanship.ttf');
+  acFont = loadFont('assets/background/AC.ttf');
+  acFont = loadFont('assets/background/AC.ttf');
+  digitalTech = loadFont('assets/background/digitalTech.ttf');
 }
 
 function setup() {
@@ -47,6 +52,7 @@ function setup() {
   playerFemale.addAnimation('forward', 'assets/player/female/player_female1.png', 'assets/player/female/player_female2.png', 'assets/player/female/player_female3.png', 'assets/player/female/player_female4.png', 'assets/player/female/player_female5.png');
   playerFemale.addAnimation('backward', 'assets/player/femaleBack/femaleBack1.png', 'assets/player/femaleBack/femaleBack2.png', 'assets/player/femaleBack/femaleBack3.png', 'assets/player/femaleBack/femaleBack4.png');
   playerFemale.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
+  playerFemale.addAnimation('fish', 'assets/player/female/player_female_fish.png');
 
   // fossils
   bg = new Group();
@@ -56,6 +62,16 @@ function setup() {
     //cycles through rocks 0 1 2
     rock.addAnimation('normal', 'assets/background/fossil.png');
     bg.add(rock);
+  }
+
+  trees = new Group();
+  //create some background for visual reference
+  for (let i = 0; i < random(15, 30); i++) {
+    let tree = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight));
+    tree.addAnimation('normal', 'assets/background/treeImg.png');
+    tree.scale = width / 3000;
+    tree.mouseActive = true;
+    trees.add(tree);
   }
 
   menu = new Group();
@@ -90,25 +106,32 @@ function setup() {
     // menu[i].position.y = playerFemale.position.y - (i * 2) - 5;
     // menu[i].position.x = playerFemale.position.x + i * 25 + 25;
   }
+
+  gameState = "world";
 }
 
 function draw() {
-  background("#73daef");
-
-  displayGrid();
-
-  camera.zoom = 1;
-  //set the camera position to the player position
-  camera.position.x = playerFemale.position.x;
-  camera.position.y = playerFemale.position.y;
 
 
+  if (gameState === "world") {
+    background("#73daef");
 
-  drawSprites(bg);
-  drawSprites(menu);
-  playerMove();
-  theMap();
-  showMenu();
+    camera.zoom = 1;
+    //set the camera position to the player position
+    camera.position.x = playerFemale.position.x;
+    camera.position.y = playerFemale.position.y;
+    displayGrid();
+
+    drawSprites(bg);
+    drawSprites(trees);
+
+
+    drawSprites(menu);
+    playerMove();
+
+    showMenu();
+    timeCount();
+  }
 
 
   // if (keyIsDown(UP_ARROW)) {
@@ -120,6 +143,20 @@ function draw() {
   // }
 
   // asterisk.overlap(collectibles, collect);
+
+}
+
+function timeCount() {
+
+  if (hour() >= 12) {
+    timeMode = "PM";
+  }
+  else {
+    timeMode = "AM";
+  }
+  currentTime = hour() + ':' + minute() + ':' + second() + " " + timeMode;
+  textFont('digitalTech');
+  messageText(width / 100, 255, currentTime, playerFemale.position.x, playerFemale.position.y - cellWidth);
 
 }
 

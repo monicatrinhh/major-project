@@ -43,6 +43,7 @@ function playerMove() {
         playerFemale.changeAnimation('normal');
     }
     drawSprite(playerFemale);
+    playerFemale.collide(trees);
 }
 
 function showMenu() {
@@ -75,18 +76,21 @@ function showMenu() {
                 menu[i].visible = false;
             }
         }
+        if (menu[i].visible) {
+            messageText(width / 80, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
+        }
     }
-
     if (keyWentDown('x')) {
         for (let i = 0; i < menu.length; i++) {
             menu[i].visible = false;
         }
     }
-
-    if (mapMenu.visible) {
-        messageText(width / 80, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
-    }
+    catchMenuFunction();
+    theMap();
 }
+
+
+
 
 function theMap() {
     if (mapMenu.mouseIsPressed) {
@@ -94,23 +98,31 @@ function theMap() {
     }
     if (zoomOut) {
         camera.zoom = 0.1;
-        // fill(200);
-        // textAlign(CENTER);
-        // textSize(200);
         messageText(width / 8, 200, 'Press on player to zoom in', playerFemale.position.x, playerFemale.position.y - cellWidth);
-        // text('Press on player to zoom in', playerFemale.position.x, playerFemale.position.y - cellWidth);
-
-
     }
 }
 
+function catchMenuFunction() {
+    if (catchMenu.mouseIsPressed) {
+        gameState = "catch";
+        blackOut();
+        catchFish();
+    }
+}
 
 function messageText(theTextSize, theColor, theMessage, x, y) {
     fill(theColor);
     textAlign(CENTER);
-    textFont(penmanship);
+    // textFont(theFont);
     textSize(theTextSize);
     text(theMessage, x, y);
+}
+
+function blackOut() {
+    // for (let i = 255; i >= 0; i--) {
+    //     fill(0, 0, 0, i);
+    //     rect(SCENE_W, SCENE_H, SCENE_W, SCENE_H);
+    // }
 }
 
 
