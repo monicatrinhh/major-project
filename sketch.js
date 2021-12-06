@@ -14,9 +14,10 @@ let player;
 let SCENE_W;
 let SCENE_H;
 let bg, trees;
+let coins;
 let mouseCursor;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
-let chooseSound;
+let chooseSound, coinSound;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
@@ -24,9 +25,11 @@ let currentTime, timeMode;
 function preload() {
   grass = loadImage("assets/background/grass.png");
   grassPale = loadImage("assets/background/grass2.jpg");
+
+  coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
+
   penmanship = loadFont('assets/background/penmanship.ttf');
-  acFont = loadFont('assets/background/AC.ttf');
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
 }
@@ -66,12 +69,22 @@ function setup() {
 
   trees = new Group();
   //create some background for visual reference
-  for (let i = 0; i < random(15, 30); i++) {
-    let tree = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight));
+  for (let i = 0; i < random(5, 15); i++) {
+    let tree = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
     tree.addAnimation('normal', 'assets/background/treeImg.png');
     tree.scale = width / 3000;
     tree.mouseActive = true;
     trees.add(tree);
+  }
+
+  coins = new Group();
+  //create some background for visual reference
+  for (let i = 0; i < random(5, 15); i++) {
+    let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+    coin.addAnimation('normal', 'assets/currency/BellCoin.png');
+    coin.scale = width / 1500;
+    coin.mouseActive = true;
+    coins.add(coin);
   }
 
   menu = new Group();
@@ -103,8 +116,6 @@ function setup() {
     menu[i].scale = width / 4000;
     menu[i].visible = false;
     menu[i].mouseActive = true;
-    // menu[i].position.y = playerFemale.position.y - (i * 2) - 5;
-    // menu[i].position.x = playerFemale.position.x + i * 25 + 25;
   }
 
   gameState = "world";
@@ -124,6 +135,7 @@ function draw() {
 
     drawSprites(bg);
     drawSprites(trees);
+    drawSprites(coins);
 
 
     drawSprites(menu);
@@ -131,6 +143,8 @@ function draw() {
 
     showMenu();
     timeCount();
+
+    playerFemale.overlap(coins, coinCollect);
   }
 
 
@@ -158,6 +172,12 @@ function timeCount() {
   textFont('digitalTech');
   messageText(width / 100, 255, currentTime, playerFemale.position.x, playerFemale.position.y - cellWidth);
 
+}
+
+function coinCollect(collector, collected) {
+  collector.changeAnimation('normal');
+  coinSound.play();
+  collected.remove();
 }
 
 
