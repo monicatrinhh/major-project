@@ -8,7 +8,7 @@ Player is set out to be a villager in their own islands where they can interact 
 ## Must Have List
 
 - 4 villagers: Tom Nook, Isabelle, Blathers, K.K SLider
-- grid map to place items
+- grid map 
 - dialouges with villagers -> multiple choices answers
 - welcoming introduction (tent,etc) and building character (tailored to your true self)
 - bells currency to buy and pay debt
@@ -20,8 +20,6 @@ Player is set out to be a villager in their own islands where they can interact 
 - catch fish and bugs
 - music and sfx
 
- - UI/UX: bag coin, friendship pts up left, storage, inventory on the right
-
 ## Nice to Have List
 
 - more villagers: Brewster, Daisy Mae, Cyrus and Reese
@@ -31,6 +29,7 @@ Player is set out to be a villager in their own islands where they can interact 
 - different routes
 - mailbox, gifts from villagers
 - player load their own map
+- real time
 
 
 external resources:
