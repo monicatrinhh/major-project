@@ -11,8 +11,11 @@ function catchFish() {
         playerFemale.position.y = height / 5 - playerFemale.height / 2;
         playerFemale.scale = width / 3000;
         drawSprite(playerFemale);
-        whileFishing();
+        if (keyCode === 27) {
+            gameState = "world";
+        }
     }
+
 }
 
 function whileFishing() {

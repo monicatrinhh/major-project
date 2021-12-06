@@ -131,6 +131,7 @@ function draw() {
     //set the camera position to the player position
     camera.position.x = playerFemale.position.x;
     camera.position.y = playerFemale.position.y;
+    playerFemale.scale = width / 2000;
     displayGrid();
 
     drawSprites(bg);
@@ -145,6 +146,7 @@ function draw() {
     timeCount();
 
     playerFemale.overlap(coins, coinCollect);
+    coins.collide(trees);
   }
 
 
@@ -156,8 +158,7 @@ function draw() {
   //   playerFemale.scale -= 0.05;
   // }
 
-  // asterisk.overlap(collectibles, collect);
-
+  catchFish();
 }
 
 function timeCount() {
