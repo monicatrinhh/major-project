@@ -20,6 +20,8 @@ Player is set out to be a villager in their own islands where they can interact 
 - catch fish and bugs
 - music and sfx
 
+note: Certain items (type of fish, bugs, etc.) only appear at a certain of the day, see comments to check them out 
+
 ## Nice to Have List
 
 - more villagers: Brewster, Daisy Mae, Cyrus and Reese

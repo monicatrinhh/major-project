@@ -77,7 +77,7 @@ function showMenu() {
             }
         }
         if (menu[i].visible) {
-            messageText(width / 80, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
+            messageText(width / 100, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
         }
     }
     if (keyWentDown('x')) {

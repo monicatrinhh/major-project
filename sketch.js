@@ -2,7 +2,10 @@
 // Monica Trinh
 // November 16th, 2021
 
-/* key/functions available: 'x' to hide menu, click on player to show menu */
+/* key/functions available: 'x' to hide menu, click on player to show menu 
+  Certain items, villagers only appear at a certain time of the day
+*/
+
 
 let grid;
 let gridSize = 30;
@@ -21,6 +24,8 @@ let chooseSound, coinSound;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
+let bitterlingImg, koiImg, carpImg;
+
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -164,12 +169,12 @@ function draw() {
 function timeCount() {
 
   if (hour() >= 12) {
-    timeMode = "PM";
+    timeMode = " PM";
   }
   else {
-    timeMode = "AM";
+    timeMode = " AM";
   }
-  currentTime = hour() + ':' + minute() + ':' + second() + " " + timeMode;
+  currentTime = hour() + ':' + minute() + ':' + second() + timeMode;
   textFont('digitalTech');
   messageText(width / 100, 255, currentTime, playerFemale.position.x, playerFemale.position.y - cellWidth);
 
