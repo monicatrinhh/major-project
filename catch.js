@@ -19,14 +19,16 @@ function catchFish() {
 
         fill(255);
         whileFishing();
+
+        if (fishes.length === 0) {
+            generateFishes();
+        }
+
         if (hour() === goldenHour) {
             // add golden hour text here
         }
         image(fishDisplay, width / 50, height / 50);
 
-        if (closeButton.mouseIsOver) {
-            closeButton.rotation(-10);
-        }
         if (keyIsDown(27)) {
             if (fishes.length > 0) {
                 for (let i = fishes.length - 1; i >= 0; i--) {
@@ -47,12 +49,21 @@ function whileFishing() {
     // line(width / 2, height / 5 - playerFemale.height / 2, width / 2, height / 5);
     noStroke();
     push();
-    // let theta = atan2(mouseY - y, mouseX - x);
-    // rotate(theta);
-    // fill("black");
-    // rectMode(CENTER);
-    // rect(width / 2, height / 5 - playerFemale.height / 2, 3, 50);
-    // pop();
+    translate(playerFemale.position.x, playerFemale.position.y);
+    let theta = (mouseY, mouseX);
+    if (mouseX <= width / 2 - 100) {
+        rotate(60);
+    }
+    else if (mouseX >= width / 2 + 100) {
+        rotate(-60);
+    }
+    else {
+        rotate(-mouseX);
+    }
+
+    fill("white");
+    rect(0, 0, 2, height / 4);
+    pop();
     carpFish();
     drawSprite(fishingHook);
     fishingHook.position.x = mouseX;

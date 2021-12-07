@@ -55,6 +55,7 @@ function setup() {
   SCENE_H = height * 3;
 
   angleMode(DEGREES);
+
   degreeX = 0;
   degreeY = height;
 
@@ -73,7 +74,7 @@ function setup() {
   fishingHook = createSprite(mouseX, mouseY);
   fishingHook.scale = width / 20000;
   fishingHook.addAnimation('normal', 'assets/functions/fishHook.png');
-  fishingHook.setCollider('rectangle', 0, 0, 800 / fishingHook.scale, 800 / fishingHook.scale);
+  fishingHook.setCollider('rectangle', 0, 0, fishingHook.width, fishingHook.height);
   fishingHook.mouseActive = true;
 
   // close button
