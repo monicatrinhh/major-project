@@ -7,6 +7,7 @@
 
   add Golden Hour Text
   add screen transition?
+  fix close buton
 */
 
 
@@ -21,7 +22,7 @@ let SCENE_W;
 let SCENE_H;
 let bg, trees, fishes;
 let coins;
-let mouseCursor;
+let closeButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound, coinSound;
 let penmanship, acFont, digitalTech;
@@ -31,6 +32,7 @@ let fishingHook;
 let fishDisplay;
 let goldenHour = 18;
 let transitionScreen;
+let degreeX, degreeY;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -52,6 +54,10 @@ function setup() {
   SCENE_W = width * 3;
   SCENE_H = height * 3;
 
+  angleMode(DEGREES);
+  degreeX = 0;
+  degreeY = height;
+
   // grid
   grid = createEmptyArray(gridSize, gridSize);
   cellWidth = (SCENE_W / gridSize) * 2;
@@ -63,11 +69,19 @@ function setup() {
 
   playerFemale.mouseActive = true;
 
+  // fishing hook for fishing game
   fishingHook = createSprite(mouseX, mouseY);
   fishingHook.scale = width / 20000;
   fishingHook.addAnimation('normal', 'assets/functions/fishHook.png');
   fishingHook.setCollider('rectangle', 0, 0, 800 / fishingHook.scale, 800 / fishingHook.scale);
   fishingHook.mouseActive = true;
+
+  // close button
+  closeButton = createSprite(width - cellHeight / 2.5, height / 20);
+  closeButton.scale = width / 25000;
+  closeButton.addAnimation('simpleRed', 'assets/functions/closeImg.png');
+  // closeButton.setCollider('rectangle', 0, 0, closeButton.width, closeButton.height);
+  closeButton.mouseActive = true;
 
   //load animation
   playerFemale.addAnimation('normal', 'assets/player/female/player_female.png');
@@ -143,32 +157,7 @@ function setup() {
 
   // fishes & bugs
   fishes = new Group();
-  for (let i = 0; i < random(5, 20); i++) {
-    let carp = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
-    carp.addAnimation('normal', 'assets/functions/carp_fish.png');
-    // add animation for bugs too
-    carp.scale = width / 2000;
-    carp.mouseActive = true;
-    fishes.add(carp);
 
-    let bitterling = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
-    bitterling.addAnimation('normal', 'assets/functions/bitterling_fish.png');
-    // add animation for bugs too
-    bitterling.scale = width / 2000;
-    bitterling.mouseActive = true;
-    fishes.add(bitterling);
-
-    // koi fishes only appear after 4pm and before 9pm
-    if (hour() >= 16 && hour() <= 21) {
-      let koi = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
-      koi.addAnimation('normal', 'assets/functions/koi.png');
-      // add animation for bugs too
-      koi.scale = width / 2000;
-      koi.mouseActive = true;
-      fishes.add(koi);
-
-    }
-  }
 
   gameState = "world";
 }

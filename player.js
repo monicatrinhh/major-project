@@ -107,6 +107,7 @@ function catchMenuFunction() {
         gameState = "catch";
         blackOut();
         catchFish();
+        generateFishes();
     }
 }
 
