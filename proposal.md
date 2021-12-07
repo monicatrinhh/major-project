@@ -19,8 +19,11 @@ Player is set out to be a villager in their own islands where they can interact 
 - activities to gain items -> talking to villagers, catching fish
 - catch fish and bugs
 - music and sfx
+- transition screen
 
 note: Certain items (type of fish, bugs, etc.) only appear at a certain of the day, see comments to check them out 
+1, Koi only appear from 4-9PM
+2, Golden hour is at noon, every item/coins you received double!
 
 ## Nice to Have List
 

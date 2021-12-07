@@ -4,19 +4,22 @@
 
 /* key/functions available: 'x' to hide menu, click on player to show menu 
   Certain items, villagers only appear at a certain time of the day
+
+  add Golden Hour Text
+  add screen transition?
 */
 
 
 let grid;
 let gridSize = 30;
 let cellWidth, cellHeight;
-let grass, grassPale;
+let grass;
 let blathers, isabelle, kk, tomNook;
 let playerFemale;
 let player;
 let SCENE_W;
 let SCENE_H;
-let bg, trees;
+let bg, trees, fishes;
 let coins;
 let mouseCursor;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
@@ -24,12 +27,13 @@ let chooseSound, coinSound;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
-let bitterlingImg, koiImg, carpImg;
-
+let fishingHook;
+let fishDisplay;
+let goldenHour = 18;
+let transitionScreen;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
-  grassPale = loadImage("assets/background/grass2.jpg");
 
   coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
@@ -37,6 +41,10 @@ function preload() {
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
+  fishDisplay = loadImage('assets/functions/carp_fish.png');
+  transitionScreen = createVideo("assets/background/transition.mov");
+  transitionScreen.size(width);
+  transitionScreen.position(0, 0);
 }
 
 function setup() {
@@ -55,6 +63,12 @@ function setup() {
 
   playerFemale.mouseActive = true;
 
+  fishingHook = createSprite(mouseX, mouseY);
+  fishingHook.scale = width / 20000;
+  fishingHook.addAnimation('normal', 'assets/functions/fishHook.png');
+  fishingHook.setCollider('rectangle', 0, 0, 800 / fishingHook.scale, 800 / fishingHook.scale);
+  fishingHook.mouseActive = true;
+
   //load animation
   playerFemale.addAnimation('normal', 'assets/player/female/player_female.png');
   playerFemale.addAnimation('forward', 'assets/player/female/player_female1.png', 'assets/player/female/player_female2.png', 'assets/player/female/player_female3.png', 'assets/player/female/player_female4.png', 'assets/player/female/player_female5.png');
@@ -72,6 +86,7 @@ function setup() {
     bg.add(rock);
   }
 
+  // spawn trees
   trees = new Group();
   //create some background for visual reference
   for (let i = 0; i < random(5, 15); i++) {
@@ -82,8 +97,9 @@ function setup() {
     trees.add(tree);
   }
 
+  // add coins
   coins = new Group();
-  //create some background for visual reference
+  //spawn coins
   for (let i = 0; i < random(5, 15); i++) {
     let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
     coin.addAnimation('normal', 'assets/currency/BellCoin.png');
@@ -92,6 +108,7 @@ function setup() {
     coins.add(coin);
   }
 
+  // menu
   menu = new Group();
   buildMenu = createSprite(playerFemale.position.y - 10, playerFemale.position.y - (cellHeight * 1.5));
   buildMenu.addImage(loadImage('assets/functions/buildF.png'));
@@ -117,10 +134,40 @@ function setup() {
   mapMenu.addImage(loadImage('assets/functions/mapF.png'));
   menu.add(mapMenu);
 
+  // add menu
   for (let i = 0; i < menu.length; i++) {
     menu[i].scale = width / 4000;
     menu[i].visible = false;
     menu[i].mouseActive = true;
+  }
+
+  // fishes & bugs
+  fishes = new Group();
+  for (let i = 0; i < random(5, 20); i++) {
+    let carp = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
+    carp.addAnimation('normal', 'assets/functions/carp_fish.png');
+    // add animation for bugs too
+    carp.scale = width / 2000;
+    carp.mouseActive = true;
+    fishes.add(carp);
+
+    let bitterling = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
+    bitterling.addAnimation('normal', 'assets/functions/bitterling_fish.png');
+    // add animation for bugs too
+    bitterling.scale = width / 2000;
+    bitterling.mouseActive = true;
+    fishes.add(bitterling);
+
+    // koi fishes only appear after 4pm and before 9pm
+    if (hour() >= 16 && hour() <= 21) {
+      let koi = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
+      koi.addAnimation('normal', 'assets/functions/koi.png');
+      // add animation for bugs too
+      koi.scale = width / 2000;
+      koi.mouseActive = true;
+      fishes.add(koi);
+
+    }
   }
 
   gameState = "world";
