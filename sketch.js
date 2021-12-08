@@ -21,7 +21,7 @@ let player;
 let SCENE_W;
 let SCENE_H;
 let bg, trees, fishes;
-let coins;
+let coins, coinDisplay;
 let closeButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound, coinSound, catchFishSound;
@@ -30,7 +30,7 @@ let gameState;
 let currentTime, timeMode;
 let fishingHook;
 let fishDisplay;
-let goldenHour = 18;
+let goldenHour = 12;
 let transitionScreen;
 let mpcBox, readBox;
 
@@ -45,11 +45,11 @@ function preload() {
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
   fishDisplay = loadImage('assets/functions/carp_fish.png');
+  coinDisplay = loadImage('assets/currency/BellCoin.png');
 
-
-  // transitionScreen = createVideo("assets/background/transition.mov");
-  // transitionScreen.size(width);
-  // transitionScreen.position(0, 0);
+  transitionScreen = createVideo("assets/background/transition.mov");
+  transitionScreen.size(width);
+  transitionScreen.position(0, 0);
 }
 
 function setup() {
@@ -66,7 +66,7 @@ function setup() {
 
   playerFemale = createSprite(SCENE_W / 2, SCENE_H / 2);
   playerFemale.scale = width / 2000;
-  playerFemale.setCollider('rectangle', 0, 0, 200, 100);
+  playerFemale.setCollider('rectangle', 0, 0, playerFemale.width, playerFemale.height);
 
   playerFemale.mouseActive = true;
 

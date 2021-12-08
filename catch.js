@@ -51,6 +51,7 @@ function catchFish() {
         for (let i = fishes.length - 1; i >= 0; i--) {
             fishes[i].velocity.x = 0;
         }
+        // generateFishes();
         gameState = "world";
     }
 
@@ -107,6 +108,7 @@ function carpFish() {
         }
     }
     drawSprites(fishes);
+    textFont(digitalTech);
     messageText(width / 70, "white", "x" + fishCount, width / 12, height / 15);
 }
 

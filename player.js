@@ -6,7 +6,6 @@ function playerMove() {
     playerFemale.velocity.x = ((camera.mouseX - playerFemale.position.x) / 20);
     playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
 
-
     // set boundary for player
     if (playerFemale.position.x < -SCENE_W + cellWidth / 10) {
         playerFemale.position.x = -SCENE_W + cellWidth / 10;
@@ -80,12 +79,14 @@ function showMenu() {
             messageText(width / 100, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
         }
     }
-    if (keyWentDown('x')) {
-        for (let i = 0; i < menu.length; i++) {
+
+    for (let i = 0; i < menu.length; i++) {
+        if (keyWentDown('x')) {
             menu[i].visible = false;
         }
     }
     catchMenuFunction();
+    shopMenuFunction();
     theMap();
 }
 
@@ -98,17 +99,31 @@ function theMap() {
     }
     if (zoomOut) {
         camera.zoom = 0.1;
+        textFont(digitalTech);
         messageText(width / 8, 200, 'Press on player to zoom in', playerFemale.position.x, playerFemale.position.y - cellWidth);
     }
 }
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
+        // gameState = "transition";
         answerYN = "no";
+        // blackOut();
         gameState = "catch";
-        blackOut();
         catchFish();
         generateFishes();
+    }
+}
+
+function shopMenuFunction() {
+    if (shopMenu.mouseIsPressed) {
+        if (hour() >= 8 && hour() <= 23) {
+            gameState = "shop";
+            answerYN = "no";
+            camera.off();
+            rect(width / 4, height / 5, width / 2, height / 1.5);
+            image(coinDisplay, width / 3.8, height / 5.2);
+        }
     }
 }
 
@@ -121,11 +136,11 @@ function messageText(theTextSize, theColor, theMessage, x, y) {
 }
 
 function blackOut() {
-    // for (let i = 255; i >= 0; i--) {
-    //     fill(0, 0, 0, i);
-    //     rect(SCENE_W, SCENE_H, SCENE_W, SCENE_H);
+    // if (gameState === "transition") {
+    //     transitionScreen.play();
     // }
 }
+
 
 
 
