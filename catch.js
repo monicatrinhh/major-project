@@ -21,7 +21,7 @@ function catchFish() {
         // make fishing rod move
         fill(255);
         whileFishing();
-
+        
         // add fishes if all gone/catched
         if (fishes.length === 0) {
             generateFishes();

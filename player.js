@@ -92,41 +92,6 @@ function showMenu() {
 
 
 
-
-function theMap() {
-    if (mapMenu.mouseIsPressed) {
-        zoomOut = true;
-    }
-    if (zoomOut) {
-        camera.zoom = 0.1;
-        textFont(digitalTech);
-        messageText(width / 8, 200, 'Press on player to zoom in', playerFemale.position.x, playerFemale.position.y - cellWidth);
-    }
-}
-
-function catchMenuFunction() {
-    if (catchMenu.mouseIsPressed) {
-        // gameState = "transition";
-        answerYN = "no";
-        // blackOut();
-        gameState = "catch";
-        catchFish();
-        generateFishes();
-    }
-}
-
-function shopMenuFunction() {
-    if (shopMenu.mouseIsPressed) {
-        if (hour() >= 8 && hour() <= 23) {
-            gameState = "shop";
-            answerYN = "no";
-            camera.off();
-            rect(width / 4, height / 5, width / 2, height / 1.5);
-            image(coinDisplay, width / 3.8, height / 5.2);
-        }
-    }
-}
-
 function messageText(theTextSize, theColor, theMessage, x, y) {
     fill(theColor);
     textAlign(CENTER);

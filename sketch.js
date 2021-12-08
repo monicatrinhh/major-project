@@ -21,7 +21,7 @@ let player;
 let SCENE_W;
 let SCENE_H;
 let bg, trees, fishes;
-let coins, coinDisplay;
+let coins, coinDisplay, coinCount = 0;
 let closeButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound, coinSound, catchFishSound;
