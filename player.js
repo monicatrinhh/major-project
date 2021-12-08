@@ -79,7 +79,7 @@ function showMenu() {
             messageText(width / 100, 255, "Press x to hide menu", playerFemale.position.x, playerFemale.position.y + cellHeight);
         }
     }
-
+    // hide menu
     for (let i = 0; i < menu.length; i++) {
         if (keyWentDown('x')) {
             menu[i].visible = false;
@@ -95,7 +95,6 @@ function showMenu() {
 function messageText(theTextSize, theColor, theMessage, x, y) {
     fill(theColor);
     textAlign(CENTER);
-    // textFont(theFont);
     textSize(theTextSize);
     text(theMessage, x, y);
 }

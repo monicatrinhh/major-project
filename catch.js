@@ -42,6 +42,7 @@ function catchFish() {
         }
 
     }
+    // exit game
     if (answerYN === "yes") {
         if (fishes.length > 0) {
             for (let i = fishes.length - 1; i >= 0; i--) {
@@ -51,10 +52,10 @@ function catchFish() {
         for (let i = fishes.length - 1; i >= 0; i--) {
             fishes[i].velocity.x = 0;
         }
-        // generateFishes();
         gameState = "world";
     }
 
+    // continut to game
     if (tryToExit && keyIsDown(78)) {
         gameState = "catch";
         tryToExit = false;
@@ -84,18 +85,20 @@ function whileFishing() {
     fishingHook.position.x = mouseX;
     fishingHook.position.y = mouseY;
 
+    // fishing hook cant go pass the green area
     if (fishingHook.position.y <= height / 5 + fishingHook.height / 2) {
         fishingHook.position.y = height / 5 + fishingHook.height / 2;
     }
 }
 
 function carpFish() {
-
+    // generate andcatch fish
     for (let i = fishes.length - 1; i >= 0; i--) {
         fishes[i].velocity.x = random(-3, -5);
         if (fishes[i].position.x <= -fishes[i].height) {
             fishes[i].remove();
         }
+        // remove fish if catch or disappears
         else if (fishes[i].mouseIsPressed && fishes[i].overlap(fishingHook)) {
             catchFishSound.play();
             if (hour() === goldenHour) {

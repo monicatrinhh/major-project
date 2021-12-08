@@ -30,6 +30,7 @@ function shopping() {
         fill("white");
         rect(width / 2.8, height / 3.8, (width / 2) * 0.6, (height / 1.5) * 0.8);
 
+        // UI/UX
         image(coinDisplay, width / 3.8, height / 5.2);
         textFont(digitalTech);
         messageText(width / 50, "white", "x" + coinCount, width / 3.2, height / 5.2);
@@ -48,6 +49,7 @@ function shopping() {
 }
 
 function theMap() {
+    // zoom in/out of the map
     if (mapMenu.mouseIsPressed) {
         zoomOut = true;
     }
