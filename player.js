@@ -104,6 +104,7 @@ function theMap() {
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
+        answerYN = "no";
         gameState = "catch";
         blackOut();
         catchFish();

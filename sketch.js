@@ -24,7 +24,7 @@ let bg, trees, fishes;
 let coins;
 let closeButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
-let chooseSound, coinSound;
+let chooseSound, coinSound, catchFishSound;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
@@ -32,21 +32,24 @@ let fishingHook;
 let fishDisplay;
 let goldenHour = 18;
 let transitionScreen;
-let degreeX, degreeY;
+let mpcBox, readBox;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
 
   coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
+  catchFishSound = loadSound('assets/sound/waterSplash.wav');
 
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
   fishDisplay = loadImage('assets/functions/carp_fish.png');
-  transitionScreen = createVideo("assets/background/transition.mov");
-  transitionScreen.size(width);
-  transitionScreen.position(0, 0);
+
+
+  // transitionScreen = createVideo("assets/background/transition.mov");
+  // transitionScreen.size(width);
+  // transitionScreen.position(0, 0);
 }
 
 function setup() {
@@ -55,9 +58,6 @@ function setup() {
   SCENE_H = height * 3;
 
   angleMode(DEGREES);
-
-  degreeX = 0;
-  degreeY = height;
 
   // grid
   grid = createEmptyArray(gridSize, gridSize);
@@ -76,6 +76,11 @@ function setup() {
   fishingHook.addAnimation('normal', 'assets/functions/fishHook.png');
   fishingHook.setCollider('rectangle', 0, 0, fishingHook.width, fishingHook.height);
   fishingHook.mouseActive = true;
+
+  mpcBox = createSprite(width / 2, height / 2);
+  mpcBox.scale = width / 2500;
+  mpcBox.addAnimation('normal', 'assets/functions/multiple.png');
+  mpcBox.mouseActive = true;
 
   // close button
   closeButton = createSprite(width - cellHeight / 2.5, height / 20);
@@ -201,6 +206,7 @@ function draw() {
   // }
 
   catchFish();
+  exitBox();
 }
 
 function timeCount() {

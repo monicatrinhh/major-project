@@ -1,10 +1,11 @@
 // Bitterling and Carp fish appears all day, Koi fish only appears from 4-9PM
 let fishCount = 0;
+let tryToExit = false;
 
 function catchFish() {
     if (gameState === "catch") {
 
-
+        // draw bg
         background("#73daef");
         camera.off();
         fill("green");
@@ -17,9 +18,11 @@ function catchFish() {
         drawSprite(playerFemale);
         drawSprite(closeButton);
 
+        // make fishing rod move
         fill(255);
         whileFishing();
 
+        // add fishes if all gone/catched
         if (fishes.length === 0) {
             generateFishes();
         }
@@ -27,30 +30,42 @@ function catchFish() {
         if (hour() === goldenHour) {
             // add golden hour text here
         }
+
         image(fishDisplay, width / 50, height / 50);
 
-        if (keyIsDown(27)) {
-            if (fishes.length > 0) {
-                for (let i = fishes.length - 1; i >= 0; i--) {
-                    fishes[i].remove();
-                }
-            }
-            generateFishes();
-            for (let i = fishes.length - 1; i >= 0; i--) {
-                fishes[i].velocity.x = 0;
-            }
-            gameState = "world";
+        // press "esc" / X button to escape
+        if (keyIsDown(27) || closeButton.mouseIsPressed) {
+            gameState = "notif";
+            tryToExit = true;
+            exitBox();
+
         }
+
+    }
+    if (answerYN === "yes") {
+        if (fishes.length > 0) {
+            for (let i = fishes.length - 1; i >= 0; i--) {
+                fishes[i].remove();
+            }
+        }
+        for (let i = fishes.length - 1; i >= 0; i--) {
+            fishes[i].velocity.x = 0;
+        }
+        gameState = "world";
     }
 
+    if (tryToExit && keyIsDown(78)) {
+        gameState = "catch";
+        tryToExit = false;
+    }
 }
 
 function whileFishing() {
-    // line(width / 2, height / 5 - playerFemale.height / 2, width / 2, height / 5);
     noStroke();
     push();
     translate(playerFemale.position.x, playerFemale.position.y);
-    let theta = (mouseY, mouseX);
+
+    // set/limit fishing rod string rotation
     if (mouseX <= width / 2 - 100) {
         rotate(60);
     }
@@ -60,7 +75,6 @@ function whileFishing() {
     else {
         rotate(-mouseX);
     }
-
     fill("white");
     rect(0, 0, 2, height / 4);
     pop();
@@ -82,6 +96,7 @@ function carpFish() {
             fishes[i].remove();
         }
         else if (fishes[i].mouseIsPressed && fishes[i].overlap(fishingHook)) {
+            catchFishSound.play();
             if (hour() === goldenHour) {
                 fishCount += 2;
             }
