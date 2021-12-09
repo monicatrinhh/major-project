@@ -112,6 +112,7 @@ function whileFishing() {
 
     if (catchState === "fish") {
         fishingHook.changeAnimation('fish');
+        fishingHook.mirrorX(1);
     }
     else if (catchState === "bug") {
         fishingHook.changeAnimation('bug');

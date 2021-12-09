@@ -12,8 +12,19 @@ function fishOrBug() {
         camera.off();
         textFont(acFont);
         messageText(width / 50, 255, 'Would you like to catch \n Fish or Bug?', width / 2, height / 2);
+        messageText(width / 80, 255, "Press Esc to exit Catch mode", width / 2, height / 2 + cellWidth);
         drawSprites(fishOrBugDisplay);
 
+        for (let i = 0; i < fishOrBugDisplay.length; i++) {
+            fishOrBugDisplay[i].scale = width / 1000;
+            if (fishOrBugDisplay[i].mouseIsOver) {
+                fishOrBugDisplay[i].scale = width / 1000 + 0.2;
+            }
+        }
+        if (keyIsDown(27)) {
+            gameState = "world";
+
+        }
         if (fishOrBugDisplay[0].mouseIsPressed) {
             chooseSound.play();
             catchState = "fish";
@@ -45,11 +56,16 @@ function shopMenuFunction() {
 function shopping() {
     if (gameState === "shop") {
         camera.off();
+        // image(nookCrannyImg, width / 2, height / 2);
         noStroke();
+
+        // 1st rect
         fill("#EEE1C6");
         rect(width / 4, height / 5, width / 2, height / 1.5);
+
+        // 2nd rect
         fill("white");
-        rect(width / 2.8, height / 3.8, (width / 2) * 0.6, (height / 1.5) * 0.8);
+        rect(width / 2.8, height / 3.9, width / 3.5, height / 1.8);
 
         // UI/UX
         image(coinDisplay, width / 3.8, height / 5.2);
@@ -62,21 +78,24 @@ function shopping() {
         playerFemale.position.x = width / 4;
         playerFemale.position.y = height - height / 5 - playerFemale.height / 4.5;
 
-        playerFemale.changeAnimation('forward');
+        playerFemale.changeAnimation('normal');
         drawSprite(playerFemale);
 
         for (let i = 0; i < next.length; i++) {
-            next[0].position.x = height / 2;
+            next[i].scale = width / 10000;
+            next[0].position.x = width / 2 - next[i].width * 2.75;
 
-            next[1].position.x = height / 2 + width / 2;
+            next[1].position.x = width / 2 + next[i].width * 2.75;
             next[0].mirrorX(-1);
-
             if (next[i].mouseIsPressed) {
                 // shopSelectSound.play();
+                next[i].scale = width / 10000 + 0.01;
             }
+
+            drawSprites(next);
         }
 
-        drawSprites(next);
+
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
