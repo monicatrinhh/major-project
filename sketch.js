@@ -29,7 +29,7 @@ let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
 let fishingHook;
-let fishDisplay;
+let fishDisplay, butterflyDisplay;
 let goldenHour = 12;
 let transitionScreen;
 let mpcBox, readBox;
@@ -47,6 +47,7 @@ function preload() {
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
   fishDisplay = loadImage('assets/functions/carp_fish.png');
+  butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
 
   transitionScreen = createVideo("assets/background/transition.mov");
@@ -76,7 +77,7 @@ function setup() {
   fishingHook = createSprite(mouseX, mouseY);
   fishingHook.scale = width / 20000;
   fishingHook.addAnimation('fish', 'assets/functions/fishHook.png');
-  fishingHook.addAnimation('bug', 'assets/functions/fishHook.png');
+  fishingHook.addAnimation('bug', 'assets/functions/bugNet.png');
   fishingHook.setCollider('rectangle', 0, 0, fishingHook.width, fishingHook.height);
   fishingHook.mouseActive = true;
 

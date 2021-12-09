@@ -72,7 +72,7 @@ function shopping() {
             next[0].mirrorX(-1);
 
             if (next[i].mouseIsPressed) {
-                shopSelectSound.play();
+                // shopSelectSound.play();
             }
         }
 

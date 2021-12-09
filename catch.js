@@ -53,7 +53,7 @@ function catchFish() {
             messageText(width / 70, "white", "x" + fishCount, width / 12, height / 15);
         }
         else if (catchState === "bug") {
-            // image('assets/functions/rajah.png', width / 50, height / 50);
+            image(butterflyDisplay, width / 50, height / 50);
             textFont(digitalTech);
             messageText(width / 70, "white", "x" + bugCount, width / 12, height / 15);
         }
@@ -110,9 +110,17 @@ function whileFishing() {
         pop();
     }
 
-
-    carpFish();
+    if (catchState === "fish") {
+        fishingHook.changeAnimation('fish');
+    }
+    else if (catchState === "bug") {
+        fishingHook.changeAnimation('bug');
+        fishingHook.scale = width / 15000;
+        fishingHook.mirrorX(-1);
+    }
     drawSprite(fishingHook);
+    carpFish();
+
     fishingHook.position.x = mouseX;
     fishingHook.position.y = mouseY;
 
