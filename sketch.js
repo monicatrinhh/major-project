@@ -50,8 +50,7 @@ function preload() {
   fishDisplay = loadImage('assets/functions/carp_fish.png');
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
-  nookCrannyImg = loadImage('assets/background/nookCranny.png');
-
+  
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
   transitionScreen.position(0, 0);
