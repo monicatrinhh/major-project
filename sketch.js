@@ -24,7 +24,7 @@ let bg, trees, fishes;
 let coins, coinDisplay, coinCount = 0;
 let closeButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
-let chooseSound, coinSound, catchFishSound;
+let chooseSound, coinSound, catchFishSound, shopSelectSound;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
@@ -33,6 +33,7 @@ let fishDisplay;
 let goldenHour = 12;
 let transitionScreen;
 let mpcBox, readBox;
+let fishOrBugDisplay;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -40,6 +41,7 @@ function preload() {
   coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
   catchFishSound = loadSound('assets/sound/waterSplash.wav');
+  // shopSelectSound = loadSound('assets/sound/shop.wav');
 
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
@@ -73,7 +75,8 @@ function setup() {
   // fishing hook for fishing game
   fishingHook = createSprite(mouseX, mouseY);
   fishingHook.scale = width / 20000;
-  fishingHook.addAnimation('normal', 'assets/functions/fishHook.png');
+  fishingHook.addAnimation('fish', 'assets/functions/fishHook.png');
+  fishingHook.addAnimation('bug', 'assets/functions/fishHook.png');
   fishingHook.setCollider('rectangle', 0, 0, fishingHook.width, fishingHook.height);
   fishingHook.mouseActive = true;
 
@@ -81,6 +84,33 @@ function setup() {
   mpcBox.scale = width / 2500;
   mpcBox.addAnimation('normal', 'assets/functions/multiple.png');
   mpcBox.mouseActive = true;
+
+  fishOrBugDisplay = new Group();
+  for (let i = 0; i < 2; i++) {
+    let displayFB = createSprite(width / 2, height / 2);
+    displayFB.scale = width / 1000;
+    displayFB.addAnimation('fish', 'assets/functions/bitterling_fish.png');
+    displayFB.addAnimation('bug', 'assets/functions/purpleButterfly.png');
+    displayFB.mouseActive = true;
+    fishOrBugDisplay.add(displayFB);
+  }
+
+  fishOrBugDisplay[0].changeAnimation('fish');
+  fishOrBugDisplay[0].position.x = width / 2 - (width / 10);
+  fishOrBugDisplay[0].position.y = height / 1.7;
+
+  fishOrBugDisplay[1].changeAnimation('bug');
+  fishOrBugDisplay[1].position.x = width / 2 + (width / 11);
+  fishOrBugDisplay[1].position.y = height / 1.7;
+
+  next = new Group();
+  for (let i = 0; i < 2; i++) {
+    let nextButton = createSprite(width / 2, height / 2);
+    nextButton.scale = width / 10000;
+    nextButton.addAnimation('normal', 'assets/functions/nextButton.png');
+    nextButton.mouseActive = true;
+    next.add(nextButton);
+  }
 
   // close button
   closeButton = createSprite(width - cellHeight / 2.5, height / 20);
@@ -204,8 +234,9 @@ function draw() {
   // if (keyIsDown(DOWN_ARROW)) {
   //   playerFemale.scale -= 0.05;
   // }
-
+  shopping();
   catchFish();
+  fishOrBug();
   exitBox();
 }
 
@@ -224,9 +255,11 @@ function timeCount() {
 }
 
 function coinCollect(collector, collected) {
+  coinCount++;
   collector.changeAnimation('normal');
   coinSound.play();
   collected.remove();
+
 }
 
 

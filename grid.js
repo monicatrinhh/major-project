@@ -22,16 +22,8 @@ function createEmptyArray(rows, cols) {
     for (let y = 0; y < rows; y++) {
         board.push([]);
         for (let x = 0; x < cols; x++) {
-            if (random(100) <= 100) {
-                board[y].push(2); // river
-            }
-
-            else {
-                board[y].push(1); // pale green
-            }
-
+            board[y].push(2);
         }
-
     }
     return board;
 }
