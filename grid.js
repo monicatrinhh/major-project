@@ -16,6 +16,17 @@ function displayGrid() {
     }
 }
 
+function displayHomeGrid() {
+    for (let y = 0; y < homeGridSize; y++) {
+        for (let x = 0; x < homeGridSize; x++) {
+            // noStroke();
+            rect((x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
+            if (grid[y][x] === 2) {
+                fill(255);
+            }
+        }
+    }
+}
 
 function createEmptyArray(rows, cols) {
     let board = [];

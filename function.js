@@ -1,12 +1,25 @@
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
-        // gameState = "transition";
         answerYN = "no";
-        // blackOut();
         gameState = "selectFB";
     }
 }
+function buildMenuFunction() {
+    if (buildMenu.mouseIsPressed) {
+        answerYN = "no";
+        gameState = "build";
 
+    }
+}
+
+function buildSpaces() {
+    if (gameState === "build") {
+        camera.off();
+        fill('white');
+        rect(width / 2, height / 2, 50, 50);
+        displayHomeGrid();
+    }
+}
 function fishOrBug() {
     if (gameState === "selectFB") {
         camera.off();
@@ -68,16 +81,18 @@ function shopping() {
         rect(width / 2.8, height / 3.9, width / 3.5, height / 1.8);
 
         // UI/UX
-        image(coinDisplay, width / 3.8, height / 5.2);
+        image(coinDisplay, width / 3.8, height / 5);
         textFont(digitalTech);
-        messageText(width / 50, "white", "x" + coinCount, width / 3.2, height / 5.2);
+        messageText(width / 50, "white", "x" + coinCount, width / 10 * 2.8, height / 5.2);
 
         image(fishDisplay, width / 1.5 - 10, height / 5.2);
         messageText(width / 50, "white", "x" + fishCount, width / 1.458, height / 5.1);
 
+        image(butterflyDisplay, width / 1.42, height / 5.2);
+        messageText(width / 50, "white", "x" + bugCount, width / 1.38, height / 5.1);
+
         playerFemale.position.x = width / 4;
         playerFemale.position.y = height - height / 5 - playerFemale.height / 4.5;
-
         playerFemale.changeAnimation('normal');
         drawSprite(playerFemale);
 

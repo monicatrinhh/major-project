@@ -88,6 +88,8 @@ function showMenu() {
     catchMenuFunction();
     shopMenuFunction();
     theMap();
+    buildMenuFunction();
+    buildSpaces();
 }
 
 

@@ -12,7 +12,7 @@
 
 
 let grid;
-let gridSize = 30;
+let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
 let grass;
 let blathers, isabelle, kk, tomNook;
@@ -35,6 +35,8 @@ let transitionScreen;
 let mpcBox, readBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
+let widthBuffer, heightBuffer;
+
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -50,7 +52,7 @@ function preload() {
   fishDisplay = loadImage('assets/functions/carp_fish.png');
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
-  
+
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
   transitionScreen.position(0, 0);
@@ -66,8 +68,16 @@ function setup() {
 
   // grid
   grid = createEmptyArray(gridSize, gridSize);
+  homeGrid = createEmptyArray(homeGridSize, homeGridSize);
+
+  homeGridSize = widthBuffer * homeGridSize;
+  widthBuffer = (width - homeGridSize) / 2;
+  heightBuffer = height / 5;
+
   cellWidth = (SCENE_W / gridSize) * 2;
   cellHeight = (SCENE_H / gridSize) * 2;
+  cellHomeWidth = (width / 1.25 - widthBuffer) / homeGridSize;
+  cellHomeHeight = (height / 1.25 - heightBuffer) / homeGridSize;
 
   playerFemale = createSprite(SCENE_W / 2, SCENE_H / 2);
   playerFemale.scale = width / 2000;
