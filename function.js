@@ -8,7 +8,6 @@ function buildMenuFunction() {
     if (buildMenu.mouseIsPressed) {
         answerYN = "no";
         gameState = "build";
-
     }
 }
 
@@ -18,6 +17,25 @@ function buildSpaces() {
         fill('white');
         rect(width / 2, height / 2, 50, 50);
         displayHomeGrid();
+        drawSprite(closeButton);
+
+        playerFemale.scale = homeGridSize / 35;
+        playerFemale.position.x = widthBuffer + cellHomeWidth / 2;
+        playerFemale.position.y = heightBuffer + cellHomeHeight / 2;
+        playerFemale.changeAnimation('forward');
+
+        insideSpaces();
+    }
+}
+
+function insideSpaces() {
+    if (keyIsDown(40)) {
+        playerFemale.position.y += 5;
+    }
+    drawSprite(playerFemale);
+
+    if (keyIsDown(27) || closeButton.mouseIsPressed) {
+        gameState = "world";
     }
 }
 function fishOrBug() {
@@ -69,7 +87,6 @@ function shopMenuFunction() {
 function shopping() {
     if (gameState === "shop") {
         camera.off();
-        // image(nookCrannyImg, width / 2, height / 2);
         noStroke();
 
         // 1st rect
@@ -106,11 +123,8 @@ function shopping() {
                 // shopSelectSound.play();
                 next[i].scale = width / 10000 + 0.01;
             }
-
             drawSprites(next);
         }
-
-
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";

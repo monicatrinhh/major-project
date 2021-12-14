@@ -23,6 +23,7 @@ function displayHomeGrid() {
             rect((x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
             if (grid[y][x] === 2) {
                 fill(255);
+                image(woodTile, (x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
             }
         }
     }

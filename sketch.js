@@ -14,7 +14,7 @@
 let grid;
 let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
-let grass;
+let grass, woodTile;
 let blathers, isabelle, kk, tomNook;
 let playerFemale;
 let player;
@@ -52,6 +52,7 @@ function preload() {
   fishDisplay = loadImage('assets/functions/carp_fish.png');
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
+  woodTile = loadImage('assets/background/woodFloor.png');
 
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
@@ -69,15 +70,15 @@ function setup() {
   // grid
   grid = createEmptyArray(gridSize, gridSize);
   homeGrid = createEmptyArray(homeGridSize, homeGridSize);
+  widthBuffer = width / 8;
+  heightBuffer = height / 15;
 
-  homeGridSize = widthBuffer * homeGridSize;
-  widthBuffer = (width - homeGridSize) / 2;
-  heightBuffer = height / 5;
 
   cellWidth = (SCENE_W / gridSize) * 2;
   cellHeight = (SCENE_H / gridSize) * 2;
-  cellHomeWidth = (width / 1.25 - widthBuffer) / homeGridSize;
-  cellHomeHeight = (height / 1.25 - heightBuffer) / homeGridSize;
+  cellHomeWidth = (width - (2 * widthBuffer)) / homeGridSize;
+  cellHomeHeight = (height - (2 * heightBuffer)) / homeGridSize;
+  homeGridWidth = cellHomeWidth * homeGridSize;
 
   playerFemale = createSprite(SCENE_W / 2, SCENE_H / 2);
   playerFemale.scale = width / 2000;
@@ -251,6 +252,7 @@ function draw() {
   catchFish();
   fishOrBug();
   exitBox();
+  buildSpaces();
 }
 
 function timeCount() {
