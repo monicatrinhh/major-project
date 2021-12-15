@@ -113,6 +113,8 @@ function shopping() {
         playerFemale.changeAnimation('normal');
         drawSprite(playerFemale);
 
+
+
         for (let i = 0; i < next.length; i++) {
             next[i].scale = width / 10000;
             next[0].position.x = width / 2 - next[i].width * 2.75;
