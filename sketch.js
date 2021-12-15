@@ -22,7 +22,7 @@ let SCENE_W;
 let SCENE_H;
 let bg, trees, fishes;
 let coins, coinDisplay, coinCount = 0;
-let closeButton;
+let closeButton, purchaseButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound, coinSound, catchFishSound, shopSelectSound;
 let penmanship, acFont, digitalTech;
@@ -205,9 +205,13 @@ function setup() {
     menu[i].mouseActive = true;
   }
 
+  purchaseButton = createSprite(width / 2, height / 2);
+  purchaseButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
+  purchaseButton.scale = width / 1500;
+  purchaseButton.mouseActive = true;
+
   // fishes & bugs
   fishes = new Group();
-
 
   gameState = "world";
 }

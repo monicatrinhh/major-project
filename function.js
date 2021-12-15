@@ -108,12 +108,21 @@ function shopping() {
         image(butterflyDisplay, width / 1.42, height / 5.2);
         messageText(width / 50, "white", "x" + bugCount, width / 1.38, height / 5.1);
 
+
         playerFemale.position.x = width / 4;
         playerFemale.position.y = height - height / 5 - playerFemale.height / 4.5;
         playerFemale.changeAnimation('normal');
         drawSprite(playerFemale);
 
+        purchaseButton.position.y = height - (height / 5.2);
+        drawSprite(purchaseButton);
 
+        if (purchaseButton.mouseIsPressed) {
+            purchaseButton.scale = width / 1500 + 0.1;
+        }
+        else {
+            purchaseButton.scale = width / 1500;
+        }
 
         for (let i = 0; i < next.length; i++) {
             next[i].scale = width / 10000;
