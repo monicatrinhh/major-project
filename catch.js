@@ -196,7 +196,7 @@ function generateFishes() {
         fishes.add(bitterling);
 
         // koi fishes only appear after 4pm and before 9pm
-        if (hour() >= 16 && hour() <= 21) {
+        if (hour() >= 16 && hour() < 21) {
             let koi = createSprite(random(width / 2, width), random(height / 5 + cellHeight / 2, height - cellHeight / 2));
             koi.addAnimation('fish', 'assets/functions/koi.png');
             koi.addAnimation('bug', 'assets/functions/orchidM.png');

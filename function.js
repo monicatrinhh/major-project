@@ -1,3 +1,4 @@
+let isItInside = true;
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
         answerYN = "no";
@@ -19,25 +20,57 @@ function buildSpaces() {
         displayHomeGrid();
         drawSprite(closeButton);
 
-        playerFemale.scale = homeGridSize / 35;
-        playerFemale.position.x = widthBuffer + cellHomeWidth / 2;
-        playerFemale.position.y = heightBuffer + cellHomeHeight / 2;
-        playerFemale.changeAnimation('forward');
-
         insideSpaces();
     }
 }
 
 function insideSpaces() {
-    if (keyIsDown(40)) {
-        playerFemale.position.y += 5;
-    }
-    drawSprite(playerFemale);
+    if (gameState === "build") {
 
-    if (keyIsDown(27) || closeButton.mouseIsPressed) {
-        gameState = "world";
+        if (playerFemaleMini.position.x >= widthBuffer + cellHomeWidth / 2 && playerFemaleMini.position.y >= heightBuffer + cellHomeHeight / 0.9 && playerFemaleMini.position.x <= width - widthBuffer - cellHomeWidth / 2 && playerFemaleMini.position.y <= height - heightBuffer - cellHomeHeight / 0.8) {
+            if (keyIsDown(40)) { //down arrow 
+
+                playerFemaleMini.changeAnimation('forward');
+                playerFemaleMini.position.y += 3;
+            }
+            else if (keyIsDown(38)) { // up arrow
+                playerFemaleMini.changeAnimation('backward');
+                playerFemaleMini.position.y -= 3;
+            }
+            else if (keyIsDown(39)) { // -->
+                playerFemaleMini.changeAnimation('movingRL');
+                playerFemaleMini.mirrorX(-1);
+                playerFemaleMini.position.x += 3;
+            }
+            else if (keyIsDown(37)) {// <---
+                playerFemaleMini.changeAnimation('movingRL');
+                playerFemaleMini.mirrorX(1);
+                playerFemaleMini.position.x -= 3;
+            }
+
+        }
+        else {
+            if (playerFemaleMini.position.x <= widthBuffer + cellHomeWidth / 2) {
+                playerFemaleMini.position.x += 1;
+            }
+            if (playerFemaleMini.position.y <= heightBuffer + cellHomeHeight / 0.9) {
+                playerFemaleMini.position.y += 1;
+            }
+            if (playerFemaleMini.position.x >= width - widthBuffer - cellHomeWidth / 2) {
+                playerFemaleMini.position.x -= 1;
+            }
+            if (playerFemaleMini.position.y >= height - heightBuffer - cellHomeHeight / 0.8) {
+                playerFemaleMini.position.y -= 1;
+            }
+        }
+        drawSprite(playerFemaleMini);
+
+        if (keyIsDown(27) || closeButton.mouseIsPressed) {
+            gameState = "world";
+        }
     }
 }
+
 function fishOrBug() {
     if (gameState === "selectFB") {
         camera.off();

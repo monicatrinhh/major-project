@@ -7,7 +7,7 @@
 
   add Golden Hour Text
   add screen transition?
-  fix close buton
+
 */
 
 
@@ -16,7 +16,7 @@ let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
 let grass, woodTile;
 let blathers, isabelle, kk, tomNook;
-let playerFemale;
+let playerFemale, playerFemaleMini;
 let player;
 let SCENE_W;
 let SCENE_H;
@@ -140,6 +140,19 @@ function setup() {
   playerFemale.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
   playerFemale.addAnimation('fish', 'assets/player/female/player_female_fish.png');
 
+  //load animation
+  playerFemaleMini = createSprite(widthBuffer + cellHomeWidth / 2, heightBuffer + cellHomeHeight / 0.9);
+  playerFemaleMini.setCollider('rectangle', 0, 0, playerFemaleMini.width, playerFemaleMini.height);
+
+  playerFemaleMini.mouseActive = true;
+  playerFemaleMini.addAnimation('normal', 'assets/player/female/player_female.png');
+  playerFemaleMini.addAnimation('forward', 'assets/player/female/player_female1.png', 'assets/player/female/player_female2.png', 'assets/player/female/player_female3.png', 'assets/player/female/player_female4.png', 'assets/player/female/player_female5.png');
+  playerFemaleMini.addAnimation('backward', 'assets/player/femaleBack/femaleBack1.png', 'assets/player/femaleBack/femaleBack2.png', 'assets/player/femaleBack/femaleBack3.png', 'assets/player/femaleBack/femaleBack4.png');
+  playerFemaleMini.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
+
+  playerFemaleMini.scale = homeGridSize / 35;
+  // playerFemaleMini.position.x = ;
+
   // fossils
   bg = new Group();
   //create some background for visual reference
@@ -257,6 +270,8 @@ function draw() {
   fishOrBug();
   exitBox();
   buildSpaces();
+  insideSpaces();
+
 }
 
 function timeCount() {
