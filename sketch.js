@@ -36,6 +36,7 @@ let mpcBox, readBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
 let widthBuffer, heightBuffer;
+let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay;
 
 
 function preload() {
@@ -225,6 +226,33 @@ function setup() {
 
   // fishes & bugs
   fishes = new Group();
+
+  itemDisplay = new Group();
+  bluePeriod = createSprite(width / 2, height / 2);
+  bluePeriod.addImage(loadImage('assets/items/bluePeriod.png'));
+  itemDisplay.add(bluePeriod);
+
+  fishingRod = createSprite(width / 2, height / 2);
+  fishingRod.addImage(loadImage('assets/items/fishingRod.png'));
+  itemDisplay.add(fishingRod);
+
+  house = createSprite(width / 2, height / 2);
+  house.addImage(loadImage('assets/items/house.png'));
+  itemDisplay.add(house);
+
+  janeEyre = createSprite(width / 2, height / 2);
+  janeEyre.addImage(loadImage('assets/items/janeEyre.png'));
+  itemDisplay.add(janeEyre);
+
+  // mansion = createSprite(width / 2, height / 2);
+  // mansion.addImage(loadImage('assets/items/mansion.png'));
+  // itemDisplay.add(mansion);
+
+  for (let i = 0; i < itemDisplay.length; i++) {
+    itemDisplay[i].scale = width / 2000;
+    itemDisplay[i].visible = false;
+    itemDisplay[i].mouseActive = true;
+  }
 
   gameState = "world";
 }

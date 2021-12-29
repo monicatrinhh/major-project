@@ -1,4 +1,17 @@
 let isItInside = true;
+let itemCount = 0;
+let itemAddBool = false, itemSubBool = false;
+
+function countingItem() {
+    // if (itemAddBool && itemCount < itemDisplay.length - 1) {
+    //     itemCount++;
+    //     itemAddBool = false;
+    // }
+    // else if (itemSubBool && itemCount > 0) {
+    //     itemCount--;
+    //     itemSubBool = false;
+    // }
+}
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
         answerYN = "no";
@@ -20,6 +33,7 @@ function buildSpaces() {
         displayHomeGrid();
         drawSprite(closeButton);
 
+        // move player and place items
         insideSpaces();
     }
 }
@@ -27,25 +41,26 @@ function buildSpaces() {
 function insideSpaces() {
     if (gameState === "build") {
 
+
         if (playerFemaleMini.position.x >= widthBuffer + cellHomeWidth / 2 && playerFemaleMini.position.y >= heightBuffer + cellHomeHeight / 0.9 && playerFemaleMini.position.x <= width - widthBuffer - cellHomeWidth / 2 && playerFemaleMini.position.y <= height - heightBuffer - cellHomeHeight / 0.8) {
             if (keyIsDown(40)) { //down arrow 
 
                 playerFemaleMini.changeAnimation('forward');
-                playerFemaleMini.position.y += 3;
+                playerFemaleMini.position.y += 2;
             }
             else if (keyIsDown(38)) { // up arrow
                 playerFemaleMini.changeAnimation('backward');
-                playerFemaleMini.position.y -= 3;
+                playerFemaleMini.position.y -= 2;
             }
             else if (keyIsDown(39)) { // -->
                 playerFemaleMini.changeAnimation('movingRL');
                 playerFemaleMini.mirrorX(-1);
-                playerFemaleMini.position.x += 3;
+                playerFemaleMini.position.x += 2;
             }
             else if (keyIsDown(37)) {// <---
                 playerFemaleMini.changeAnimation('movingRL');
                 playerFemaleMini.mirrorX(1);
-                playerFemaleMini.position.x -= 3;
+                playerFemaleMini.position.x -= 2;
             }
 
         }
@@ -64,6 +79,8 @@ function insideSpaces() {
             }
         }
         drawSprite(playerFemaleMini);
+
+
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
@@ -113,7 +130,12 @@ function shopMenuFunction() {
             answerYN = "no";
             shopping();
             drawSprite(closeButton);
+            itemDisplay[0].visible = true;
+            drawSprites(itemDisplay);
         }
+        // else {
+        //     messageText(width / 100, 255, "The shop is close at the moment, check back after 8 AM", playerFemale.position.x, playerFemale.position.y + cellHeight);
+        // }
     }
 }
 
@@ -157,6 +179,8 @@ function shopping() {
             purchaseButton.scale = width / 1500;
         }
 
+
+        // interact with <- -> button 
         for (let i = 0; i < next.length; i++) {
             next[i].scale = width / 10000;
             next[0].position.x = width / 2 - next[i].width * 2.75;
@@ -170,6 +194,11 @@ function shopping() {
             drawSprites(next);
         }
 
+
+        nextItem();
+
+        countingItem();
+        drawSprites(itemDisplay);
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
         }
@@ -177,6 +206,19 @@ function shopping() {
 
 }
 
+function nextItem() {
+    // move item
+    if (next[1].mouseIsPressed) {
+        itemAddBool = true;
+        // itemDisplay[itemCount].visible = true;
+        // itemDisplay[itemCount - 1].visible = false;
+    }
+    else if (next[0].mouseIsPressed) {
+        itemSubBool = true;
+        // itemDisplay[itemCount].visible = true;
+        // itemDisplay[itemCount + 1].visible = false;
+    }
+}
 function theMap() {
     // zoom in/out of the map
     if (mapMenu.mouseIsPressed) {
