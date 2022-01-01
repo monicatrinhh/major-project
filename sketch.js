@@ -32,7 +32,7 @@ let fishingHook;
 let fishDisplay, butterflyDisplay;
 let goldenHour = 12;
 let transitionScreen;
-let mpcBox, readBox;
+let mpcBox, readBox, nameBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
 let widthBuffer, heightBuffer;
@@ -54,6 +54,7 @@ function preload() {
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
   woodTile = loadImage('assets/background/woodFloor.png');
+
 
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
@@ -99,6 +100,11 @@ function setup() {
   mpcBox.scale = width / 2500;
   mpcBox.addAnimation('normal', 'assets/functions/multiple.png');
   mpcBox.mouseActive = true;
+
+
+  nameBox = createSprite(width / 2, height / 4);
+  nameBox.scale = width / 4000;
+  nameBox.addImage(loadImage("assets/functions/nameBox.png"));
 
   fishOrBugDisplay = new Group();
   for (let i = 0; i < 2; i++) {

@@ -188,13 +188,14 @@ function shopping() {
             itemDisplay.previousFrame();
         }
 
+        drawSprite(nameBox);
         animation(itemDisplay, width / 2, height / 2);
         textFont(acFont);
-        messageText(width / 50, "white", itemPurchase[itemDisplay.getFrame() + 1].name, width / 2, height / 4);
+        messageText(width / 50, "orange", itemPurchase[itemDisplay.getFrame() + 1].name, width / 2, height / 4 + 10);
         textFont(digitalTech);
         messageText(width / 100, 100, itemPurchase[itemDisplay.getFrame() + 1].description, width / 2, height - height / 3.5);
 
-
+        messageText(width / 70, 0, "Price: x" + itemPurchase[itemDisplay.getFrame() + 1].price[0], width / 3.5, height / 3.5);
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
         }
