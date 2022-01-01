@@ -1,17 +1,5 @@
 let isItInside = true;
-let itemCount = 0;
-let itemAddBool = false, itemSubBool = false;
 
-function countingItem() {
-    // if (itemAddBool && itemCount < itemDisplay.length - 1) {
-    //     itemCount++;
-    //     itemAddBool = false;
-    // }
-    // else if (itemSubBool && itemCount > 0) {
-    //     itemCount--;
-    //     itemSubBool = false;
-    // }
-}
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
         answerYN = "no";
@@ -81,7 +69,6 @@ function insideSpaces() {
         drawSprite(playerFemaleMini);
 
 
-
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
         }
@@ -129,9 +116,8 @@ function shopMenuFunction() {
             gameState = "shop";
             answerYN = "no";
             shopping();
+            itemDisplay.goToFrame(0);
             drawSprite(closeButton);
-            itemDisplay[0].visible = true;
-            drawSprites(itemDisplay);
         }
         // else {
         //     messageText(width / 100, 255, "The shop is close at the moment, check back after 8 AM", playerFemale.position.x, playerFemale.position.y + cellHeight);
@@ -184,21 +170,27 @@ function shopping() {
         for (let i = 0; i < next.length; i++) {
             next[i].scale = width / 10000;
             next[0].position.x = width / 2 - next[i].width * 2.75;
-
             next[1].position.x = width / 2 + next[i].width * 2.75;
             next[0].mirrorX(-1);
-            if (next[i].mouseIsPressed) {
+
+            // pop up button
+            if (next[i].mouseIsOver) {
                 // shopSelectSound.play();
                 next[i].scale = width / 10000 + 0.01;
             }
             drawSprites(next);
         }
 
+        if (next[1].mouseIsOver && mouseWentDown()) {
+            itemDisplay.nextFrame();
+        }
+        else if (next[0].mouseIsOver && mouseWentDown()) {
+            itemDisplay.previousFrame();
+        }
+        animation(itemDisplay, width / 2, height / 2);
 
-        nextItem();
+        // messageText(20, 255, itemPurchase[0].name, width / 2; height / 5);
 
-        countingItem();
-        drawSprites(itemDisplay);
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
         }
@@ -206,19 +198,6 @@ function shopping() {
 
 }
 
-function nextItem() {
-    // move item
-    if (next[1].mouseIsPressed) {
-        itemAddBool = true;
-        // itemDisplay[itemCount].visible = true;
-        // itemDisplay[itemCount - 1].visible = false;
-    }
-    else if (next[0].mouseIsPressed) {
-        itemSubBool = true;
-        // itemDisplay[itemCount].visible = true;
-        // itemDisplay[itemCount + 1].visible = false;
-    }
-}
 function theMap() {
     // zoom in/out of the map
     if (mapMenu.mouseIsPressed) {

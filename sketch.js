@@ -227,33 +227,37 @@ function setup() {
   // fishes & bugs
   fishes = new Group();
 
-  itemDisplay = new Group();
-  bluePeriod = createSprite(width / 2, height / 2);
-  bluePeriod.addImage(loadImage('assets/items/bluePeriod.png'));
-  itemDisplay.add(bluePeriod);
+  // itemDisplay = new Group();
+  // bluePeriod = createSprite(width / 2, height / 2);
+  // bluePeriod.addImage(loadImage('assets/items/bluePeriod.png'));
+  // itemDisplay.add(bluePeriod);
 
-  fishingRod = createSprite(width / 2, height / 2);
-  fishingRod.addImage(loadImage('assets/items/fishingRod.png'));
-  itemDisplay.add(fishingRod);
+  // fishingRod = createSprite(width / 2, height / 2);
+  // fishingRod.addImage(loadImage('assets/items/fishingRod.png'));
+  // itemDisplay.add(fishingRod);
 
-  house = createSprite(width / 2, height / 2);
-  house.addImage(loadImage('assets/items/house.png'));
-  itemDisplay.add(house);
+  // house = createSprite(width / 2, height / 2);
+  // house.addImage(loadImage('assets/items/house.png'));
+  // itemDisplay.add(house);
 
-  janeEyre = createSprite(width / 2, height / 2);
-  janeEyre.addImage(loadImage('assets/items/janeEyre.png'));
-  itemDisplay.add(janeEyre);
+  // janeEyre = createSprite(width / 2, height / 2);
+  // janeEyre.addImage(loadImage('assets/items/janeEyre.png'));
+  // itemDisplay.add(janeEyre);
 
   // mansion = createSprite(width / 2, height / 2);
   // mansion.addImage(loadImage('assets/items/mansion.png'));
   // itemDisplay.add(mansion);
 
-  for (let i = 0; i < itemDisplay.length; i++) {
-    itemDisplay[i].scale = width / 2000;
-    itemDisplay[i].visible = false;
-    itemDisplay[i].mouseActive = true;
-  }
+  // for (let i = 0; i < itemDisplay.length; i++) {
+  //   itemDisplay[i].scale = width / 2000;
+  //   itemDisplay[i].visible = false;
+  //   itemDisplay[i].mouseActive = true;
+  // }
 
+
+  itemDisplay = loadAnimation('assets/items/fishingRod.png', 'assets/items/bugNet.png', 'assets/items/house.png', 'assets/items/janeEyre.png', 'assets/items/bluePerioda.png', 'assets/items/mansion.png');
+  itemDisplay.playing = false;
+  itemDisplay.scale = 20;
   gameState = "world";
 }
 
@@ -285,6 +289,7 @@ function draw() {
     coins.collide(trees);
   }
 
+  // console.log(itemPurchase.[0].name);
 
   // if (keyIsDown(UP_ARROW)) {
   //   playerFemale.scale += 0.05;
