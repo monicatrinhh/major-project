@@ -116,7 +116,6 @@ function shopMenuFunction() {
             gameState = "shop";
             answerYN = "no";
             shopping();
-            itemDisplay.goToFrame(0);
             drawSprite(closeButton);
         }
         // else {
@@ -165,6 +164,7 @@ function shopping() {
             purchaseButton.scale = width / 1500;
         }
 
+        messageText(width / 70, 255, "PURCHASE", width / 2, height - (height / 5.2));
 
         // interact with <- -> button 
         for (let i = 0; i < next.length; i++) {
@@ -187,9 +187,13 @@ function shopping() {
         else if (next[0].mouseIsOver && mouseWentDown()) {
             itemDisplay.previousFrame();
         }
-        animation(itemDisplay, width / 2, height / 2);
 
-        // messageText(20, 255, itemPurchase[0].name, width / 2; height / 5);
+        animation(itemDisplay, width / 2, height / 2);
+        textFont(acFont);
+        messageText(width / 50, "white", itemPurchase[itemDisplay.getFrame() + 1].name, width / 2, height / 4);
+        textFont(digitalTech);
+        messageText(width / 100, 100, itemPurchase[itemDisplay.getFrame() + 1].description, width / 2, height - height / 3.5);
+
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";

@@ -254,8 +254,7 @@ function setup() {
   //   itemDisplay[i].mouseActive = true;
   // }
 
-
-  itemDisplay = loadAnimation('assets/items/fishingRod.png', 'assets/items/bugNet.png', 'assets/items/house.png', 'assets/items/janeEyre.png', 'assets/items/bluePerioda.png', 'assets/items/mansion.png');
+  itemDisplay = loadAnimation('assets/items/fishingRod.png', 'assets/items/bugNet.png', 'assets/items/house.png', 'assets/items/mansion.png', 'assets/items/janeEyre.png', 'assets/items/bluePerioda.png');
   itemDisplay.playing = false;
   itemDisplay.scale = 20;
   gameState = "world";
@@ -289,15 +288,6 @@ function draw() {
     coins.collide(trees);
   }
 
-  // console.log(itemPurchase.[0].name);
-
-  // if (keyIsDown(UP_ARROW)) {
-  //   playerFemale.scale += 0.05;
-  // }
-
-  // if (keyIsDown(DOWN_ARROW)) {
-  //   playerFemale.scale -= 0.05;
-  // }
   shopping();
   catchFish();
   fishOrBug();

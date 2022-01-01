@@ -6,41 +6,37 @@
 
 // info about item in the store including prices and description
 let itemPurchase = {
-    // tent: {
-    //     price: 10,
-    //     description: "Build your first sweet... home-ish!",
-    // },
-    house: {
+    3: {
         name: "Home Sweet Home",
         price: 18,
         description: "Upgrade your tent to a beautiful house",
     },
-    mansion: {
+    4: {
         name: "Classy Mansion",
         price: 35,
         description: "Level up your taste to an exquisite mansion",
     },
-    fishingRod: {
+    1: {
         name: "Fishing Rod",
         price: 5,
-        description: "Fishing rod breaks after 5 usages, purchase a new one when needed",
+        description: "Fishing rod breaks after 5 usages,\n purchase a new one when needed",
     },
-    bugNet: {
+    2: {
         name: "Bug Catcher Net",
         price: 5,
-        description: "Bug net is full of holes after 5 usages, purchase a new one when needed",
+        description: "Bug net is full of holes after 5 usages, \n purchase a new one when needed",
     },
-    janeEyreSet: {
+    5: {
         name: "Jane Eyre House Set",
         price: 20,
         description: "mystic antique house set for vintage lover",
     },
-    bluePeriodSet: {
+    6: {
         name: "Blue Period House Set",
         price: 25,
         description: "modern house set for elegant connoisseur",
     },
-    emmaSet: {
+    7: {
         name: "Emma House Set",
         price: 30,
         description: "extravagant house set for the elevated elites",
