@@ -1,4 +1,6 @@
 let isItInside = true;
+let fishingTimeCount = 0;
+let bugCatchingTimeCount = 0;
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
@@ -99,6 +101,7 @@ function fishOrBug() {
             gameState = "catch";
             catchFish();
             generateFishes();
+            fishingTimeCount++;
         }
         else if (fishOrBugDisplay[1].mouseIsPressed) {
             chooseSound.play();
@@ -106,6 +109,7 @@ function fishOrBug() {
             gameState = "catch";
             catchFish();
             generateFishes();
+            bugCatchingTimeCount++;
         }
     }
 }
@@ -203,7 +207,7 @@ function shopping() {
         // pricing in coins, fish, bugs
         messageText(width / 60, 255, "Price: x" + itemPurchase[itemDisplay.getFrame() + 1].price[0], width / 3.5, height / 3.2);
         messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[1], width / 1.5 + cellWidth / 10, height / 3.2);
-        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[2], width / 1.5 + cellWidth / 3.5, height / 3.2);
+        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[2], width / 1.5 + cellWidth / 3.2, height / 3.2);
 
         purchaseButton.position.y = height - (height / 5.2);
         drawSprite(purchaseButton);
@@ -226,8 +230,8 @@ function purchaseItem() {
         fishCount -= itemPurchase[itemDisplay.getFrame() + 1].price[1];
         bugCount -= itemPurchase[itemDisplay.getFrame() + 1].price[2];
     }
-    else{
-        
+    else {
+
     }
 
 }

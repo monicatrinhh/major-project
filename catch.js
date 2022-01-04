@@ -1,8 +1,9 @@
 // Bitterling and Carp fish appears all day, Koi fish only appears from 4-9PM
-let fishCount = 100;
-let bugCount = 100;
+let fishCount = 0;
+let bugCount = 0;
 let tryToExit = false;
 let catchState;
+
 
 function catchFish() {
     if (gameState === "catch") {

@@ -5,9 +5,14 @@
 /* key/functions available: 'x' to hide menu, click on player to show menu 
   Certain items, villagers only appear at a certain time of the day
 
+  Press on trees to spawn coins
+
   add Golden Hour Text
   add screen transition?
 
+  make a storage instead of the design function
+  make fishing rod, bug net breaks after 5 use
+  make a place for tent
 */
 
 
@@ -21,7 +26,7 @@ let player;
 let SCENE_W;
 let SCENE_H;
 let bg, trees, fishes;
-let coins, coinDisplay, coinCount = 100;
+let coins, coinDisplay, coinCount = 0;
 let closeButton, purchaseButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
 let chooseSound, coinSound, catchFishSound, shopSelectSound;
@@ -263,6 +268,7 @@ function setup() {
   itemDisplay = loadAnimation('assets/items/fishingRod.png', 'assets/items/bugNet.png', 'assets/items/house.png', 'assets/items/mansion.png', 'assets/items/janeEyre.png', 'assets/items/bluePerioda.png');
   itemDisplay.playing = false;
   itemDisplay.scale = 20;
+
   gameState = "world";
 }
 
@@ -292,6 +298,14 @@ function draw() {
 
     playerFemale.overlap(coins, coinCollect);
     coins.collide(trees);
+
+    for (let i = 0; i < trees.length; i++) {
+      if (trees[i].mouseIsOver && mouseWentDown()) {
+        if (coinCount <= 0) {
+          spawnCoins();
+        }
+      }
+    }
   }
 
   shopping();
@@ -301,6 +315,18 @@ function draw() {
   buildSpaces();
   insideSpaces();
 
+}
+
+function spawnCoins() {
+  if (random(100) < 50) {
+    for (let i = 0; i < random(5); i++) {
+      let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+      coin.addAnimation('normal', 'assets/currency/BellCoin.png');
+      coin.scale = width / 1500;
+      coin.mouseActive = true;
+      coins.add(coin);
+    }
+  }
 }
 
 function timeCount() {
@@ -318,11 +344,13 @@ function timeCount() {
 }
 
 function coinCollect(collector, collected) {
-  coinCount++;
+  if (coinCount < 1000) {
+    coinCount++;
+  }
+
   collector.changeAnimation('normal');
   coinSound.play();
   collected.remove();
-
 }
 
 
