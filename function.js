@@ -140,11 +140,14 @@ function shopping() {
         // UI/UX
         image(coinDisplay, width / 3.8, height / 5);
         textFont(digitalTech);
+
+        drawRect(width / 4, height / 5 - 30, cellWidth / 3, 30, 0, 10, 0, 0, "#EEE1C6");
         messageText(width / 50, "white", "x" + coinCount, width / 10 * 2.8, height / 5.2);
-
+        drawRect(width - width / 4 - 150, height / 5 - 30, 75, 30, 0, 10, 0, 0, "#EEE1C6");
         image(fishDisplay, width / 1.5 - 10, height / 5.2);
-        messageText(width / 50, "white", "x" + fishCount, width / 1.458, height / 5.1);
 
+        drawRect(width - width / 4 - 70, height / 5 - 30, 70, 30, 0, 10, 0, 0, "#EEE1C6");
+        messageText(width / 50, "white", "x" + fishCount, width / 1.488, height / 5.1);
         image(butterflyDisplay, width / 1.42, height / 5.2);
         messageText(width / 50, "white", "x" + bugCount, width / 1.38, height / 5.1);
 
@@ -154,8 +157,7 @@ function shopping() {
         playerFemale.changeAnimation('normal');
         drawSprite(playerFemale);
 
-        purchaseButton.position.y = height - (height / 5.2);
-        drawSprite(purchaseButton);
+
 
         if (purchaseButton.mouseIsPressed) {
             purchaseButton.scale = width / 1500 + 0.1;
@@ -164,7 +166,6 @@ function shopping() {
             purchaseButton.scale = width / 1500;
         }
 
-        messageText(width / 70, 255, "PURCHASE", width / 2, height - (height / 5.2));
 
         // interact with <- -> button 
         for (let i = 0; i < next.length; i++) {
@@ -193,14 +194,48 @@ function shopping() {
         textFont(acFont);
         messageText(width / 50, "orange", itemPurchase[itemDisplay.getFrame() + 1].name, width / 2, height / 4 + 10);
         textFont(digitalTech);
+
+        // drawRect(width / 2.5, height - height / 3, width / 5, height / 8, 10, 10, 10, 10, "orange");
         messageText(width / 100, 100, itemPurchase[itemDisplay.getFrame() + 1].description, width / 2, height - height / 3.5);
 
-        messageText(width / 70, 0, "Price: x" + itemPurchase[itemDisplay.getFrame() + 1].price[0], width / 3.5, height / 3.5);
+        drawRect(width / 4 - 20, height / 3.7, width / 10, width / 30, 0, 20, 20, 0, "orange");
+        drawRect(width / 1.5 - 10, height / 3.7, width / 10, width / 30, 20, 0, 0, 20, "orange");
+        // pricing in coins, fish, bugs
+        messageText(width / 60, 255, "Price: x" + itemPurchase[itemDisplay.getFrame() + 1].price[0], width / 3.5, height / 3.2);
+        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[1], width / 1.5 + cellWidth / 10, height / 3.2);
+        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[2], width / 1.5 + cellWidth / 3.5, height / 3.2);
+
+        purchaseButton.position.y = height - (height / 5.2);
+        drawSprite(purchaseButton);
+        messageText(width / 70, 255, "PURCHASE", width / 2, height - (height / 5.2));
+
+        if (purchaseButton.mouseIsOver && mouseWentDown()) {
+            purchaseItem();
+        }
+
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
         }
     }
 
+}
+
+function purchaseItem() {
+    if (coinCount >= itemPurchase[itemDisplay.getFrame() + 1].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame() + 1].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame() + 1].price[2]) {
+        coinCount -= itemPurchase[itemDisplay.getFrame() + 1].price[0];
+        fishCount -= itemPurchase[itemDisplay.getFrame() + 1].price[1];
+        bugCount -= itemPurchase[itemDisplay.getFrame() + 1].price[2];
+    }
+    else{
+        
+    }
+
+}
+
+function drawRect(x, y, w, l, br1, br2, br3, br4, theColor) {
+    fill(theColor);
+    noStroke();
+    rect(x, y, w, l, br1, br2, br3, br4);
 }
 
 function theMap() {

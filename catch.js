@@ -1,6 +1,6 @@
 // Bitterling and Carp fish appears all day, Koi fish only appears from 4-9PM
-let fishCount = 0;
-let bugCount = 0;
+let fishCount = 100;
+let bugCount = 100;
 let tryToExit = false;
 let catchState;
 
@@ -153,10 +153,16 @@ function carpFish() {
             if (catchState === "fish") {
                 catchFishSound.play();
                 if (hour() === goldenHour) {
-                    fishCount += 2;
+                    if (fishCount < 1000) {
+                        fishCount += 2;
+                    }
+
                 }
                 else {
-                    fishCount++;
+                    if (fishCount < 1000) {
+                        fishCount++;
+                    }
+
                 }
             }
             if (catchState === "bug") {
