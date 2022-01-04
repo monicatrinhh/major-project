@@ -301,7 +301,7 @@ function draw() {
 
     for (let i = 0; i < trees.length; i++) {
       if (trees[i].mouseIsOver && mouseWentDown()) {
-        if (coinCount <= 0) {
+        if (coinCount <= 5) {
           spawnCoins();
         }
       }
