@@ -28,6 +28,18 @@ function displayHomeGrid() {
         }
     }
 }
+let storageSize = 4;
+let cellStorageWidth = cellHomeWidth;
+let cellStorageHeight = cellHomeWidth;
+
+function displayStorage() {
+    for (let y = 0; y < storageSize; y++) {
+        for (let x = 0; x < storageSize / 2; x++) {
+            fill(255, 255, 255, 200);
+            // rect(playerFemale.position.x, (y * cellHomeHeight) + heightBuffer, cellStorageWidth, cellStorageHeight);
+        }
+    }
+}
 
 function createEmptyArray(rows, cols) {
     let board = [];

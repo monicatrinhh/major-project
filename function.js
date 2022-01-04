@@ -15,14 +15,18 @@ function buildMenuFunction() {
     }
 }
 
+function storageMenuFunction() {
+    if (storageMenu.mouseIsPressed) {
+        
+    }
+}
+
 function buildSpaces() {
     if (gameState === "build") {
         camera.off();
         fill('white');
-        rect(width / 2, height / 2, 50, 50);
         displayHomeGrid();
         drawSprite(closeButton);
-
         // move player and place items
         insideSpaces();
     }
@@ -122,9 +126,7 @@ function shopMenuFunction() {
             shopping();
             drawSprite(closeButton);
         }
-        // else {
-        //     messageText(width / 100, 255, "The shop is close at the moment, check back after 8 AM", playerFemale.position.x, playerFemale.position.y + cellHeight);
-        // }
+        // a bubble text from player
     }
 }
 
@@ -147,11 +149,11 @@ function shopping() {
 
         drawRect(width / 4, height / 5 - 30, cellWidth / 3, 30, 0, 10, 0, 0, "#EEE1C6");
         messageText(width / 50, "white", "x" + coinCount, width / 10 * 2.8, height / 5.2);
-        drawRect(width - width / 4 - 150, height / 5 - 30, 75, 30, 0, 10, 0, 0, "#EEE1C6");
+        drawRect(width - width / 4 - 170, height / 5 - 30, 95, 30, 0, 10, 0, 0, "#EEE1C6");
         image(fishDisplay, width / 1.5 - 10, height / 5.2);
-
-        drawRect(width - width / 4 - 70, height / 5 - 30, 70, 30, 0, 10, 0, 0, "#EEE1C6");
+        drawRect(width - width / 4 - 75, height / 5 - 30, 75, 30, 0, 10, 0, 0, "#EEE1C6");
         messageText(width / 50, "white", "x" + fishCount, width / 1.488, height / 5.1);
+
         image(butterflyDisplay, width / 1.42, height / 5.2);
         messageText(width / 50, "white", "x" + bugCount, width / 1.38, height / 5.1);
 

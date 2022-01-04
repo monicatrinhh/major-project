@@ -4,10 +4,8 @@ let bugCount = 0;
 let tryToExit = false;
 let catchState;
 
-
 function catchFish() {
     if (gameState === "catch") {
-
         // draw bg
         background("#73daef");
         camera.off();
