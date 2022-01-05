@@ -1,6 +1,7 @@
 let isItInside = true;
 let fishingTimeCount = 0;
 let bugCatchingTimeCount = 0;
+let isDisplayStorage = false;
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
@@ -17,18 +18,29 @@ function buildMenuFunction() {
 
 function storageMenuFunction() {
     if (storageMenu.mouseIsPressed) {
-        
+        isDisplayStorage = true;
     }
+    if (isDisplayStorage) {
+        displayStorage();
+    }
+    if (mouseWentDown()) {
+        isDisplayStorage = false;
+    }
+
+    // mouseX > playerFemale.position.x + storageSize * cellStorageWidth + playerFemale.width / 2 && mouseX < playerFemale.position.x + playerFemale.width / 2 && mouseY < playerFemale.position.y - cellStorageHeight && mouseY > playerFemale.position.y + cellStorageHeight
+
 }
 
 function buildSpaces() {
     if (gameState === "build") {
         camera.off();
+        background(bgDay);
         fill('white');
         displayHomeGrid();
         drawSprite(closeButton);
         // move player and place items
         insideSpaces();
+        buildStorageDisplay();
     }
 }
 

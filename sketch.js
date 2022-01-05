@@ -15,7 +15,7 @@
   make a place for tent
 */
 
-
+let bgDay, bgAfternoon, bgNight;
 let grid;
 let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
@@ -42,7 +42,7 @@ let fishOrBugDisplay;
 let nookCrannyImg;
 let widthBuffer, heightBuffer;
 let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay;
-
+let cellStorageHeight, cellStorageWidth;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -59,7 +59,7 @@ function preload() {
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
   woodTile = loadImage('assets/background/woodFloor.png');
-
+  bgDay = loadImage('assets/background/bg-day.jpeg');
 
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
@@ -86,6 +86,8 @@ function setup() {
   cellHomeWidth = (width - (2 * widthBuffer)) / homeGridSize;
   cellHomeHeight = (height - (2 * heightBuffer)) / homeGridSize;
   homeGridWidth = cellHomeWidth * homeGridSize;
+  cellStorageWidth = cellWidth / 4;
+  cellStorageHeight = cellWidth / 4;
 
   playerFemale = createSprite(SCENE_W / 2, SCENE_H / 2);
   playerFemale.scale = width / 2000;

@@ -29,14 +29,22 @@ function displayHomeGrid() {
     }
 }
 let storageSize = 4;
-let cellStorageWidth = cellHomeWidth;
-let cellStorageHeight = cellHomeWidth;
-
 function displayStorage() {
-    for (let y = 0; y < storageSize; y++) {
-        for (let x = 0; x < storageSize / 2; x++) {
-            fill(255, 255, 255, 200);
-            // rect(playerFemale.position.x, (y * cellHomeHeight) + heightBuffer, cellStorageWidth, cellStorageHeight);
+    stroke(0);
+    for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
+        for (let x = 0; x < storageSize; x++) {
+            fill(255, 255, 255, 70);
+            rect(playerFemale.position.x + x * cellStorageWidth + playerFemale.width / 2, playerFemale.position.y - y * cellStorageHeight, cellStorageWidth, cellStorageHeight);
+        }
+    }
+}
+
+function buildStorageDisplay() {
+    stroke(0);
+    for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
+        for (let x = 0; x < 2; x++) {
+            fill(255, 165, 0, 150);
+            rect(widthBuffer / 4 + x * (width - widthBuffer), heightBuffer + y * height / 5 + cellStorageHeight, cellStorageWidth, cellStorageHeight);
         }
     }
 }
