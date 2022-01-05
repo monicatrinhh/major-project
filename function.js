@@ -26,7 +26,6 @@ function storageMenuFunction() {
     if (mouseWentDown()) {
         isDisplayStorage = false;
     }
-
     // mouseX > playerFemale.position.x + storageSize * cellStorageWidth + playerFemale.width / 2 && mouseX < playerFemale.position.x + playerFemale.width / 2 && mouseY < playerFemale.position.y - cellStorageHeight && mouseY > playerFemale.position.y + cellStorageHeight
 
 }
@@ -34,7 +33,18 @@ function storageMenuFunction() {
 function buildSpaces() {
     if (gameState === "build") {
         camera.off();
-        background(bgDay);
+
+        if (timeState === "day") {
+            background(bgDay);
+        }
+        else if (timeState === "afternoon") {
+            background(bgAfternoon);
+        }
+        else {
+            background(bgNight);
+        }
+
+
         fill('white');
         displayHomeGrid();
         drawSprite(closeButton);

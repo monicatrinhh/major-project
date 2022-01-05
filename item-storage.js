@@ -12,12 +12,12 @@ let itemPurchase = {
     },
     1: {
         name: "Fishing Rod",
-        price: [5, 30, 20],
+        price: [2, 20, 10],
         description: "Fishing rod breaks after 5 usages,\n purchase a new one when needed",
     },
     2: {
         name: "Bug Net",
-        price: [5, 30, 20],
+        price: [3, 20, 10],
         description: "Bug net is full of holes after 5 usages, \n purchase a new one when needed",
     },
     5: {

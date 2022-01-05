@@ -43,7 +43,7 @@ function buildStorageDisplay() {
     stroke(0);
     for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
         for (let x = 0; x < 2; x++) {
-            fill(255, 165, 0, 150);
+            fill(255, 255, 255, 100);
             rect(widthBuffer / 4 + x * (width - widthBuffer), heightBuffer + y * height / 5 + cellStorageHeight, cellStorageWidth, cellStorageHeight);
         }
     }

@@ -4,18 +4,24 @@
 
 /* key/functions available: 'x' to hide menu, click on player to show menu 
   Certain items, villagers only appear at a certain time of the day
+  log in with name
 
+  change bg based on time
   Press on trees to spawn coins
 
-  add Golden Hour Text
+  add Golden Hour Text at 12 (double fishes and bugs)
   add screen transition?
 
-  make a storage instead of the design function
   make fishing rod, bug net breaks after 5 use
   make a place for tent
-*/
 
-let bgDay, bgAfternoon, bgNight;
+  trade fish and bugs with the owl, one trade time every hour
+  shop close after 10
+
+  kk slider can play music
+*/
+let timeState;
+let bgDay, bgAfternoon, bgNight, sunset;
 let grid;
 let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
@@ -60,6 +66,9 @@ function preload() {
   coinDisplay = loadImage('assets/currency/BellCoin.png');
   woodTile = loadImage('assets/background/woodFloor.png');
   bgDay = loadImage('assets/background/bg-day.jpeg');
+  sunset = loadImage('assets/background/sunset.jpeg');
+  bgNight = loadImage('assets/background/night.jpeg');
+  bgAfternoon = loadImage('assets/background/afternoon.jpeg');
 
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
@@ -251,7 +260,19 @@ function draw() {
 
 
   if (gameState === "world") {
-    background("#73daef");
+    if (hour() <= 15 && hour() >= 7) {
+      background("#73daef");
+      timeState = "day";
+    }
+    else if (hour() > 15 && hour() < 21) {
+      background(sunset);
+      timeState = "afternoon";
+    }
+    else {
+      background(8, 17, 59);
+      timeState = "night";
+    }
+
 
     camera.zoom = 1;
     //set the camera position to the player position
@@ -270,7 +291,6 @@ function draw() {
 
     showMenu();
     timeCount();
-
     playerFemale.overlap(coins, coinCollect);
     coins.collide(trees);
 
