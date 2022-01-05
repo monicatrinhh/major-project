@@ -95,7 +95,11 @@ function insideSpaces() {
             }
         }
         drawSprite(playerFemaleMini);
+        for (let i = 0; i < itemDisplayStorage.length; i++) {
+            itemDisplayStorage[i].visible = true;
+        }
 
+        drawSprites(itemDisplayStorage);
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
@@ -220,18 +224,18 @@ function shopping() {
         drawSprite(nameBox);
         animation(itemDisplay, width / 2, height / 2);
         textFont(acFont);
-        messageText(width / 50, "orange", itemPurchase[itemDisplay.getFrame() + 1].name, width / 2, height / 4 + 10);
+        messageText(width / 50, "orange", itemPurchase[itemDisplay.getFrame()].name, width / 2, height / 4 + 10);
         textFont(digitalTech);
 
         // drawRect(width / 2.5, height - height / 3, width / 5, height / 8, 10, 10, 10, 10, "orange");
-        messageText(width / 100, 100, itemPurchase[itemDisplay.getFrame() + 1].description, width / 2, height - height / 3.5);
+        messageText(width / 100, 100, itemPurchase[itemDisplay.getFrame()].description, width / 2, height - height / 3.5);
 
         drawRect(width / 4 - 20, height / 3.7, width / 10, width / 30, 0, 20, 20, 0, "orange");
         drawRect(width / 1.5 - 10, height / 3.7, width / 10, width / 30, 20, 0, 0, 20, "orange");
         // pricing in coins, fish, bugs
-        messageText(width / 60, 255, "Price: x" + itemPurchase[itemDisplay.getFrame() + 1].price[0], width / 3.5, height / 3.2);
-        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[1], width / 1.5 + cellWidth / 10, height / 3.2);
-        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame() + 1].price[2], width / 1.5 + cellWidth / 3.2, height / 3.2);
+        messageText(width / 60, 255, "Price: x" + itemPurchase[itemDisplay.getFrame()].price[0], width / 3.5, height / 3.2);
+        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame()].price[1], width / 1.5 + cellWidth / 10, height / 3.2);
+        messageText(width / 60, 255, "x" + itemPurchase[itemDisplay.getFrame()].price[2], width / 1.5 + cellWidth / 3.2, height / 3.2);
 
         purchaseButton.position.y = height - (height / 5.2);
         drawSprite(purchaseButton);

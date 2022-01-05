@@ -20,6 +20,7 @@
 
   kk slider can play music
 */
+
 let timeState;
 let bgDay, bgAfternoon, bgNight, sunset;
 let grid;
@@ -47,7 +48,7 @@ let mpcBox, readBox, nameBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
 let widthBuffer, heightBuffer;
-let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay;
+let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay, itemDisplayStorage;
 let cellStorageHeight, cellStorageWidth;
 
 function preload() {
@@ -174,7 +175,6 @@ function setup() {
   playerFemaleMini.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
 
   playerFemaleMini.scale = homeGridSize / 35;
-  // playerFemaleMini.position.x = ;
 
   // fossils
   bg = new Group();
@@ -249,15 +249,25 @@ function setup() {
   // fishes & bugs
   fishes = new Group();
 
-  itemDisplay = loadAnimation('assets/items/fishingRod.png', 'assets/items/bugNet.png', 'assets/items/house.png', 'assets/items/mansion.png', 'assets/items/janeEyre.png', 'assets/items/bluePerioda.png');
+  itemDisplay = loadAnimation('assets/items/0.png', 'assets/items/1.png', 'assets/items/2.png', 'assets/items/3.png', 'assets/items/4.png', 'assets/items/5.png');
   itemDisplay.playing = false;
   itemDisplay.scale = 20;
+
+  itemDisplayStorage = new Group();
+  for (let i = 0; i < itemPurchase.length; i++) {
+    // let itemPurchase[i].name[0] = createSprite(width / 2, height / 2);
+
+    // itemDisplayStorage[i].name[0].addImage('assets/items/0.png');
+
+    // itemDisplayStorage[i].name[0].scale = width / 3000;
+    // itemDisplayStorage[i].name[0].mouseActive = true;
+    // itemDisplayStorage.add(itemDisplayStorage[i].name[0]);
+  }
 
   gameState = "world";
 }
 
 function draw() {
-
 
   if (gameState === "world") {
     if (hour() <= 15 && hour() >= 7) {
@@ -342,7 +352,6 @@ function coinCollect(collector, collected) {
   if (coinCount < 1000) {
     coinCount++;
   }
-
   collector.changeAnimation('normal');
   coinSound.play();
   collected.remove();
