@@ -22,13 +22,29 @@ function storageMenuFunction() {
     }
     if (isDisplayStorage) {
         displayStorage();
+        for (let i = 0; i < itemDisplayStorage.length; i++) {
+            itemDisplayStorage[i].visible = true;
+            // itemDisplayStorage[i].position.y = heightBuffer + y * height / 5 + cellStorageHeight;
+        }
+        for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
+            for (let x = 0; x < 2; x++) {
+                for (let i = 0; i < itemDisplayStorage.length; i++) {
+                    itemDisplayStorage[i].position.x = playerFemale.position.x + x * cellStorageWidth;
+                    itemDisplayStorage[i].position.y = playerFemale.position.y + y * cellStorageHeight;
+                }
+
+            }
+
+        }
     }
     if (mouseWentDown()) {
         isDisplayStorage = false;
     }
-    // mouseX > playerFemale.position.x + storageSize * cellStorageWidth + playerFemale.width / 2 && mouseX < playerFemale.position.x + playerFemale.width / 2 && mouseY < playerFemale.position.y - cellStorageHeight && mouseY > playerFemale.position.y + cellStorageHeight
-
+    drawSprites(itemDisplayStorage);
 }
+
+// mouseX > playerFemale.position.x + storageSize * cellStorageWidth + playerFemale.width / 2 && mouseX < playerFemale.position.x + playerFemale.width / 2 && mouseY < playerFemale.position.y - cellStorageHeight && mouseY > playerFemale.position.y + cellStorageHeight
+
 
 function buildSpaces() {
     if (gameState === "build") {
@@ -95,11 +111,7 @@ function insideSpaces() {
             }
         }
         drawSprite(playerFemaleMini);
-        for (let i = 0; i < itemDisplayStorage.length; i++) {
-            itemDisplayStorage[i].visible = true;
-        }
 
-        drawSprites(itemDisplayStorage);
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";

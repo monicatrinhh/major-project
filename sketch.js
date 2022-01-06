@@ -254,14 +254,14 @@ function setup() {
   itemDisplay.scale = 20;
 
   itemDisplayStorage = new Group();
-  for (let i = 0; i < itemPurchase.length; i++) {
-    // let itemPurchase[i].name[0] = createSprite(width / 2, height / 2);
+  for (let i = 0; i < 6; i++) {
+    let theItem = createSprite(width / 2, height / 2);
 
-    // itemDisplayStorage[i].name[0].addImage('assets/items/0.png');
-
-    // itemDisplayStorage[i].name[0].scale = width / 3000;
-    // itemDisplayStorage[i].name[0].mouseActive = true;
-    // itemDisplayStorage.add(itemDisplayStorage[i].name[0]);
+    theItem.addImage(loadImage("assets/items/" + i + ".png"));
+    itemDisplayStorage.add(theItem);
+    theItem.scale = width / 4000;
+    theItem.mouseActive = true;
+    theItem.visible = false;
   }
 
   gameState = "world";
