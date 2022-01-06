@@ -20,7 +20,7 @@
 
   kk slider can play music
 */
-
+let fishRodCount = 0, bugNetCount = 0;
 let timeState;
 let bgDay, bgAfternoon, bgNight, sunset;
 let grid;

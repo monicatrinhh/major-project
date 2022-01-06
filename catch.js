@@ -93,20 +93,22 @@ function whileFishing() {
 
     if (catchState === "fish") {
         // set/limit fishing rod string rotation
-        push();
-        translate(playerFemale.position.x, playerFemale.position.y);
-        if (mouseX <= width / 2 - 100) {
-            rotate(60);
+        if (isFishable) {
+            push();
+            translate(playerFemale.position.x, playerFemale.position.y);
+            if (mouseX <= width / 2 - 100) {
+                rotate(60);
+            }
+            else if (mouseX >= width / 2 + 100) {
+                rotate(-60);
+            }
+            else {
+                rotate(-mouseX);
+            }
+            fill("white");
+            rect(0, 0, 2, height / 4);
+            pop();
         }
-        else if (mouseX >= width / 2 + 100) {
-            rotate(-60);
-        }
-        else {
-            rotate(-mouseX);
-        }
-        fill("white");
-        rect(0, 0, 2, height / 4);
-        pop();
     }
 
     if (catchState === "fish") {
@@ -118,6 +120,7 @@ function whileFishing() {
         fishingHook.scale = width / 15000;
         fishingHook.mirrorX(-1);
     }
+    replaceTool();
     drawSprite(fishingHook);
     carpFish();
 
@@ -132,6 +135,8 @@ function whileFishing() {
     }
 
 }
+
+
 
 function carpFish() {
     // generate andcatch fish
@@ -149,20 +154,23 @@ function carpFish() {
         }
         // remove fish if catch or disappears
         else if (fishes[i].mouseIsPressed && fishes[i].overlap(fishingHook)) {
-            if (catchState === "fish") {
-                catchFishSound.play();
-                if (hour() === goldenHour) {
-                    if (fishCount < 1000) {
-                        fishCount += 2;
-                    }
+            if (isFishable) {
+                if (catchState === "fish") {
+                    catchFishSound.play();
+                    if (hour() === goldenHour) {
+                        if (fishCount < 1000) {
+                            fishCount += 2;
+                        }
 
-                }
-                else {
-                    if (fishCount < 1000) {
-                        fishCount++;
                     }
+                    else {
+                        if (fishCount < 1000) {
+                            fishCount++;
+                        }
 
+                    }
                 }
+                fishes[i].remove();
             }
             if (catchState === "bug") {
                 // catchFishSound.play();
@@ -172,9 +180,9 @@ function carpFish() {
                 else {
                     bugCount++;
                 }
+                fishes[i].remove;
             }
 
-            fishes[i].remove();
         }
     }
     drawSprites(fishes);

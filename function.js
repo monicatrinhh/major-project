@@ -2,6 +2,7 @@ let isItInside = true;
 let fishingTimeCount = 0;
 let bugCatchingTimeCount = 0;
 let isDisplayStorage = false;
+let isFishable = true, isBugable = true;
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
@@ -22,20 +23,20 @@ function storageMenuFunction() {
     }
     if (isDisplayStorage) {
         displayStorage();
-        for (let i = 0; i < itemDisplayStorage.length; i++) {
-            itemDisplayStorage[i].visible = true;
-            // itemDisplayStorage[i].position.y = heightBuffer + y * height / 5 + cellStorageHeight;
-        }
-        for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
-            for (let x = 0; x < 2; x++) {
-                for (let i = 0; i < itemDisplayStorage.length; i++) {
-                    itemDisplayStorage[i].position.x = playerFemale.position.x + x * cellStorageWidth;
-                    itemDisplayStorage[i].position.y = playerFemale.position.y + y * cellStorageHeight;
-                }
+        // for (let i = 0; i < itemDisplayStorage.length; i++) {
+        //     itemDisplayStorage[i].visible = true;
+        // }
+        // for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
+        //     for (let x = 0; x < 2; x++) {
+        //         for (let i = 0; i < itemDisplayStorage.length; i++) {
+        //             itemDisplayStorage[i].position.x = playerFemale.position.x + x * cellStorageWidth;
+        //             itemDisplayStorage[i].position.y = playerFemale.position.y + y * cellStorageHeight;
+        //         }
 
-            }
+        //     }
 
-        }
+        // }
+
     }
     if (mouseWentDown()) {
         isDisplayStorage = false;
@@ -269,13 +270,19 @@ function shopping() {
 }
 
 function purchaseItem() {
-    if (coinCount >= itemPurchase[itemDisplay.getFrame() + 1].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame() + 1].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame() + 1].price[2]) {
-        coinCount -= itemPurchase[itemDisplay.getFrame() + 1].price[0];
-        fishCount -= itemPurchase[itemDisplay.getFrame() + 1].price[1];
-        bugCount -= itemPurchase[itemDisplay.getFrame() + 1].price[2];
+    if (coinCount >= itemPurchase[itemDisplay.getFrame()].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame()].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame()].price[2]) {
+        coinCount -= itemPurchase[itemDisplay.getFrame()].price[0];
+        fishCount -= itemPurchase[itemDisplay.getFrame()].price[1];
+        bugCount -= itemPurchase[itemDisplay.getFrame()].price[2];
+        if (itemDisplay.getFrame() === 1) {
+            bugNetCount++;
+        }
+        else if (itemDisplay.getFrame() === 2) {
+            fishRodCount++;
+        }
     }
     else {
-
+        // appear message you don't have enough fund
     }
 
 }
@@ -296,4 +303,42 @@ function theMap() {
         textFont(digitalTech);
         messageText(width / 8, 200, 'Press on player to zoom in', playerFemale.position.x, playerFemale.position.y - cellWidth);
     }
+}
+
+function replaceTool() {
+    if (catchState === "fish") {
+        if (fishingTimeCount > 5) {
+            if (fishRodCount > 0) {
+                fishingHook.visible = true;
+                fishRodCount--;
+                fishingTimeCount = 0;
+                isFishable = true;
+            }
+            else {
+                fishingHook.visible = false;
+                isFishable = false;
+                stroke(0);
+                messageText(width / 100, 255, "Uh Oh...You need to replace your fishing rod \n (psst...Fishing Rod breaks after 5 usages)", width / 2, height / 2);
+            }
+        }
+    }
+    else if (catchState === "bug") {
+        // make it appear as well when fishing hook disappears
+        // no stroke on exitBox
+        if (bugCatchingTimeCount > 5) {
+            if (bugNetCount > 0) {
+                fishingHook.visible = true;
+                bugNetCount--;
+                bugCatchingTimeCount = 0;
+                isBugable = true;
+            }
+            else {
+                fishingHook.visible = false;
+                isBugable = false;
+                stroke(0);
+                messageText(width / 100, 255, "Uh Oh...You need to replace your bug net \n (psst...Bug net wears out after 5 usages)", width / 2, height / 2);
+            }
+        }
+    }
+
 }
