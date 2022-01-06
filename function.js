@@ -39,6 +39,10 @@ function storageMenuFunction() {
     }
     if (mouseWentDown()) {
         isDisplayStorage = false;
+        for (let i = 0; i < itemDisplayStorage.length; i++) {
+            itemDisplayStorage[i].visible = false;
+        }
+
     }
     drawSprites(itemDisplayStorage);
 }
