@@ -249,7 +249,7 @@ function setup() {
   // fishes & bugs
   fishes = new Group();
 
-  itemDisplay = loadAnimation('assets/items/0.png', 'assets/items/1.png', 'assets/items/2.png', 'assets/items/3.png', 'assets/items/4.png', 'assets/items/5.png');
+  itemDisplay = loadAnimation('assets/items/0.png', 'assets/items/9.png');
   itemDisplay.playing = false;
   itemDisplay.scale = 20;
 
