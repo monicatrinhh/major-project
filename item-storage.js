@@ -44,13 +44,13 @@ let itemPurchase = {
     },
 
     8: {
-        name: "Solitude Black",
+        name: "Veneer Tiles",
         price: [10, 30, 30],
         description: "Minimalistic flooring to soothe your senses",
     },
 
     9: {
-        name: "Blue HoneyComb",
+        name: "HoneyComb",
         price: [20, 30, 30],
         description: "Dreamy flooring makes your house more unique",
     },

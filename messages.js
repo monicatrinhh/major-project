@@ -4,6 +4,7 @@ function exitBox() {
     if (gameState === "notif") {
         camera.off();
         drawSprite(mpcBox);
+        noStroke();
         textFont(acFont);
         messageText(mpcBox.width / 20, "orange", "Are you sure that \n you want to exit?", width / 2, height / 2 - mpcBox.height / 25);
         ellipse(width / 2 - mpcBox.width / 5, height / 2 + mpcBox.height / 20, mpcBox.width / 5, mpcBox.height / 18);

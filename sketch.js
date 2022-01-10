@@ -3,20 +3,19 @@
 // November 16th, 2021
 
 /* key/functions available: 'x' to hide menu, click on player to show menu 
-  Certain items, villagers only appear at a certain time of the day
+  Certain items only appear at a certain time of the day
   log in with name
 
-  change bg based on time
+  change bg based on time 
   Press on trees to spawn coins
 
   add Golden Hour Text at 12 (double fishes and bugs)
-  add screen transition?
 
   make fishing rod, bug net breaks after 5 use
   make a place for tent
 
   trade fish and bugs with the owl, one trade time every hour
-  shop close after 10
+  shop opens from 8am - 10pm
 
   kk slider can play music
 */
@@ -32,11 +31,15 @@ let playerFemale, playerFemaleMini;
 let player;
 let SCENE_W;
 let SCENE_H;
+let fishCount = 0;
+let bugCount = 0;
+let tryToExit = false;
+let catchState;
 let bg, trees, fishes;
 let coins, coinDisplay, coinCount = 0;
 let closeButton, purchaseButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
-let chooseSound, coinSound, catchFishSound, shopSelectSound;
+let chooseSound, coinSound, catchFishSound, shopSelectSound, chaChing, errorfx;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
@@ -48,8 +51,11 @@ let mpcBox, readBox, nameBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
 let widthBuffer, heightBuffer;
+let fishingRodMini, bugNetMini
 let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay, itemDisplayStorage;
 let cellStorageHeight, cellStorageWidth;
+let theMinute, theSecond
+let capture;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -58,6 +64,8 @@ function preload() {
   chooseSound = loadSound('assets/sound/choose.wav');
   catchFishSound = loadSound('assets/sound/waterSplash.wav');
   // shopSelectSound = loadSound('assets/sound/shop.wav');
+  chaChing = loadSound('assets/sound/cha-ching.mp3');
+  errorfx = loadSound('assets/sound/windows_error.mp3');
 
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
@@ -83,6 +91,10 @@ function setup() {
   SCENE_H = height * 3;
 
   angleMode(DEGREES);
+
+  capture = createCapture(VIDEO);
+  capture.size(320, 240);
+  capture.hide();
 
   // grid
   grid = createEmptyArray(gridSize, gridSize);
@@ -254,14 +266,16 @@ function setup() {
   itemDisplay.scale = 20;
 
   itemDisplayStorage = new Group();
-  for (let i = 0; i < 6; i++) {
-    let theItem = createSprite(width / 2, height / 2);
+  fishingRodMini = createSprite(width / 2, height / 2);
+  fishingRodMini.addImage(loadImage("assets/items/2.png"));
+  itemDisplayStorage.add(fishingRodMini);
 
-    theItem.addImage(loadImage("assets/items/" + i + ".png"));
-    itemDisplayStorage.add(theItem);
-    theItem.scale = width / 4000;
-    theItem.mouseActive = true;
-    theItem.visible = false;
+  bugNetMini = createSprite(width / 2, height / 2);
+  bugNetMini.addImage(loadImage("assets/items/1.png"));
+  itemDisplayStorage.add(bugNetMini);
+
+  for (let i = 0; i < itemDisplayStorage.length; i++) {
+    itemDisplayStorage[i].visible = false;
   }
 
   gameState = "world";
@@ -319,6 +333,7 @@ function draw() {
   exitBox();
   buildSpaces();
   insideSpaces();
+  cameraFunction();
 
 }
 
@@ -342,7 +357,19 @@ function timeCount() {
   else {
     timeMode = " AM";
   }
-  currentTime = hour() + ':' + minute() + ':' + second() + timeMode;
+  if (minute() < 10) {
+    theMinute = "0" + minute();
+  }
+  else {
+    theMinute = minute();
+  }
+  if (second() < 10) {
+    theSecond = "0" + second();
+  }
+  else {
+    theSecond = second();
+  }
+  currentTime = hour() + ':' + theMinute + ':' + theSecond + timeMode;
   textFont('digitalTech');
   messageText(width / 100, 255, currentTime, playerFemale.position.x, playerFemale.position.y - cellWidth);
 

@@ -1,3 +1,4 @@
+let storageSize = 4;
 function displayGrid() {
     for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
@@ -28,13 +29,17 @@ function displayHomeGrid() {
         }
     }
 }
-let storageSize = 4;
+
 function displayStorage() {
     stroke(0);
     for (let y = 0; y < floor(storageSize * 3 / 4); y++) {
         for (let x = 0; x < storageSize; x++) {
             fill(255, 255, 255, 70);
             rect(playerFemale.position.x + x * cellStorageWidth + playerFemale.width / 2, playerFemale.position.y - y * cellStorageHeight, cellStorageWidth, cellStorageHeight);
+            fill(255);
+            circle(playerFemale.position.x + playerFemale.width / 2 + x * cellStorageWidth, playerFemale.position.y + cellStorageHeight - y * cellStorageHeight, 20);
+            messageText(width / 120, 0, fishRodCount, playerFemale.position.x + playerFemale.width / 2, playerFemale.position.y - cellStorageHeight + 5);
+            messageText(width / 120, 0, bugNetCount, playerFemale.position.x + playerFemale.width / 2 + cellStorageWidth, playerFemale.position.y - cellStorageHeight + 5);
         }
     }
 }

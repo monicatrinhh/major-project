@@ -1,8 +1,5 @@
 // Bitterling and Carp fish appears all day, Koi fish only appears from 4-9PM
-let fishCount = 0;
-let bugCount = 0;
-let tryToExit = false;
-let catchState;
+
 
 function catchFish() {
     if (gameState === "catch") {
@@ -93,7 +90,10 @@ function whileFishing() {
 
     if (catchState === "fish") {
         // set/limit fishing rod string rotation
+        fishingHook.changeAnimation('fish');
+        fishingHook.mirrorX(1);
         if (isFishable) {
+            fishingHook.visible = true;
             push();
             translate(playerFemale.position.x, playerFemale.position.y);
             if (mouseX <= width / 2 - 100) {
@@ -109,21 +109,19 @@ function whileFishing() {
             rect(0, 0, 2, height / 4);
             pop();
         }
-    }
 
-    if (catchState === "fish") {
-        fishingHook.changeAnimation('fish');
-        fishingHook.mirrorX(1);
     }
     else if (catchState === "bug") {
         fishingHook.changeAnimation('bug');
         fishingHook.scale = width / 15000;
         fishingHook.mirrorX(-1);
+        if (isBugable) {
+            fishingHook.visible = true;
+        }
     }
     replaceTool();
-    drawSprite(fishingHook);
     carpFish();
-
+    drawSprite(fishingHook);
     fishingHook.position.x = mouseX;
     fishingHook.position.y = mouseY;
 
@@ -156,33 +154,40 @@ function carpFish() {
         else if (fishes[i].mouseIsPressed && fishes[i].overlap(fishingHook)) {
 
             if (catchState === "fish") {
-                catchFishSound.play();
-                if (hour() === goldenHour) {
-                    if (fishCount < 1000) {
-                        fishCount += 2;
+                if (isFishable) {
+                    catchFishSound.play();
+                    if (hour() === goldenHour) {
+                        if (fishCount < 1000) {
+                            fishCount += 2;
+                        }
+
+                    }
+                    else {
+                        if (fishCount < 1000) {
+                            fishCount++;
+                        }
+
                     }
 
+                    fishes[i].remove();
                 }
-                else {
-                    if (fishCount < 1000) {
-                        fishCount++;
-                    }
 
-                }
-                fishes[i].remove();
             }
 
 
 
             else if (catchState === "bug") {
                 // catchFishSound.play();
-                if (hour() === goldenHour) {
-                    bugCount += 2;
+                if (isBugable) {
+                    if (hour() === goldenHour) {
+                        bugCount += 2;
+                    }
+                    else {
+                        bugCount++;
+                    }
+                    fishes[i].remove();
                 }
-                else {
-                    bugCount++;
-                }
-                fishes[i].remove();
+
             }
 
 
