@@ -56,6 +56,10 @@ let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay, itemDisplaySt
 let cellStorageHeight, cellStorageWidth;
 let theMinute, theSecond
 let capture;
+let acLogo;
+let isOpening = true;
+let dialougeBox;
+let enterName = false;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -82,6 +86,8 @@ function preload() {
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
   transitionScreen.position(0, 0);
+
+  acLogo = loadImage('assets/ac-logo.png');
 
 }
 
@@ -220,6 +226,12 @@ function setup() {
     coins.add(coin);
   }
 
+  dialougeBox = createSprite(width / 2, height / 2);
+  dialougeBox.addAnimation('normal', 'assets/dialouge-box.png');
+  dialougeBox.mouseActive = true;
+  dialougeBox.scale = width / 800;
+  dialougeBox.visible = false;
+
   // menu
   menu = new Group();
   buildMenu = createSprite(playerFemale.position.y - 10, playerFemale.position.y - (cellHeight * 1.5));
@@ -303,38 +315,49 @@ function draw() {
     camera.position.x = playerFemale.position.x;
     camera.position.y = playerFemale.position.y;
     playerFemale.scale = width / 2000;
+
     displayGrid();
 
     drawSprites(bg);
     drawSprites(trees);
-    drawSprites(coins);
 
-
-    drawSprites(menu);
     playerMove();
 
-    showMenu();
-    timeCount();
-    playerFemale.overlap(coins, coinCollect);
-    coins.collide(trees);
-
-    for (let i = 0; i < trees.length; i++) {
-      if (trees[i].mouseIsOver && mouseWentDown()) {
-        if (coinCount <= 5) {
-          spawnCoins();
-        }
+    if (isOpening) {
+      image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
+      textFont(digitalTech);
+      messageText(width / 50, 255, "Press Space to Start", playerFemale.position.x, playerFemale.position.y + cellHeight * 1.5);
+      if (keyIsDown(32)) {
+        isOpening = !isOpening;
+        enterName = true;
       }
     }
+    if (!isOpening) {
+
+      drawSprites(menu);
+      drawSprites(coins);
+      showMenu();
+      playerFemale.overlap(coins, coinCollect);
+      coins.collide(trees);
+      timeCount();
+      for (let i = 0; i < trees.length; i++) {
+        if (trees[i].mouseIsOver && mouseWentDown()) {
+          if (coinCount <= 5) {
+            spawnCoins();
+          }
+        }
+      }
+      playerDialouge();
+    }
+
+    shopping();
+    catchFish();
+    fishOrBug();
+    exitBox();
+    buildSpaces();
+    insideSpaces();
+    cameraFunction();
   }
-
-  shopping();
-  catchFish();
-  fishOrBug();
-  exitBox();
-  buildSpaces();
-  insideSpaces();
-  cameraFunction();
-
 }
 
 function spawnCoins() {

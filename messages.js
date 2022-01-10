@@ -20,3 +20,14 @@ function exitBox() {
         }
     }
 }
+
+function playerDialouge() {
+
+    dialougeBox.position.x = playerFemale.position.x;
+    dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
+    drawSprite(dialougeBox);
+    if (enterName) {
+        dialougeBox.visible = true;
+        messageText(width / 100, 0, "asdasdas", dialougeBox.position.x, dialougeBox.position.y);
+    }
+}

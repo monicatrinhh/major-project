@@ -25,9 +25,8 @@ function cameraFunction() {
     if (isCapturing) {
         camera.off();
         gameState = "camera";
-        image(capture, width / 2, heightt / 2, 360, 240);
+        image(capture, width / 2, height / 2, 360, 240);
     }
-
 }
 
 function storageMenuFunction() {
