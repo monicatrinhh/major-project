@@ -333,8 +333,10 @@ function draw() {
       }
     }
     if (!isOpening) {
+      if (!enterName) {
+        drawSprites(menu);
+      }
 
-      drawSprites(menu);
       drawSprites(coins);
       showMenu();
       playerFemale.overlap(coins, coinCollect);

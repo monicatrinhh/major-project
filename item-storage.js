@@ -58,3 +58,7 @@ let itemPurchase = {
 
 }
 
+let nameDialouge = {
+    0: "Welcome to Animal Crossing",
+
+}
