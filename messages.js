@@ -23,14 +23,27 @@ function exitBox() {
 
 function playerDialouge() {
 
+    if (enterName) {
+        dialougeBox.visible = true;
+        textInput(nameDialouge);
+        // if (dialougeBox.mouseIsPressed) {
+        //     dialougeBox.visible = false;
+        //     enterName = !enterName;
+        // }
+    }
+    else {
+        dialougeBox.visible = false;
+    }
+}
+function textInput(aList) {
+
+    // for (let i = 0; i < aList.length; i++) {
+    //     if (dialougeBox.mouseIsPressed) {
+    //         messageText(width / 50, 50, aList[i], dialougeBox.position.x, dialougeBox.position.y);
+    //     }
+    // }
+
     dialougeBox.position.x = playerFemale.position.x;
     dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
     drawSprite(dialougeBox);
-    if (enterName) {
-        dialougeBox.visible = true;
-        nameInput();
-    }
-}
-function nameInput() {
-
 }
