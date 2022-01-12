@@ -4,7 +4,7 @@
 function catchFish() {
     if (gameState === "catch") {
         // draw bg
-        background("#73daef");
+        background(grassCatch);
         camera.off();
 
         if (catchState === "bug") {
@@ -13,13 +13,20 @@ function catchFish() {
             }
         }
         if (catchState === "fish") {
-            fill("green");
-            rect(0, 0, width, height / 5);
+            if (timeState === "day") {
+                fill("#73daef");
+            }
+            else if (timeState === "afternoon") {
+                fill('#fd5e53');
+            }
+            else {
+                fill(8, 17, 59);
+            }
+            rect(0, height / 5, width, height);
             playerFemale.changeAnimation('fish');
         }
         else if (catchState === "bug") {
-            fill("green");
-            rect(0, 0, width, height);
+            background(grassCatch);
             playerFemale.changeAnimation('fish');
         }
 
@@ -54,6 +61,9 @@ function catchFish() {
             messageText(width / 70, "white", "x" + bugCount, width / 12, height / 15);
         }
 
+        if (closeButton.mouseIsOver) {
+            cursor('grab');
+        }
 
         // press "esc" / X button to escape
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
@@ -174,8 +184,6 @@ function carpFish() {
 
             }
 
-
-
             else if (catchState === "bug") {
                 // catchFishSound.play();
                 if (isBugable) {
@@ -190,10 +198,7 @@ function carpFish() {
 
             }
 
-
-
         }
-
     }
     drawSprites(fishes);
 

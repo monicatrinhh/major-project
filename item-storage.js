@@ -62,6 +62,39 @@ let nameDialouge = {
     0: "Welcome to Animal Crossing",
     1: "This wonderful place was created by the amazing Monica so \n if you like this game please praise her, \n she will gladly accept them",
     2: "Anyways, I don't have a name yet \n What name do you think would suit me?",
-    3: "That's lovely, I think...",
+    3: "That's lovely, I think... ",
     4: "Nonetheless, I hope we will have a \n wonderful time together \n Let's Get Started!",
+}
+
+let villagersData = {
+    0: {
+        name: "Blathers",
+        dialouge: {
+
+        }
+    },
+    1: {
+        name: "Isabelle",
+        dialouge: {
+
+        }
+    },
+    2: {
+        name: "KK Slider",
+        dialouge: {
+
+        }
+    },
+    3: {
+        name: "Tom Nook",
+        dialouge: {
+
+        }
+    },
+    4: {
+        name: "Marshall",
+        dialouge: {
+
+        }
+    },
 }

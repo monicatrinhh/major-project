@@ -17,15 +17,18 @@
   shop opens from 8am - 10pm
 
   kk slider can play music
+
+  inbox / notif box
 */
+let settings;
 let fishRodCount = 0, bugNetCount = 0;
 let timeState;
 let bgDay, bgAfternoon, bgNight, sunset;
 let grid;
 let gridSize = 30, homeGridSize = 15;
 let cellWidth, cellHeight;
-let grass, woodTile;
-let blathers, isabelle, kk, tomNook;
+let grass, woodTile, grassCatch;
+let blathers, isabelle, kk, tomNook, marshall, villagers;
 let playerFemale, playerFemaleMini;
 let player;
 let SCENE_W;
@@ -82,6 +85,8 @@ function preload() {
   sunset = loadImage('assets/background/sunset.jpeg');
   bgNight = loadImage('assets/background/night.jpeg');
   bgAfternoon = loadImage('assets/background/afternoon.jpeg');
+  bgAfternoon = loadImage('assets/background/afternoon.jpeg');
+  grassCatch = loadImage('assets/background/grass-catch.png');
 
   transitionScreen = createVideo("assets/background/transition.mov");
   transitionScreen.size(width);
@@ -288,7 +293,47 @@ function setup() {
 
   for (let i = 0; i < itemDisplayStorage.length; i++) {
     itemDisplayStorage[i].visible = false;
+
   }
+
+
+  //villagers sprites
+  villagers = new Group();
+
+  blathers = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+  blathers.addAnimation('normal', 'assets/villagers/blathers.png');
+  villagers.add(blathers);
+
+  isabelle = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+  isabelle.addAnimation('normal', 'assets/villagers/isabelle.png');
+  villagers.add(isabelle);
+
+  kk = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+  kk.addAnimation('normal', 'assets/villagers/kkSlider.png');
+  villagers.add(kk);
+
+  tomNook = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+  tomNook.addAnimation('normal', 'assets/villagers/tomNook.png');
+  villagers.add(tomNook);
+
+  marshall = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
+  marshall.addAnimation('normal', 'assets/villagers/marshall.png');
+  villagers.add(marshall);
+
+  for (let i = 0; i < villagers.length; i++) {
+    villagers[i].scale = width / 5000;
+    villagers[i].mouseActive = true;
+    villagers[i].setCollider('rectangle', 0, 0, villagers[i].width, villagers[i].height);
+  }
+
+  kk.scale = width / 7000;
+  isabelle.scale = width / 7000;
+  tomNook.scale = width / 25000;
+
+  settings = createSprite(width / 2, height / 2);
+  settings.addImage(loadImage('assets/functions/settings-icon.png'));
+  settings.scale = width / 16500;
+  settings.mouseActive = true;
 
   gameState = "world";
 
@@ -298,6 +343,7 @@ function setup() {
 
 
 function draw() {
+
 
   if (gameState === "world") {
     if (hour() <= 15 && hour() >= 7) {
@@ -331,7 +377,12 @@ function draw() {
       messageText(width / 50, 255, "Press Space to Start", playerFemale.position.x, playerFemale.position.y + cellHeight * 1.5);
       if (keyIsDown(32)) {
         isOpening = false;
-        enterName = true;
+        if (getItem("playerName") === null) {
+          enterName = true;
+        }
+        else {
+          playerName = getItem('playerName');
+        }
       }
     }
     else {
@@ -352,11 +403,21 @@ function draw() {
             }
           }
         }
+        villagersMove();
+
+        // settings icon
+        settings.position.x = playerFemale.position.x + width / 2 - settings.width;
+        settings.position.y = playerFemale.position.y - height / 2 + settings.height;
+        drawSprite(settings);
       }
     }
 
+
     playerMove();
+    cursor(CROSS);
   }
+
+
 
   shopping();
   catchFish();
@@ -366,6 +427,8 @@ function draw() {
   insideSpaces();
   cameraFunction();
   playSfx();
+
+  settingsButton();
 }
 
 function playSfx() {
@@ -415,6 +478,15 @@ function timeCount() {
 
 }
 
+function settingsButton() {
+  if (settings.mouseIsPressed) {
+    clearStorage();
+    isOpening = true;
+    enterName = true;
+    playerName = "";
+  }
+}
+
 function coinCollect(collector, collected) {
   if (coinCount < 1000) {
     coinCount++;
@@ -424,4 +496,58 @@ function coinCollect(collector, collected) {
   collected.remove();
 }
 
+function storeMemory() {
 
+}
+
+  // if (gameState === "world") {
+  //   if (hour() <= 15 && hour() >= 7) {
+  //     background("#73daef");
+  //     timeState = "day";
+  //   }
+  //   else if (hour() > 15 && hour() < 21) {
+  //     background(sunset);
+  //     timeState = "afternoon";
+  //   }
+  //   else {
+  //     background(8, 17, 59);
+  //     timeState = "night";
+  //   }
+
+
+  //   camera.zoom = 1;
+  //   //set the camera position to the player position
+  //   camera.position.x = playerFemale.position.x;
+  //   camera.position.y = playerFemale.position.y;
+  //   playerFemale.scale = width / 2000;
+  //   displayGrid();
+
+  //   drawSprites(bg);
+  //   drawSprites(trees);
+  //   drawSprites(coins);
+
+
+  //   drawSprites(menu);
+  //   playerMove();
+
+  //   showMenu();
+  //   timeCount();
+  //   playerFemale.overlap(coins, coinCollect);
+  //   coins.collide(trees);
+
+  //   for (let i = 0; i < trees.length; i++) {
+  //     if (trees[i].mouseIsOver && mouseWentDown()) {
+  //       if (coinCount <= 5) {
+  //         spawnCoins();
+  //       }
+  //     }
+  //   }
+  // }
+
+  // shopping();
+  // catchFish();
+  // fishOrBug();
+  // exitBox();
+  // buildSpaces();
+  // insideSpaces();
+  // cameraFunction();

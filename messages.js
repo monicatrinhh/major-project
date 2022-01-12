@@ -28,6 +28,7 @@ function playerDialouge() {
     if (enterName) {
         dialougeBox.visible = true;
         textInput(nameDialouge);
+
     }
     if (dialougeCounter > 4) {
         dialougeBox.visible = false;
@@ -50,6 +51,7 @@ function textInput(aList) {
             isEnteringName = false;
             nameInput.hide();
             playerName = nameInput.value();
+            storeItem("playerName", playerName);
         }
         else {
             isEnteringName = true;
