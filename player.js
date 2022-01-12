@@ -27,16 +27,20 @@ function playerMove() {
     if (playerFemale.velocity.x > 2 && playerFemale.velocity.y > -2 && playerFemale.velocity.y < 2 && playerFemale.velocity.y > -2 && playerFemale.velocity.y < 2) {
         playerFemale.mirrorX(-1);
         playerFemale.changeAnimation('movingRL');
+
     }
     else if (playerFemale.velocity.x < -2 && playerFemale.velocity.y > -2 && playerFemale.velocity.y < 2) {
         playerFemale.mirrorX(1);
         playerFemale.changeAnimation('movingRL');
+
     }
     else if (playerFemale.velocity.y > 2) {
         playerFemale.changeAnimation('forward');
+
     }
     else if (playerFemale.velocity.y < -2) {
         playerFemale.changeAnimation('backward');
+
     }
     else {
         playerFemale.changeAnimation('normal');

@@ -171,7 +171,8 @@ function fishOrBug() {
 
 function shopMenuFunction() {
     if (shopMenu.mouseIsPressed) {
-        if (hour() >= 8 && hour() <= 23) {
+        if (hour() >= 8 && hour() <= 24) {
+            walkingsfx.pause();
             gameState = "shop";
             answerYN = "no";
             shopping();

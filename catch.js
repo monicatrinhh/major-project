@@ -86,7 +86,7 @@ function catchFish() {
 
 function whileFishing() {
     noStroke();
-
+    noCursor();
 
     if (catchState === "fish") {
         // set/limit fishing rod string rotation

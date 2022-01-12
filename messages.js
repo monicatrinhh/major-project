@@ -1,4 +1,6 @@
 let answerYN;
+let dialougeCounter = 0;
+
 
 function exitBox() {
     if (gameState === "notif") {
@@ -26,24 +28,43 @@ function playerDialouge() {
     if (enterName) {
         dialougeBox.visible = true;
         textInput(nameDialouge);
-        // if (dialougeBox.mouseIsPressed) {
-        //     dialougeBox.visible = false;
-        //     enterName = !enterName;
-        // }
     }
-    else {
+    if (dialougeCounter > 4) {
         dialougeBox.visible = false;
+        dialougeCounter = 0;
+        enterName = false;
     }
 }
+let isEnteringName = false;
+let playerName;
+
 function textInput(aList) {
-
-    // for (let i = 0; i < aList.length; i++) {
-    //     if (dialougeBox.mouseIsPressed) {
-    //         messageText(width / 50, 50, aList[i], dialougeBox.position.x, dialougeBox.position.y);
-    //     }
-    // }
-
     dialougeBox.position.x = playerFemale.position.x;
     dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
     drawSprite(dialougeBox);
+
+
+    if (dialougeCounter === 2) {
+        if (keyIsDown(13)) {
+            dialougeCounter++;
+            isEnteringName = false;
+            nameInput.hide();
+            playerName = nameInput.value();
+        }
+        else {
+            isEnteringName = true;
+            nameInput.position(width / 2 - cellWidth / 4, height / 5, 200, 500);
+        }
+
+    }
+
+    if (dialougeBox.mouseIsOver && mouseWentDown()) {
+        if (!isEnteringName) {
+            dialougeCounter++;
+
+        }
+    }
+    textFont(digitalTech);
+    messageText(width / 100, 50, aList[dialougeCounter], dialougeBox.position.x, dialougeBox.position.y);
+
 }

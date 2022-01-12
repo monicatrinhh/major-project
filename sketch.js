@@ -6,13 +6,12 @@
   Certain items only appear at a certain time of the day
   log in with name
 
-  change bg based on time 
+  change ocean/space func bg based on time 
   Press on trees to spawn coins
 
   add Golden Hour Text at 12 (double fishes and bugs)
 
   make fishing rod, bug net breaks after 5 use
-  make a place for tent
 
   trade fish and bugs with the owl, one trade time every hour
   shop opens from 8am - 10pm
@@ -39,7 +38,7 @@ let bg, trees, fishes;
 let coins, coinDisplay, coinCount = 0;
 let closeButton, purchaseButton;
 let menu, buildMenu, cameraMenu, catchMenu, customMenu, mapMenu, shopMenu;
-let chooseSound, coinSound, catchFishSound, shopSelectSound, chaChing, errorfx;
+let chooseSound, coinSound, catchFishSound, shopSelectSound, chaChing, errorfx, walkingsfx;
 let penmanship, acFont, digitalTech;
 let gameState;
 let currentTime, timeMode;
@@ -59,7 +58,7 @@ let capture;
 let acLogo;
 let isOpening = true;
 let dialougeBox;
-let enterName = false;
+let enterName = false, nameInput;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -70,6 +69,7 @@ function preload() {
   // shopSelectSound = loadSound('assets/sound/shop.wav');
   chaChing = loadSound('assets/sound/cha-ching.mp3');
   errorfx = loadSound('assets/sound/windows_error.mp3');
+  walkingsfx = loadSound('assets/sound/walking.mp3');
 
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
@@ -291,7 +291,11 @@ function setup() {
   }
 
   gameState = "world";
+
+  nameInput = createInput();
+  walkingsfx.loop();
 }
+
 
 function draw() {
 
@@ -315,50 +319,61 @@ function draw() {
     camera.position.x = playerFemale.position.x;
     camera.position.y = playerFemale.position.y;
     playerFemale.scale = width / 2000;
-
     displayGrid();
 
     drawSprites(bg);
     drawSprites(trees);
-
-    playerMove();
+    drawSprites(coins);
 
     if (isOpening) {
       image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
       textFont(digitalTech);
       messageText(width / 50, 255, "Press Space to Start", playerFemale.position.x, playerFemale.position.y + cellHeight * 1.5);
       if (keyIsDown(32)) {
-        isOpening = !isOpening;
+        isOpening = false;
         enterName = true;
       }
     }
-    if (!isOpening) {
-      if (!enterName) {
-        drawSprites(menu);
+    else {
+      if (enterName) {
+        playerDialouge();
       }
+      else {
+        drawSprites(menu);
+        showMenu();
+        timeCount();
+        playerFemale.overlap(coins, coinCollect);
+        coins.collide(trees);
 
-      drawSprites(coins);
-      showMenu();
-      playerFemale.overlap(coins, coinCollect);
-      coins.collide(trees);
-      timeCount();
-      for (let i = 0; i < trees.length; i++) {
-        if (trees[i].mouseIsOver && mouseWentDown()) {
-          if (coinCount <= 5) {
-            spawnCoins();
+        for (let i = 0; i < trees.length; i++) {
+          if (trees[i].mouseIsOver && mouseWentDown()) {
+            if (coinCount <= 5) {
+              spawnCoins();
+            }
           }
         }
       }
-      playerDialouge();
     }
 
-    shopping();
-    catchFish();
-    fishOrBug();
-    exitBox();
-    buildSpaces();
-    insideSpaces();
-    cameraFunction();
+    playerMove();
+  }
+
+  shopping();
+  catchFish();
+  fishOrBug();
+  exitBox();
+  buildSpaces();
+  insideSpaces();
+  cameraFunction();
+  playSfx();
+}
+
+function playSfx() {
+  if (gameState === "world") {
+    walkingsfx.setVolume(1);
+  }
+  else {
+    walkingsfx.setVolume(0);
   }
 }
 
