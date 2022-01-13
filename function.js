@@ -56,8 +56,6 @@ function storageMenuFunction() {
     drawSprites(itemDisplayStorage);
 }
 
-// mouseX > playerFemale.position.x + storageSize * cellStorageWidth + playerFemale.width / 2 && mouseX < playerFemale.position.x + playerFemale.width / 2 && mouseY < playerFemale.position.y - cellStorageHeight && mouseY > playerFemale.position.y + cellStorageHeight
-
 
 function buildSpaces() {
     if (gameState === "build") {
@@ -77,6 +75,7 @@ function buildSpaces() {
         fill('white');
         displayHomeGrid();
         drawSprite(closeButton);
+
         // move player and place items
         insideSpaces();
         buildStorageDisplay();

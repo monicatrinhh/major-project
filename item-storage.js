@@ -68,16 +68,28 @@ let nameDialouge = {
 
 let villagersData = {
     0: {
-        name: "Blathers",
+        name: 'Blathers',
         dialouge: {
 
-        }
+        },
     },
     1: {
         name: "Isabelle",
         dialouge: {
+            default: {
+                0: "Oh! Here you are already!",
+                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
+                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
+                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+            },
+            info: {
 
-        }
+            },
+            question: {
+                0: "What is your profession?",
+                2: "Do you ",
+            }
+        },
     },
     2: {
         name: "KK Slider",

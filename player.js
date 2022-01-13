@@ -5,7 +5,7 @@ function playerMove() {
 
     playerFemale.velocity.x = ((camera.mouseX - playerFemale.position.x) / 20);
     playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
-
+    
     messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
     // set boundary for player
     if (playerFemale.position.x < -SCENE_W + cellWidth / 10) {
@@ -108,11 +108,7 @@ function messageText(theTextSize, theColor, theMessage, x, y) {
     text(theMessage, x, y);
 }
 
-function blackOut() {
-    // if (gameState === "transition") {
-    //     transitionScreen.play();
-    // }
-}
+
 
 
 

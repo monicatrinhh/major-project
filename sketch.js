@@ -410,9 +410,7 @@ function draw() {
         }
         villagersMove();
 
-        // settings icon
-        // settings.position.x = playerFemale.position.x;
-        // settings.position.y = playerFemale.position.y - (cellWidth / 2);
+        // function in settings
         settingsButton();
       }
     }
@@ -491,7 +489,7 @@ function coinCollect(collector, collected) {
 }
 
 
-// fetching memory, prob not the most efficient since I could have made some fancy loop or function but was too lazy too >:-)
+// fetching memory, prob not the most efficient since I could have made some fancy loop or function but was too lazy to >:-)
 function fetchMemory() {
   if (getItem('fishCount') !== null) {
     fishCount = getItem('fishCount');
@@ -499,6 +497,7 @@ function fetchMemory() {
   else {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       fishCount = 100;
+      storeItem('fishCount', fishCount);
     }
     else {
       fishCount = 0;
@@ -510,6 +509,7 @@ function fetchMemory() {
   else {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       bugCount = 100;
+      storeItem('bugCount', bugCount);
     }
     else {
       bugCount = 0;
@@ -521,6 +521,7 @@ function fetchMemory() {
   else {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       coinCount = 100;
+      storeItem('coinCount', coinCount);
     }
     else {
       coinCount = 0;
