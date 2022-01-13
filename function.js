@@ -107,7 +107,9 @@ function insideSpaces() {
                 playerFemaleMini.mirrorX(1);
                 playerFemaleMini.position.x -= 2;
             }
-
+            else {
+                playerFemaleMini.changeAnimation('normal');
+            }
         }
         else {
             if (playerFemaleMini.position.x <= widthBuffer + cellHomeWidth / 2) {
@@ -175,6 +177,7 @@ function fishOrBug() {
 function shopMenuFunction() {
     if (shopMenu.mouseIsPressed) {
         if (hour() >= 8 && hour() <= 24) {
+
             walkingsfx.pause();
             gameState = "shop";
             answerYN = "no";
@@ -189,7 +192,7 @@ function shopping() {
     if (gameState === "shop") {
         camera.off();
         noStroke();
-
+        cursor('grab');
         // 1st rect
         fill("#EEE1C6");
         rect(width / 4, height / 5, width / 2, height / 1.5);
@@ -288,11 +291,16 @@ function purchaseItem() {
         coinCount -= itemPurchase[itemDisplay.getFrame()].price[0];
         fishCount -= itemPurchase[itemDisplay.getFrame()].price[1];
         bugCount -= itemPurchase[itemDisplay.getFrame()].price[2];
+        storeItem('coinCount', coinCount);
+        storeItem('fishCount', fishCount);
+        storeItem('bugCount', bugCount);
         if (itemDisplay.getFrame() === 1) {
             bugNetCount++;
+            storeItem('bugNetCount', bugNetCount);
         }
         else if (itemDisplay.getFrame() === 2) {
             fishRodCount++;
+            storeItem('fishRodCount', fishRodCount);
         }
     }
     else {
@@ -328,6 +336,7 @@ function replaceTool() {
         if (fishingTimeCount > 5) {
             if (fishRodCount > 0) {
                 fishRodCount--;
+                storeItem('fishRodCount', fishRodCount);
                 isFishable = true;
                 fishingTimeCount = 0;
 
@@ -351,6 +360,7 @@ function replaceTool() {
             if (bugNetCount > 0) {
                 fishingHook.visible = true;
                 bugNetCount--;
+                storeItem('bugNetCount', bugNetCount);
                 isBugable = true;
                 bugCatchingTimeCount = 0;
 

@@ -379,8 +379,10 @@ function draw() {
       if (keyIsDown(32)) {
         isOpening = false;
         walkingsfx.loop();
+        fetchMemory();
         if (getItem("playerName") === null) {
           enterName = true;
+
         }
         else {
           playerName = getItem('playerName');
@@ -390,6 +392,7 @@ function draw() {
     else {
       if (enterName) {
         playerDialouge();
+        fetchMemory();
       }
       else {
         drawSprites(menu);
@@ -411,9 +414,6 @@ function draw() {
         // settings.position.x = playerFemale.position.x;
         // settings.position.y = playerFemale.position.y - (cellWidth / 2);
         settingsButton();
-
-
-        // drawSprite(settings);
       }
     }
 
@@ -428,7 +428,6 @@ function draw() {
   buildSpaces();
   insideSpaces();
   cameraFunction();
-
 
 }
 
@@ -478,77 +477,76 @@ function settingsButton() {
     isOpening = true;
     enterName = true;
     playerName = "";
-    coinCount = 0;
-    fishCount = 0;
-    fishingTimeCount = 0;
-    bugCount = 0;
-    bugCatchingTimeCount = 0;
-    bugNetCount = 0;
-    fishRodCount = 0;
   }
 }
 
 function coinCollect(collector, collected) {
   if (coinCount < 1000) {
     coinCount++;
+    storeItem('coinCount', coinCount);
   }
   collector.changeAnimation('normal');
   coinSound.play();
   collected.remove();
 }
 
-function storeMemory() {
 
+// fetching memory, prob not the most efficient since I could have made some fancy loop or function but was too lazy too >:-)
+function fetchMemory() {
+  if (getItem('fishCount') !== null) {
+    fishCount = getItem('fishCount');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      fishCount = 100;
+    }
+    else {
+      fishCount = 0;
+    }
+  }
+  if (getItem('bugCount') !== null) {
+    bugCount = getItem('bugCount');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      bugCount = 100;
+    }
+    else {
+      bugCount = 0;
+    }
+  }
+  if (getItem('coinCount') !== null) {
+    coinCount = getItem('coinCount');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      coinCount = 100;
+    }
+    else {
+      coinCount = 0;
+    }
+  }
+  if (getItem('fishRodCount') !== null) {
+    fishRodCount = getItem('fishRodCount');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      fishRodCount = 10;
+    }
+    else {
+      fishRodCount = 0;
+    }
+  }
+  if (getItem('bugNetCount') !== null) {
+    bugNetCount = getItem('bugNetCount');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      bugNetCount = 10;
+    }
+    else {
+      bugNetCount = 0;
+    }
+  }
 }
 
-  // if (gameState === "world") {
-  //   if (hour() <= 15 && hour() >= 7) {
-  //     background("#73daef");
-  //     timeState = "day";
-  //   }
-  //   else if (hour() > 15 && hour() < 21) {
-  //     background(sunset);
-  //     timeState = "afternoon";
-  //   }
-  //   else {
-  //     background(8, 17, 59);
-  //     timeState = "night";
-  //   }
-
-
-  //   camera.zoom = 1;
-  //   //set the camera position to the player position
-  //   camera.position.x = playerFemale.position.x;
-  //   camera.position.y = playerFemale.position.y;
-  //   playerFemale.scale = width / 2000;
-  //   displayGrid();
-
-  //   drawSprites(bg);
-  //   drawSprites(trees);
-  //   drawSprites(coins);
-
-
-  //   drawSprites(menu);
-  //   playerMove();
-
-  //   showMenu();
-  //   timeCount();
-  //   playerFemale.overlap(coins, coinCollect);
-  //   coins.collide(trees);
-
-  //   for (let i = 0; i < trees.length; i++) {
-  //     if (trees[i].mouseIsOver && mouseWentDown()) {
-  //       if (coinCount <= 5) {
-  //         spawnCoins();
-  //       }
-  //     }
-  //   }
-  // }
-
-  // shopping();
-  // catchFish();
-  // fishOrBug();
-  // exitBox();
-  // buildSpaces();
-  // insideSpaces();
-  // cameraFunction();

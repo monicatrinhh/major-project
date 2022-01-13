@@ -167,12 +167,14 @@ function carpFish() {
                     if (hour() === goldenHour) {
                         if (fishCount < 1000) {
                             fishCount += 2;
+                            storeItem('fishCount', fishCount);
                         }
 
                     }
                     else {
                         if (fishCount < 1000) {
                             fishCount++;
+                            storeItem('fishCount', fishCount);
                         }
 
                     }
@@ -187,9 +189,11 @@ function carpFish() {
                 if (isBugable) {
                     if (hour() === goldenHour) {
                         bugCount += 2;
+                        storeItem('bugCount', bugCount);
                     }
                     else {
                         bugCount++;
+                        storeItem('bugCount', bugCount);
                     }
                     fishes[i].remove();
                 }
