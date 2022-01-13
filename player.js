@@ -67,7 +67,7 @@ function showMenu() {
     }
 
     // interacting w menu
-    for (let i = 0; i < menu.length; i++) {
+    for (let i = 0; i < menu.length - 1; i++) {
         if (menu[i].mouseIsOver) {
             menu[i].scale = width / 4000 + 0.1;
         }

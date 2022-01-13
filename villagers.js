@@ -2,6 +2,8 @@ function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
         messageText(width / 100, 255, villagersData[i].name, villagers[i].position.x, villagers[i].position.y - 100);
         villagers[i].collide(playerFemale);
+        villagers[i].collide(trees);
+        villagers[i].collide(coins);
         if (villagers[i].position.x < -SCENE_W + cellWidth / 10) {
             villagers[i].position.x = -SCENE_W + cellWidth / 10;
         }

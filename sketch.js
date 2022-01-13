@@ -334,11 +334,12 @@ function setup() {
   settings.addImage(loadImage('assets/functions/settings-icon.png'));
   settings.scale = width / 16500;
   settings.mouseActive = true;
+  settings.visible = false;
+  menu.add(settings);
 
   gameState = "world";
-
+  walkingsfx.setVolume(0.5);
   nameInput = createInput();
-  walkingsfx.loop();
 }
 
 
@@ -377,6 +378,7 @@ function draw() {
       messageText(width / 50, 255, "Press Space to Start", playerFemale.position.x, playerFemale.position.y + cellHeight * 1.5);
       if (keyIsDown(32)) {
         isOpening = false;
+        walkingsfx.loop();
         if (getItem("playerName") === null) {
           enterName = true;
         }
@@ -406,18 +408,18 @@ function draw() {
         villagersMove();
 
         // settings icon
-        settings.position.x = playerFemale.position.x + width / 2 - settings.width;
-        settings.position.y = playerFemale.position.y - height / 2 + settings.height;
-        drawSprite(settings);
+        // settings.position.x = playerFemale.position.x;
+        // settings.position.y = playerFemale.position.y - (cellWidth / 2);
+        settingsButton();
+
+
+        // drawSprite(settings);
       }
     }
-
 
     playerMove();
     cursor(CROSS);
   }
-
-
 
   shopping();
   catchFish();
@@ -426,19 +428,10 @@ function draw() {
   buildSpaces();
   insideSpaces();
   cameraFunction();
-  playSfx();
 
-  settingsButton();
+
 }
 
-function playSfx() {
-  if (gameState === "world") {
-    walkingsfx.setVolume(1);
-  }
-  else {
-    walkingsfx.setVolume(0);
-  }
-}
 
 function spawnCoins() {
   if (random(100) < 50) {
@@ -481,9 +474,17 @@ function timeCount() {
 function settingsButton() {
   if (settings.mouseIsPressed) {
     clearStorage();
+    walkingsfx.pause();
     isOpening = true;
     enterName = true;
     playerName = "";
+    coinCount = 0;
+    fishCount = 0;
+    fishingTimeCount = 0;
+    bugCount = 0;
+    bugCatchingTimeCount = 0;
+    bugNetCount = 0;
+    fishRodCount = 0;
   }
 }
 

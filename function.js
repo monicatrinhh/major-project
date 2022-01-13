@@ -19,14 +19,14 @@ function buildMenuFunction() {
 }
 
 function cameraFunction() {
-    if (cameraMenu.mouseIsPressed) {
-        isCapturing = true;
-    }
-    if (isCapturing) {
-        camera.off();
-        gameState = "camera";
-        image(capture, width / 2, height / 2, 360, 240);
-    }
+    // if (cameraMenu.mouseIsPressed) {
+    //     isCapturing = true;
+    // }
+    // if (isCapturing) {
+    //     camera.off();
+    //     gameState = "camera";
+    //     image(capture, width / 2, height / 2, 360, 240);
+    // }
 }
 
 function storageMenuFunction() {
@@ -86,7 +86,7 @@ function buildSpaces() {
 function insideSpaces() {
     if (gameState === "build") {
 
-
+        walkingsfx.pause();
         if (playerFemaleMini.position.x >= widthBuffer + cellHomeWidth / 2 && playerFemaleMini.position.y >= heightBuffer + cellHomeHeight / 0.9 && playerFemaleMini.position.x <= width - widthBuffer - cellHomeWidth / 2 && playerFemaleMini.position.y <= height - heightBuffer - cellHomeHeight / 0.8) {
             if (keyIsDown(40)) { //down arrow 
 
@@ -128,6 +128,7 @@ function insideSpaces() {
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
+            walkingsfx.loop();
         }
     }
 }
@@ -135,6 +136,8 @@ function insideSpaces() {
 function fishOrBug() {
     if (gameState === "selectFB") {
         camera.off();
+        walkingsfx.pause();
+
         textFont(acFont);
         messageText(width / 50, 255, 'Would you like to catch \n Fish or Bug?', width / 2, height / 2);
         messageText(width / 80, 255, "Press Esc to exit Catch mode", width / 2, height / 2 + cellWidth);
@@ -148,7 +151,7 @@ function fishOrBug() {
         }
         if (keyIsDown(27)) {
             gameState = "world";
-
+            walkingsfx.loop();
         }
         if (fishOrBugDisplay[0].mouseIsPressed) {
             chooseSound.play();
@@ -273,6 +276,7 @@ function shopping() {
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
+            walkingsfx.loop();
         }
     }
 

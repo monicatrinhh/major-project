@@ -6,7 +6,6 @@ function catchFish() {
         // draw bg
         background(grassCatch);
         camera.off();
-
         if (catchState === "bug") {
             for (let i = 0; i < fishes.length; i++) {
                 fishes[i].changeAnimation('bug');
@@ -70,10 +69,9 @@ function catchFish() {
             gameState = "notif";
             tryToExit = true;
             exitBox();
-
         }
-
     }
+
     // exit game
     if (answerYN === "yes") {
         if (fishes.length > 0) {

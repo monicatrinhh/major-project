@@ -16,11 +16,13 @@ function exitBox() {
         messageText(mpcBox.width / 40, 255, "Press Y / N to select", width / 2, height / 2 + height / 5);
         if (keyIsDown(89)) {
             answerYN = "yes";
+            walkingsfx.loop();
         }
         else if (keyIsDown(78)) {
             answerYN = "no";
         }
     }
+ 
 }
 
 function playerDialouge() {
