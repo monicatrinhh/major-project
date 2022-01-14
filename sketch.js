@@ -18,6 +18,8 @@
 
   kk slider can play music
 
+   if sudeenly leave without finishing conversation, friendship pts went down.
+   friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship ots
   inbox / notif box
 */
 let settings;
@@ -322,7 +324,6 @@ function setup() {
   for (let i = 0; i < villagers.length; i++) {
     villagers[i].scale = width / 5000;
     villagers[i].mouseActive = true;
-    villagers[i].setCollider('rectangle', 0, 0, villagers[i].width, villagers[i].height);
   }
 
   kk.scale = width / 7000;

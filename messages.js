@@ -28,9 +28,7 @@ function exitBox() {
 
 function playerDialouge() {
     if (enterName) {
-        dialougeBox.visible = true;
         textInput(nameDialouge);
-
     }
     if (dialougeCounter > 4) {
         dialougeBox.visible = false;
@@ -38,7 +36,6 @@ function playerDialouge() {
         enterName = false;
     }
 }
-
 
 function textInput(aList) {
     dialougeBox.visible = true;
@@ -57,15 +54,14 @@ function textInput(aList) {
         }
         else {
             isEnteringName = true;
-            nameInput.position(width / 2 - cellWidth / 4, height / 5, 200, 500);
+            nameInput.position(width / 2 - cellWidth / 4, height / 5);
         }
 
     }
 
-    if (dialougeBox.mouseIsOver && mouseWentDown()) {
+    if (mouseWentDown()) {
         if (!isEnteringName) {
             dialougeCounter++;
-
         }
     }
     textFont(digitalTech);

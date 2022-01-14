@@ -70,14 +70,8 @@ let villagersData = {
     0: {
         name: 'Blathers',
         dialouge: {
-
-        },
-    },
-    1: {
-        name: "Isabelle",
-        dialouge: {
             default: {
-                0: "Oh! Here you are already!",
+                0: "Oh! Here you are already, ",
                 1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
@@ -90,23 +84,99 @@ let villagersData = {
                 2: "Do you ",
             }
         },
+        function: {
+            0: "Trade F/B",
+            1: 'Give out advices'
+        },
+    }
+        1: {
+        name: "Isabelle",
+        dialouge: {
+            default: {
+                0: "Oh! Here you are already, ",
+                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
+                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
+                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+            },
+            info: {
+
+            },
+            question: {
+                0: "What is your profession?",
+                2: "Do you ",
+            }
+        },
+        function: {
+            0: 'Chat with her',
+            1: 'Ask for info',
+        }
     },
     2: {
         name: "KK Slider",
         dialouge: {
+            default: {
+                0: "Oh! Here you are already, ",
+                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
+                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
+                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+            },
+            info: {
 
+            },
+            question: {
+                0: "What is your profession?",
+                2: "Do you ",
+            }
+        },
+        function: {
+            0: "Chat with him",
+            1: "Play music",
         }
+
     },
     3: {
         name: "Tom Nook",
         dialouge: {
+            default: {
+                0: "Oh! Look who's here, ",
+                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
+                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
+                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+            },
+            info: {
 
+            },
+            question: {
+                0: "What is your profession?",
+                2: "Do you ",
+            }
+        },
+        function: {
+            0: 'Tell stories',
+            1: "Buy items",
         }
     },
     4: {
-        name: "Marshall",
+        name: "Marshal",
         dialouge: {
+            default: {
+                0: "Well, hello there! Bet you didn't expect to meet \n someone like me in a place \n like this, ",
+                1: "So, tell me, \n what's going on, sulky?",
+                2: "I'm not the best at comforting but I'm \n decent of giving out brutally honest advices",
+                3: "so don't fret, cupcake, \n what can Marshal help you with?",
+            },
+            info: {
 
+            },
+            question: {
+                0: "What is your profession?",
+                2: "Do you ",
+            }
+        },
+        function: {
+            0: "Roast me",
+            1: "Roast me x2",
         }
     },
-}
+},
+

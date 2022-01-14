@@ -9,7 +9,6 @@ function playerMove() {
         playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
     }
     else {
-        playerFemale.changeAnimation('normal');
         playerFemale.velocity.x = 0;
         playerFemale.velocity.y = 0;
     }
@@ -50,9 +49,7 @@ function playerMove() {
         playerFemale.changeAnimation('backward');
 
     }
-    else {
-        playerFemale.changeAnimation('normal');
-    }
+
     drawSprite(playerFemale);
     playerFemale.collide(trees);
 }
@@ -67,10 +64,13 @@ function showMenu() {
     // show menu
     if (playerFemale.mouseIsPressed) {
         zoomOut = false;
-        isUsable = true;
-        for (let i = 0; i < menu.length; i++) {
-            menu[i].visible = true;
+        if (!isTalking) {
+            isUsable = true;
+            for (let i = 0; i < menu.length; i++) {
+                menu[i].visible = true;
+            }
         }
+
 
     }
 
