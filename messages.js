@@ -1,6 +1,7 @@
 let answerYN;
 let dialougeCounter = 0;
-
+let isEnteringName = false;
+let playerName;
 
 function exitBox() {
     if (gameState === "notif") {
@@ -22,11 +23,10 @@ function exitBox() {
             answerYN = "no";
         }
     }
- 
+
 }
 
 function playerDialouge() {
-
     if (enterName) {
         dialougeBox.visible = true;
         textInput(nameDialouge);
@@ -38,10 +38,10 @@ function playerDialouge() {
         enterName = false;
     }
 }
-let isEnteringName = false;
-let playerName;
+
 
 function textInput(aList) {
+    dialougeBox.visible = true;
     dialougeBox.position.x = playerFemale.position.x;
     dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
     drawSprite(dialougeBox);

@@ -46,7 +46,7 @@ function storageMenuFunction() {
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = false;
         }
-
+        // isUsable = false;
     }
     for (let i = 0; i < itemDisplayStorage.length; i++) {
         itemDisplayStorage[i].scale = width / 7000;
@@ -130,6 +130,7 @@ function insideSpaces() {
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
             walkingsfx.loop();
+            isUsable = false;
         }
     }
 }
@@ -279,6 +280,7 @@ function shopping() {
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
             walkingsfx.loop();
+            isUsable = false;
         }
     }
 

@@ -293,7 +293,6 @@ function setup() {
 
   for (let i = 0; i < itemDisplayStorage.length; i++) {
     itemDisplayStorage[i].visible = false;
-
   }
 
 
@@ -408,14 +407,19 @@ function draw() {
             }
           }
         }
-        villagersMove();
+        messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
 
         // function in settings
-        settingsButton();
+        if (isUsable) {
+          settingsButton();
+        }
+
       }
     }
 
     playerMove();
+    villagersMove();
+
     cursor(CROSS);
   }
 
@@ -425,7 +429,7 @@ function draw() {
   exitBox();
   buildSpaces();
   insideSpaces();
-  cameraFunction();
+  // cameraFunction();
 
 }
 

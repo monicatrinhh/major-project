@@ -14,14 +14,17 @@ function catchFish() {
         if (catchState === "fish") {
             if (timeState === "day") {
                 fill("#73daef");
+                rect(0, height / 5, width, height);
+
             }
             else if (timeState === "afternoon") {
-                fill('#fd5e53');
+                image(sunset, 0, height / 5, width, height);
             }
             else {
                 fill(8, 17, 59);
+                rect(0, height / 5, width, height);
+
             }
-            rect(0, height / 5, width, height);
             playerFemale.changeAnimation('fish');
         }
         else if (catchState === "bug") {

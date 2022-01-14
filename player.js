@@ -1,12 +1,19 @@
 let menuVisible = false;
 let zoomOut = false;
+let isTalking = false;
 
 function playerMove() {
 
-    playerFemale.velocity.x = ((camera.mouseX - playerFemale.position.x) / 20);
-    playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
-    
-    messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
+    if (isTalking === false) {
+        playerFemale.velocity.x = ((camera.mouseX - playerFemale.position.x) / 20);
+        playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
+    }
+    else {
+        playerFemale.changeAnimation('normal');
+        playerFemale.velocity.x = 0;
+        playerFemale.velocity.y = 0;
+    }
+
     // set boundary for player
     if (playerFemale.position.x < -SCENE_W + cellWidth / 10) {
         playerFemale.position.x = -SCENE_W + cellWidth / 10;
@@ -49,7 +56,7 @@ function playerMove() {
     drawSprite(playerFemale);
     playerFemale.collide(trees);
 }
-
+let isUsable = false;
 function showMenu() {
     // adjust menu pos.
     for (let i = 0; i < menu.length; i++) {
@@ -60,6 +67,7 @@ function showMenu() {
     // show menu
     if (playerFemale.mouseIsPressed) {
         zoomOut = false;
+        isUsable = true;
         for (let i = 0; i < menu.length; i++) {
             menu[i].visible = true;
         }
@@ -75,7 +83,10 @@ function showMenu() {
             menu[i].scale = width / 4000;
         }
         if (menu[i].mouseIsPressed) {
-            chooseSound.play();
+            if (isUsable) {
+                chooseSound.play();
+            }
+
             for (let i = 0; i < menu.length; i++) {
                 menu[i].visible = false;
             }
@@ -88,15 +99,19 @@ function showMenu() {
     for (let i = 0; i < menu.length; i++) {
         if (keyWentDown('x')) {
             menu[i].visible = false;
+            isUsable = false;
         }
     }
-    catchFish();
-    catchMenuFunction();
-    shopMenuFunction();
-    theMap();
-    buildMenuFunction();
-    buildSpaces();
-    storageMenuFunction();
+    if (isUsable) {
+        catchFish();
+        catchMenuFunction();
+        shopMenuFunction();
+        theMap();
+        buildMenuFunction();
+        buildSpaces();
+        storageMenuFunction();
+    }
+
 }
 
 
