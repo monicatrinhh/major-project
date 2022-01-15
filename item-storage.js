@@ -85,11 +85,11 @@ let villagersData = {
             }
         },
         function: {
-            0: "Trade F/B",
-            1: 'Give out advices'
+            0: "A: Trade F/B",
+            1: 'B: Give out\n advices'
         },
-    }
-        1: {
+    },
+    1: {
         name: "Isabelle",
         dialouge: {
             default: {
@@ -107,9 +107,9 @@ let villagersData = {
             }
         },
         function: {
-            0: 'Chat with her',
-            1: 'Ask for info',
-        }
+            0: 'A: Chat with her',
+            1: 'B: Ask for info',
+        },
     },
     2: {
         name: "KK Slider",
@@ -129,8 +129,8 @@ let villagersData = {
             }
         },
         function: {
-            0: "Chat with him",
-            1: "Play music",
+            0: "A: Chat with him",
+            1: "B: Play music",
         }
 
     },
@@ -138,7 +138,7 @@ let villagersData = {
         name: "Tom Nook",
         dialouge: {
             default: {
-                0: "Oh! Look who's here, ",
+                0: "Oh! Here you are already, ",
                 1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
@@ -152,8 +152,8 @@ let villagersData = {
             }
         },
         function: {
-            0: 'Tell stories',
-            1: "Buy items",
+            0: 'A: Tell stories',
+            1: "B: Buy items",
         }
     },
     4: {
@@ -174,9 +174,9 @@ let villagersData = {
             }
         },
         function: {
-            0: "Roast me",
-            1: "Roast me x2",
-        }
+            0: "A: Roast me",
+            1: "B: Roast me x3",
+        },
     },
-},
+}
 

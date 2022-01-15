@@ -29,19 +29,20 @@ function villagersMove() {
         playerFemale.displace(villagers[i]);
 
         if (villagers[i].mouseIsPressed) {
-            isTalking = true;
-            thisVillager = i;
-
+            if (gameState === "world") {
+                isTalking = true;
+                thisVillager = i;
+            }
 
             for (let i = 0; i < villagers.length; i++) {
                 villagers[i].visible = false;
             }
             villagers[i].visible = true;
             walkingsfx.pause();
-            if (villagers[i].overlap(playerFemale) || playerFemale.overlap(villagers[i])) {
-                villagers[i].position.x = playerFemale.position.x - dialougeBox.width / 4;
-                villagers[i].position.y = playerFemale.position.y;
-            }
+
+            villagers[i].position.x = playerFemale.position.x - dialougeBox.width / 4;
+            villagers[i].position.y = playerFemale.position.y;
+
         }
     }
     if (keyIsDown(27)) {
@@ -49,6 +50,7 @@ function villagersMove() {
         for (let i = 0; i < villagers.length; i++) {
             villagers[i].visible = true;
         }
+        conversationCounter = -1;
     }
     whatDirection();
     if (!isTalking) {
@@ -102,23 +104,20 @@ function villagersDialouge() {
         for (let i = 0; i < menu.length; i++) {
             menu[i].visible = false;
         }
-        talkDisplay("default",);
+        talkDisplay("default");
     }
 
 }
 
-// if sudeenly leave without finishing conversation, friendship pts deducted. 
+// if suddenly leave without finishing conversation, friendship pts deducted. 
 //friendship pts can exchange for items at Nook shop. Give stuff to villagers can exchange to frd ship pts
 
 function talkDisplay(convoStr) {
     if (isTalking) {
         if (mouseWentDown()) {
-            villagersData[thisVillager].dialouge["default"][0] = villagersData[thisVillager].dialouge['default'][0] + playerName;
             conversationCounter++;
         }
     }
-
-
 
     dialougeBox.visible = true;
     dialougeBox.position.x = playerFemale.position.x;
@@ -126,13 +125,35 @@ function talkDisplay(convoStr) {
     drawSprite(dialougeBox);
 
     textFont(digitalTech);
-    messageText(width / 100, 50, villagersData[thisVillager].dialouge[convoStr][conversationCounter], dialougeBox.position.x, dialougeBox.position.y);
+    if (conversationCounter === 0 && convoStr === "default") {
+        messageText(width / 100, 50, villagersData[thisVillager].dialouge[convoStr][conversationCounter] + playerName, dialougeBox.position.x, dialougeBox.position.y);
+    }
+    else {
+        messageText(width / 100, 50, villagersData[thisVillager].dialouge[convoStr][conversationCounter], dialougeBox.position.x, dialougeBox.position.y);
 
-    if (conversationCounter > 3) {
-        isTalking = false;
-        conversationCounter = -1;
-        for (let i = 0; i < villagers.length; i++) {
-            villagers[i].visible = true;
+    }
+
+    if (conversationCounter > 3 && convoStr === "default") {
+        // isTalking = false;
+        // conversationCounter = -1;
+        // for (let i = 0; i < villagers.length; i++) {
+        //     villagers[i].visible = true;
+        // }
+
+        drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
+        chooseOption();
+    }
+}
+
+let villagerOption;
+
+function chooseOption() {
+    for (let i = 0; i < 2; i++) {
+        messageText(width / 100, 50, villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
+        if (villagers[thisVillager].mouseIsOver) {
+            messageText(width / 100, "red", villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
         }
     }
+    // messageText()
+
 }
