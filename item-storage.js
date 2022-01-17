@@ -114,6 +114,29 @@ let villagersData = {
             0: 'A: Chat with her',
             1: 'B: Ask for info',
         },
+        instruct: {
+            0: "Alright, down here is a list of things \n that you can do in our village",
+            1: "This world is run on real time\n The ocean, your home space changes their color based on \n the time of the day",
+            2: 'Some fish/bug only appear from 4-9pm, \n the shop open from 8AM to midnight',
+            3: 'Each villager has an unique ability \n talk to them to find out',
+            4: 'The trees might spawn coins if you press on it, \n try your luck!',
+            5: 'Every things double at noon, \n be sure to log in at that time to maximize \n your items collecting',
+            6: 'To delete data or adjust the music, go to settings',
+            7: 'Trading rate for fish and bug is \ndifferent everytime you log in',
+            8: 'I hope you have a wonderful time \n at Animal Crossing',
+        },
+        talk: {
+            0:{
+                question: 'What are your hobbies?',
+                answer: '',
+                keyCode: '49',
+            },
+            1:{
+                question: '',
+                answer: '',
+                keyCode: '50',
+            }
+        },
     },
     2: {
         name: "KK Slider",
@@ -177,7 +200,7 @@ let villagersData = {
                 2: "Do you ",
             }
         },
-        
+
     },
 }
 

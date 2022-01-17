@@ -11,16 +11,17 @@
 
   add Golden Hour Text at 12 (double fishes and bugs)
 
-  make fishing rod, bug net breaks after 5 use
 
   trade fish and bugs with the owl, one trade time every hour
   shop opens from 8am - 10pm
 
   kk slider can play music
 
-   if sudeenly leave without finishing conversation, friendship pts went down.
+   if suddenly leave without finishing conversation, friendship pts went down.?
    friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship ots
   inbox / notif box
+  
+  trade item in tom nook store w friendship pts
 */
 let settings;
 let fishRodCount = 0, bugNetCount = 0;
@@ -64,7 +65,7 @@ let acLogo;
 let isOpening = true;
 let dialougeBox;
 let enterName = false, nameInput, fbInput;
-let fbExchange;
+let fbExchange, friendshipPts;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -555,6 +556,18 @@ function fetchMemory() {
     }
     else {
       bugNetCount = 0;
+    }
+  }
+  if (getItem('friendshipPts') !== null) {
+    friendshipPts = getItem('friendshipPts');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      friendshipPts = 100;
+      storeItem('friendshipPts', friendshipPts);
+    }
+    else {
+      friendshipPts = 0;
     }
   }
 }

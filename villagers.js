@@ -32,7 +32,7 @@ function villagersMove() {
         playerFemale.displace(villagers[i]);
 
         if (villagers[i].mouseIsPressed) {
-            if (gameState === "world") {
+            if (gameState === "world" && !isOpening) {
                 isTalking = true;
                 thisVillager = i;
             }
@@ -158,6 +158,7 @@ function villagersDialouge() {
             }
             chooseOption();
             blathersTrade();
+            isabelleV();
         }
     }
 
@@ -168,8 +169,18 @@ function chooseOption() {
     if (thisVillager === 0) {
         if (keyIsDown(65)) {
             isFunctioning = true;
+            isEnteringNum = true;
         }
         else if (keyIsDown(66)) {
+        }
+    }
+    else if (thisVillager === 1) {
+        if (keyIsDown(65)) {
+
+            isFunctioning = true;
+        }
+        else if (keyIsDown(66)) {
+
         }
     }
 }
@@ -178,7 +189,7 @@ let isEnteringNum = true;
 
 // trade fish and bug for coins, different exchange rate every time
 function blathersTrade() {
-    if (isFunctioning) {
+    if (isFunctioning && thisVillager === 0) {
         messageText(width / 100, 50, villagersData[0].trade[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
         if (functionCounter === 0) {
             messageText(width / 100, "orange", fbExchange + " fishes and bugs for 1 coin", dialougeBox.position.x, dialougeBox.position.y + width / 80);
@@ -188,14 +199,14 @@ function blathersTrade() {
             if (isEnteringNum) {
                 messageText(width / 100, 50, "Please Enter the number of Fish \nand Bug you would like to trade", dialougeBox.position.x, dialougeBox.position.y - width / 80);
                 fbInput.position(width / 2 - width / 20, height - height / 4.5);
-
+                fbInput.show();
             }
             else {
                 messageText(width / 100, 50, "That's lovely, " + playerName + "! I will have \n lots of fun investigating them!", dialougeBox.position.x, dialougeBox.position.y);
                 fbInput.hide();
                 amountTrade = fbInput.value();
                 if (mouseWentDown()) {
-                    if (amountTrade !== "" && fishCount >= amountTrade * fbExchange && bugCount >= amountTrade * fbExchange && isNaN(floor(amountTrade))) {
+                    if (amountTrade !== "" && fishCount >= amountTrade * fbExchange && bugCount >= amountTrade * fbExchange) {
                         fishCount -= floor(amountTrade) * fbExchange;
                         bugCount -= floor(amountTrade) * fbExchange;
                         coinCount += parseInt(floor(amountTrade));
@@ -215,9 +226,23 @@ function blathersTrade() {
 
             if (keyWentDown(13)) {
                 isEnteringNum = false;
-
-
             }
         }
     }
+}
+
+function isabelleV() {
+    if (isFunctioning && thisVillager === 1) {
+        messageText(width / 100, 50, villagersData[1].instruct[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
+        if (functionCounter > 8) {
+            isTalking = false;
+            isFunctioning = false;
+            functionCounter = 0;
+            for (let i = 0; i < villagers.length; i++) {
+                villagers[i].visible = true;
+            }
+            conversationCounter = -1;
+        }
+    }
+
 }
