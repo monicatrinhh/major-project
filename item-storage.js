@@ -88,6 +88,10 @@ let villagersData = {
             0: "A: Trade F/B",
             1: 'B: Give out\n advices'
         },
+        trade: {
+            0: "Alright then, today exchange rate is",
+            1: "Please enter the number of Fish/Bug you \n would like to trade, hit esc if you don't want to\n When done, hit Enter",
+        },
     },
     1: {
         name: "Isabelle",
@@ -173,10 +177,7 @@ let villagersData = {
                 2: "Do you ",
             }
         },
-        function: {
-            0: "A: Roast me",
-            1: "B: Roast me x3",
-        },
+        
     },
 }
 

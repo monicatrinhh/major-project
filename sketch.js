@@ -63,7 +63,8 @@ let capture;
 let acLogo;
 let isOpening = true;
 let dialougeBox;
-let enterName = false, nameInput;
+let enterName = false, nameInput, fbInput;
+let fbExchange;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -105,9 +106,10 @@ function setup() {
 
   angleMode(DEGREES);
 
-  capture = createCapture(VIDEO);
-  capture.size(320, 240);
-  capture.hide();
+  fbExchange = floor(random(5, 10));
+  // capture = createCapture(VIDEO);
+  // capture.size(320, 240);
+  // capture.hide();
 
   // grid
   grid = createEmptyArray(gridSize, gridSize);
@@ -340,6 +342,7 @@ function setup() {
   gameState = "world";
   walkingsfx.setVolume(0.5);
   nameInput = createInput();
+  fbInput = createInput();
 }
 
 

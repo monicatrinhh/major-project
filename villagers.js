@@ -5,7 +5,10 @@ let thisVillager;
 
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
-        messageText(width / 100, 255, villagersData[i].name, villagers[i].position.x, villagers[i].position.y - 100);
+        if (!isTalking) {
+            messageText(width / 100, 255, villagersData[i].name, villagers[i].position.x, villagers[i].position.y - 100);
+
+        }
         villagers[i].collide(playerFemale);
         villagers[i].collide(trees);
         villagers[i].collide(coins);
@@ -47,6 +50,8 @@ function villagersMove() {
     }
     if (keyIsDown(27)) {
         isTalking = false;
+        isFunctioning = false;
+        functionCounter = 0;
         for (let i = 0; i < villagers.length; i++) {
             villagers[i].visible = true;
         }
@@ -97,6 +102,23 @@ function villagersDirection(i, speed) {
 }
 
 let conversationCounter = -1;
+let functionCounter = 0;
+let isFunctioning = false;
+
+// if suddenly leave without finishing conversation, friendship pts deducted. 
+//friendship pts can exchange for items at Nook shop. Give stuff to villagers can exchange to frd ship pts
+function dialougeClicked() {
+    if (isTalking) {
+        if (mouseWentDown()) {
+            if (!isFunctioning) {
+                conversationCounter++;
+            }
+            else if (isFunctioning) {
+                functionCounter++;
+            }
+        }
+    }
+}
 
 function villagersDialouge() {
     if (isTalking) {
@@ -104,56 +126,98 @@ function villagersDialouge() {
         for (let i = 0; i < menu.length; i++) {
             menu[i].visible = false;
         }
-        talkDisplay("default");
-    }
+        dialougeClicked();
 
-}
+        dialougeBox.visible = true;
+        dialougeBox.position.x = playerFemale.position.x;
+        dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
+        drawSprite(dialougeBox);
+        if (!isFunctioning) {
+            textFont(digitalTech);
+            if (conversationCounter === 0) {
+                messageText(width / 100, 50, villagersData[thisVillager].dialouge["default"][conversationCounter] + playerName, dialougeBox.position.x, dialougeBox.position.y);
+            }
+            else {
+                messageText(width / 100, 50, villagersData[thisVillager].dialouge["default"][conversationCounter], dialougeBox.position.x, dialougeBox.position.y);
 
-// if suddenly leave without finishing conversation, friendship pts deducted. 
-//friendship pts can exchange for items at Nook shop. Give stuff to villagers can exchange to frd ship pts
+            }
+        }
+        if (conversationCounter > 3) {
 
-function talkDisplay(convoStr) {
-    if (isTalking) {
-        if (mouseWentDown()) {
-            conversationCounter++;
+
+            if (!isFunctioning && thisVillager !== 4) {
+                messageText(width / 100, 50, "Press 'A' or 'B' to select", dialougeBox.position.x, dialougeBox.position.y);
+                drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
+
+                for (let i = 0; i < 2; i++) {
+                    messageText(width / 100, 50, villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
+                    if (villagers[thisVillager].mouseIsOver) {
+                        messageText(width / 100, "red", villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
+                    }
+                }
+            }
+            chooseOption();
+            blathersTrade();
         }
     }
 
-    dialougeBox.visible = true;
-    dialougeBox.position.x = playerFemale.position.x;
-    dialougeBox.position.y = playerFemale.position.y + playerFemale.height;
-    drawSprite(dialougeBox);
-
-    textFont(digitalTech);
-    if (conversationCounter === 0 && convoStr === "default") {
-        messageText(width / 100, 50, villagersData[thisVillager].dialouge[convoStr][conversationCounter] + playerName, dialougeBox.position.x, dialougeBox.position.y);
-    }
-    else {
-        messageText(width / 100, 50, villagersData[thisVillager].dialouge[convoStr][conversationCounter], dialougeBox.position.x, dialougeBox.position.y);
-
-    }
-
-    if (conversationCounter > 3 && convoStr === "default") {
-        // isTalking = false;
-        // conversationCounter = -1;
-        // for (let i = 0; i < villagers.length; i++) {
-        //     villagers[i].visible = true;
-        // }
-
-        drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
-        chooseOption();
-    }
 }
-
-let villagerOption;
 
 function chooseOption() {
-    for (let i = 0; i < 2; i++) {
-        messageText(width / 100, 50, villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
-        if (villagers[thisVillager].mouseIsOver) {
-            messageText(width / 100, "red", villagersData[thisVillager].function[i], villagers[thisVillager].position.x - cellWidth / 2.5, villagers[thisVillager].position.y - cellHeight / 2 + cellWidth / 7.5 + i * cellHeight / 3);
+
+    if (thisVillager === 0) {
+        if (keyIsDown(65)) {
+            isFunctioning = true;
+        }
+        else if (keyIsDown(66)) {
         }
     }
-    // messageText()
+}
+let amountTrade;
+let isEnteringNum = true;
 
+// trade fish and bug for coins, different exchange rate every time
+function blathersTrade() {
+    if (isFunctioning) {
+        messageText(width / 100, 50, villagersData[0].trade[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
+        if (functionCounter === 0) {
+            messageText(width / 100, "orange", fbExchange + " fishes and bugs for 1 coin", dialougeBox.position.x, dialougeBox.position.y + width / 80);
+        }
+        if (functionCounter > 1) {
+
+            if (isEnteringNum) {
+                messageText(width / 100, 50, "Please Enter the number of Fish \nand Bug you would like to trade", dialougeBox.position.x, dialougeBox.position.y - width / 80);
+                fbInput.position(width / 2 - width / 20, height - height / 4.5);
+
+            }
+            else {
+                messageText(width / 100, 50, "That's lovely, " + playerName + "! I will have \n lots of fun investigating them!", dialougeBox.position.x, dialougeBox.position.y);
+                fbInput.hide();
+                amountTrade = fbInput.value();
+                if (mouseWentDown()) {
+                    if (amountTrade !== "" && fishCount >= amountTrade * fbExchange && bugCount >= amountTrade * fbExchange && isNaN(floor(amountTrade))) {
+                        fishCount -= floor(amountTrade) * fbExchange;
+                        bugCount -= floor(amountTrade) * fbExchange;
+                        coinCount += parseInt(floor(amountTrade));
+                        storeItem('fishCount', fishCount);
+                        storeItem('bugCount', bugCount);
+                        storeItem('coinCount', coinCount);
+                    }
+                    isTalking = false;
+                    isFunctioning = false;
+                    functionCounter = 0;
+                    for (let i = 0; i < villagers.length; i++) {
+                        villagers[i].visible = true;
+                    }
+                    conversationCounter = -1;
+                }
+            }
+
+            if (keyWentDown(13)) {
+                isEnteringNum = false;
+
+
+            }
+        }
+    }
 }
