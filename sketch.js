@@ -66,6 +66,8 @@ let isOpening = true;
 let dialougeBox;
 let enterName = false, nameInput, fbInput;
 let fbExchange, friendshipPts;
+let musicButton, radio, inputMusic, theSound, pauseButton;
+let kkSong1, kkSong2, kkSong3, kkSongList;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -97,6 +99,13 @@ function preload() {
   transitionScreen.position(0, 0);
 
   acLogo = loadImage('assets/ac-logo.png');
+
+  inputMusic = createFileInput(handleFile);
+  inputMusic.hide();
+  
+  kkSong1 = loadSound('assets/sound/agentKK.mp3');
+  kkSong2 = loadSound('assets/sound/djKK.mp3');
+  kkSong3 = loadSound('assets/sound/farewellKK.mp3');
 
 }
 
@@ -341,9 +350,19 @@ function setup() {
   menu.add(settings);
 
   gameState = "world";
-  walkingsfx.setVolume(0.5);
+  // walkingsfx.setVolume(0.5);
   nameInput = createInput();
   fbInput = createInput();
+
+  radio = createRadio();
+  radio.option("Choose my own Music");
+  radio.option("KK's music");
+  radio.style('height', '30px');
+  radio.hide();
+
+  musicButton = createButton('Play');
+  pauseButton = createButton('Pause');
+
 }
 
 
@@ -363,7 +382,6 @@ function draw() {
       background(8, 17, 59);
       timeState = "night";
     }
-
 
     camera.zoom = 1;
     //set the camera position to the player position
@@ -413,6 +431,7 @@ function draw() {
           }
         }
         messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
+        messageText(width / 100, 0, friendshipPts, playerFemale.position.x - width / 5, playerFemale.position.y);
 
         // function in settings
         if (isUsable) {
@@ -558,6 +577,7 @@ function fetchMemory() {
       bugNetCount = 0;
     }
   }
+
   if (getItem('friendshipPts') !== null) {
     friendshipPts = getItem('friendshipPts');
   }

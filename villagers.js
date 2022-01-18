@@ -2,6 +2,8 @@ let lastTimeSwitched = 0;
 let theDirect = "forward";
 let choosingDirection = ['forward', 'left', 'right', 'backwards'];
 let thisVillager;
+let amountTrade;
+let isEnteringNum = true;
 
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
@@ -35,6 +37,7 @@ function villagersMove() {
             if (gameState === "world" && !isOpening) {
                 isTalking = true;
                 thisVillager = i;
+                isStillTalking = true;
             }
 
             for (let i = 0; i < villagers.length; i++) {
@@ -48,7 +51,7 @@ function villagersMove() {
 
         }
     }
-    if (keyIsDown(27)) {
+    if (keyWentDown(27)) {
         isTalking = false;
         isFunctioning = false;
         functionCounter = 0;
@@ -56,6 +59,23 @@ function villagersMove() {
             villagers[i].visible = true;
         }
         conversationCounter = -1;
+        walkingsfx.loop();
+        if (isStillTalking || isPlayingMusic) {
+            friendshipPts--;
+            theSound.pause();
+            storeItem('friendshipPts', friendshipPts);
+        }
+        isPlayingMusic = false;
+        fbInput.hide();
+        radio.hide();
+        musicButton.hide();
+        pauseButton.hide();
+        inputMusic.hide();
+
+        // stop all music
+        kkSong1.pause();
+        kkSong2.pause();
+        kkSong3.pause();
     }
     whatDirection();
     if (!isTalking) {
@@ -143,8 +163,7 @@ function villagersDialouge() {
             }
         }
         if (conversationCounter > 3) {
-
-
+            // opt into function mode
             if (!isFunctioning && thisVillager !== 4) {
                 messageText(width / 100, 50, "Press 'A' or 'B' to select", dialougeBox.position.x, dialougeBox.position.y);
                 drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
@@ -159,6 +178,7 @@ function villagersDialouge() {
             chooseOption();
             blathersTrade();
             isabelleV();
+            kkMusic();
         }
     }
 
@@ -166,26 +186,20 @@ function villagersDialouge() {
 
 function chooseOption() {
 
-    if (thisVillager === 0) {
-        if (keyIsDown(65)) {
-            isFunctioning = true;
+    if (keyIsDown(65)) {
+        isFunctioning = true;
+        if (thisVillager === 0) {
             isEnteringNum = true;
         }
-        else if (keyIsDown(66)) {
-        }
+        isStillTalking = true;
     }
-    else if (thisVillager === 1) {
-        if (keyIsDown(65)) {
-
-            isFunctioning = true;
-        }
-        else if (keyIsDown(66)) {
-
-        }
+    else if (keyIsDown(66)) {
+        isStillTalking = true;
     }
+
 }
-let amountTrade;
-let isEnteringNum = true;
+
+let isStillTalking = false;
 
 // trade fish and bug for coins, different exchange rate every time
 function blathersTrade() {
@@ -194,9 +208,10 @@ function blathersTrade() {
         if (functionCounter === 0) {
             messageText(width / 100, "orange", fbExchange + " fishes and bugs for 1 coin", dialougeBox.position.x, dialougeBox.position.y + width / 80);
         }
-        if (functionCounter > 1) {
+        if (functionCounter > 1 && thisVillager === 0) {
 
             if (isEnteringNum) {
+                isStillTalking = true;
                 messageText(width / 100, 50, "Please Enter the number of Fish \nand Bug you would like to trade", dialougeBox.position.x, dialougeBox.position.y - width / 80);
                 fbInput.position(width / 2 - width / 20, height - height / 4.5);
                 fbInput.show();
@@ -205,6 +220,9 @@ function blathersTrade() {
                 messageText(width / 100, 50, "That's lovely, " + playerName + "! I will have \n lots of fun investigating them!", dialougeBox.position.x, dialougeBox.position.y);
                 fbInput.hide();
                 amountTrade = fbInput.value();
+
+
+                //esc and done with trading
                 if (mouseWentDown()) {
                     if (amountTrade !== "" && fishCount >= amountTrade * fbExchange && bugCount >= amountTrade * fbExchange) {
                         fishCount -= floor(amountTrade) * fbExchange;
@@ -214,6 +232,7 @@ function blathersTrade() {
                         storeItem('bugCount', bugCount);
                         storeItem('coinCount', coinCount);
                     }
+                    isStillTalking = false;
                     isTalking = false;
                     isFunctioning = false;
                     functionCounter = 0;
@@ -221,9 +240,12 @@ function blathersTrade() {
                         villagers[i].visible = true;
                     }
                     conversationCounter = -1;
+                    walkingsfx.loop();
+                    friendshipPts += floor(random(2, 5));
+                    storeItem('friendshipPts', friendshipPts)
                 }
             }
-
+            // hit enter amount
             if (keyWentDown(13)) {
                 isEnteringNum = false;
             }
@@ -234,15 +256,103 @@ function blathersTrade() {
 function isabelleV() {
     if (isFunctioning && thisVillager === 1) {
         messageText(width / 100, 50, villagersData[1].instruct[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
-        if (functionCounter > 8) {
+
+        // done w instruction and esc
+        if (functionCounter > 9) {
             isTalking = false;
             isFunctioning = false;
-            functionCounter = 0;
             for (let i = 0; i < villagers.length; i++) {
                 villagers[i].visible = true;
             }
             conversationCounter = -1;
+            walkingsfx.loop();
+            isStillTalking = false;
+            functionCounter = 0;
         }
     }
 
+}
+let insertMusic = false;
+function kkMusic() {
+    if (isFunctioning && thisVillager === 2) {
+        messageText(width / 100, 50, villagersData[2].music[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
+
+        // choose music option
+        if (functionCounter > 3) {
+            messageText(width / 100, 50, "Please choose your music option", dialougeBox.position.x, dialougeBox.position.y);
+            radio.show();
+            radio.position(width / 2 - width / 12, height - height / 4.5);
+            let val = radio.value();
+            if (val) {
+                if (val === "Choose my own Music") {
+
+                    // hit enter to spawn buttons
+                    if (keyWentDown(13)) {
+                        inputMusic.show();
+                        inputMusic.position(width / 2 - width / 15, height - height / 5.5);
+                        insertMusic = true;
+                    }
+                    // disable texr when open file
+                    if (!insertMusic) {
+                        messageText(width / 100, 50, "Press hit Enter to Select", dialougeBox.position.x, dialougeBox.position.y + dialougeBox.height / 4);
+                    }
+
+
+
+                }
+                if (!isPlayingMusic && val === "KK's music") {
+                    insertMusic = false;
+                    musicButton.hide();
+                    pauseButton.hide();
+                    inputMusic.hide();
+                    messageText(width / 100, 50, "Press Enter to Play", dialougeBox.position.x, dialougeBox.position.y + dialougeBox.height / 4);
+
+                    if (keyWentDown(13)) {
+                        // kkSong1.play();     
+                        if (random(100) < 33) {
+                            kkSong1.play();
+                        }
+                        else if (random(100) < 66) {
+                            kkSong2.play();
+                        }
+                        else if (random(100) < 100) {
+                            kkSong3.play();
+                        }
+                        isStillTalking = false;
+                        friendshipPts += floor(random(2, 5));
+                        storeItem("friendshipPts", friendshipPts);
+                    }
+                }
+                // play and pause button
+                if (insertMusic) {
+                    musicButton.mousePressed(togglePlaying);
+                    musicButton.show();
+                    pauseButton.mousePressed(pauseMusic);
+                    pauseButton.show();
+                }
+            }
+        }
+    }
+}
+
+let isPlayingMusic = false;
+
+function handleFile(file) {
+    if (file.type === 'audio') {
+        theSound = createAudio(file.data, '');
+    }
+    musicButton.position(width / 2 - kk.width, height / 2 - kk.width / 1.5);
+    pauseButton.position(width / 2 - kk.width + 50, height / 2 - kk.width / 1.5);
+}
+
+function togglePlaying() {
+
+    theSound.play();
+    isPlayingMusic = true;
+}
+
+function pauseMusic() {
+    theSound.pause();
+    isStillTalking = false;
+    isPlayingMusic = false;
 }

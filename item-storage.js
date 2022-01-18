@@ -102,12 +102,17 @@ let villagersData = {
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
-            info: {
-
-            },
             question: {
-                0: "What is your profession?",
-                2: "Do you ",
+                0: {
+                    question: 'What are your hobbies?',
+                    answer: '',
+                    keyCode: '49',
+                },
+                1: {
+                    question: '',
+                    answer: '',
+                    keyCode: '50',
+                }
             }
         },
         function: {
@@ -123,20 +128,10 @@ let villagersData = {
             5: 'Every things double at noon, \n be sure to log in at that time to maximize \n your items collecting',
             6: 'To delete data or adjust the music, go to settings',
             7: 'Trading rate for fish and bug is \ndifferent everytime you log in',
-            8: 'I hope you have a wonderful time \n at Animal Crossing',
+            8: 'If you start talking to villagers and suddenly esc out, the villagers \n will get angry deduct 1 friendship pts from you, \n if you use one of their ability, \n they will award pts as they see fits!',
+            9: 'I hope you have a wonderful time \n at Animal Crossing',
         },
-        talk: {
-            0:{
-                question: 'What are your hobbies?',
-                answer: '',
-                keyCode: '49',
-            },
-            1:{
-                question: '',
-                answer: '',
-                keyCode: '50',
-            }
-        },
+
     },
     2: {
         name: "KK Slider",
@@ -147,17 +142,20 @@ let villagersData = {
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
-            info: {
-
-            },
             question: {
                 0: "What is your profession?",
                 2: "Do you ",
             }
         },
         function: {
-            0: "A: Chat with him",
-            1: "B: Play music",
+            0: "A: Play music",
+            1: "B: Chat with him",
+        },
+        music: {
+            0: 'Alrighty, KK is at your service. \n Looks like it is time for me to show \n off my skill',
+            1: 'You know, back in the day, \n I use to be pretty popular with the ladies \n because of my splendid finger techinique',
+            2: 'Guitar-fingering, of course hahaha',
+            3: 'Anyways, would you like to choose your own song \n let me play my own?',
         }
 
     },
