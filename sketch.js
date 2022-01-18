@@ -21,6 +21,9 @@
    friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship ots
   inbox / notif box
   
+  add music emotion for player
+  different skin for player 
+
   trade item in tom nook store w friendship pts
 */
 let settings;
@@ -33,7 +36,6 @@ let cellWidth, cellHeight;
 let grass, woodTile, grassCatch;
 let blathers, isabelle, kk, tomNook, marshall, villagers;
 let playerFemale, playerFemaleMini;
-let player;
 let SCENE_W;
 let SCENE_H;
 let fishCount = 0;
@@ -68,6 +70,7 @@ let enterName = false, nameInput, fbInput;
 let fbExchange, friendshipPts;
 let musicButton, radio, inputMusic, theSound, pauseButton;
 let kkSong1, kkSong2, kkSong3, kkSongList;
+let initialDebt, tent;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -102,7 +105,7 @@ function preload() {
 
   inputMusic = createFileInput(handleFile);
   inputMusic.hide();
-  
+
   kkSong1 = loadSound('assets/sound/agentKK.mp3');
   kkSong2 = loadSound('assets/sound/djKK.mp3');
   kkSong3 = loadSound('assets/sound/farewellKK.mp3');
@@ -342,6 +345,12 @@ function setup() {
   isabelle.scale = width / 7000;
   tomNook.scale = width / 25000;
 
+  tent = createSprite(width / 2, height / 2);
+  tent.addAnimation('tent', 'assets/items/tent.png');
+  tent.visible = false;
+  tent.mouseActive = true;
+  tent.setCollider('rectangle', 0, 0, 700, 700);
+
   settings = createSprite(width / 2, height / 2);
   settings.addImage(loadImage('assets/functions/settings-icon.png'));
   settings.scale = width / 16500;
@@ -365,6 +374,9 @@ function setup() {
 
 }
 
+let placeable = true;
+let thisTenty;
+let thisTentx;
 
 function draw() {
 
@@ -404,7 +416,6 @@ function draw() {
         fetchMemory();
         if (getItem("playerName") === null) {
           enterName = true;
-
         }
         else {
           playerName = getItem('playerName');
@@ -423,6 +434,36 @@ function draw() {
         playerFemale.overlap(coins, coinCollect);
         coins.collide(trees);
 
+
+        if (placeable) {
+          tent.changeAnimation('tent');
+          tent.visible = true;
+          tent.position.x = playerFemale.position.x - width / 10;
+          tent.position.y = playerFemale.position.y;
+          tent.scale = width / 10000;
+          storeItem('placeable', placeable);
+        }
+        else {
+          tent.visible = true;
+          tent.scale = width / 4000;
+          tent.collide(trees);
+          tent.collide(villagers);
+          playerFemale.collide(tent);
+          tent.position.x = thisTentx;
+          tent.position.y = thisTenty;
+          storeItem('placeable', placeable);
+        }
+
+
+        if (keyWentDown(80)) {
+          placeable = false;
+          thisTentx = tent.position.x;
+          thisTenty = tent.position.y;
+          storeItem('tentX', thisTentx);
+          storeItem('tentY', thisTenty);
+        }
+
+        drawSprite(tent);
         for (let i = 0; i < trees.length; i++) {
           if (trees[i].mouseIsOver && mouseWentDown()) {
             if (coinCount <= 5) {
@@ -431,7 +472,7 @@ function draw() {
           }
         }
         messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
-        messageText(width / 100, 0, friendshipPts, playerFemale.position.x - width / 5, playerFemale.position.y);
+        // messageText(width / 100, 0, friendshipPts, playerFemale.position.x - width / 5, playerFemale.position.y);
 
         // function in settings
         if (isUsable) {
@@ -503,6 +544,7 @@ function settingsButton() {
     isOpening = true;
     enterName = true;
     playerName = "";
+    placeable = true;
   }
 }
 
@@ -590,5 +632,35 @@ function fetchMemory() {
       friendshipPts = 0;
     }
   }
+
+  if (getItem('debt') !== null) {
+    initialDebt = getItem('debt');
+  }
+  else {
+    if (playerName === "schellenberg" || playerName === "Schellenberg") {
+      initialDebt = 10;
+      storeItem('debt', initialDebt);
+    }
+    else {
+      initialDebt = 50;
+      storeItem('debt', initialDebt);
+    }
+  }
+
+  if (getItem('placeable') !== null) {
+    placeable = getItem('placeable');
+  }
+  else {
+    placeable = true;
+  }
+
+  if (getItem('tentX') !== null) {
+    thisTentx = getItem('tentX');
+  }
+
+  if (getItem('tentY') !== null) {
+    thisTenty = getItem('tentY');
+  }
+
 }
 

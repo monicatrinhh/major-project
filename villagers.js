@@ -52,30 +52,32 @@ function villagersMove() {
         }
     }
     if (keyWentDown(27)) {
-        isTalking = false;
-        isFunctioning = false;
-        functionCounter = 0;
-        for (let i = 0; i < villagers.length; i++) {
-            villagers[i].visible = true;
-        }
-        conversationCounter = -1;
-        walkingsfx.loop();
-        if (isStillTalking || isPlayingMusic) {
-            friendshipPts--;
-            theSound.pause();
-            storeItem('friendshipPts', friendshipPts);
-        }
-        isPlayingMusic = false;
-        fbInput.hide();
-        radio.hide();
-        musicButton.hide();
-        pauseButton.hide();
-        inputMusic.hide();
+        if (!isPlayingMusic) {
+            isTalking = false;
+            isFunctioning = false;
+            functionCounter = 0;
+            for (let i = 0; i < villagers.length; i++) {
+                villagers[i].visible = true;
+            }
+            conversationCounter = -1;
+            walkingsfx.loop();
+            if (isStillTalking || isPlayingMusic) {
+                friendshipPts--;
+                storeItem('friendshipPts', friendshipPts);
+            }
+            isPlayingMusic = false;
+            fbInput.hide();
+            radio.hide();
+            musicButton.hide();
+            pauseButton.hide();
+            inputMusic.hide();
 
-        // stop all music
-        kkSong1.pause();
-        kkSong2.pause();
-        kkSong3.pause();
+            // stop all music
+            kkSong1.pause();
+            kkSong2.pause();
+            kkSong3.pause();
+        }
+
     }
     whatDirection();
     if (!isTalking) {

@@ -63,7 +63,10 @@ let nameDialouge = {
     1: "This wonderful place was created by the amazing Monica so \n if you like this game please praise her, \n she will gladly accept them",
     2: "Anyways, I don't have a name yet \n What name do you think would suit me?",
     3: "That's lovely, I think... ",
-    4: "Nonetheless, I hope we will have a \n wonderful time together \n Let's Get Started!",
+    4: "Nonetheless, I hope we will have a \n wonderful time together",
+    5: 'Your first task is to find a place \n for your tent and pay off \n the loan for it to Tom Nook',
+    6: 'When you find a place for \n your tent, press "P" to place it \n pay off the loan to start using the shop',
+    7: "Alright, that's it! \n Let's Get Started! ",
 }
 
 let villagersData = {
@@ -163,14 +166,12 @@ let villagersData = {
         name: "Tom Nook",
         dialouge: {
             default: {
-                0: "Oh! Here you are already, ",
-                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
-                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
-                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+                0: "Look's who's here \n ain't it my favourite villager, ",
+                1: "I'm gladly to be at your service\n as long as you remain my patron, that is...",
+                2: "Anyways, there is lots I can do for you, \n if you are willing to pay the price required",
+                3: "Alright, now tell me, \n what brings you here?",
             },
-            info: {
 
-            },
             question: {
                 0: "What is your profession?",
                 2: "Do you ",
