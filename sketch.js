@@ -24,6 +24,8 @@
   different skin for player 
 
   trade item in tom nook store w friendship pts
+
+  erase items after store done
 */
 let settings;
 let fishRodCount = 0, bugNetCount = 0;
@@ -469,6 +471,8 @@ function draw() {
           tent.collide(trees);
           tent.collide(villagers);
           playerFemale.collide(tent);
+          tent.collide(trees);
+          villagers.collide(tent);
           tent.position.x = thisTentx;
           tent.position.y = thisTenty;
           storeItem('placeable', placeable);
@@ -597,9 +601,9 @@ function fetchMemory() {
       fishCount = 100;
       storeItem('fishCount', fishCount);
     }
-    // else {
-    //   fishCount = 0;
-    // }
+    else {
+      fishCount = 0;
+    }
   }
   if (getItem('bugCount') !== null) {
     bugCount = getItem('bugCount');
@@ -609,9 +613,9 @@ function fetchMemory() {
       bugCount = 100;
       storeItem('bugCount', bugCount);
     }
-    // else {
-    //   bugCount = 0;
-    // }
+    else {
+      bugCount = 0;
+    }
   }
   if (getItem('coinCount') !== null) {
     coinCount = getItem('coinCount');
@@ -629,15 +633,23 @@ function fetchMemory() {
   else {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       fishRodCount = 10;
+      storeItem('fishRodCount', fishRodCount);
+
+    }
+    else {
+      fishRodCount = 0;
     }
   }
 
   if (getItem('bugNetCount') !== null) {
     bugNetCount = getItem('bugNetCount');
+
   }
   else {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       bugNetCount = 10;
+      storeItem('bugNetCount', bugNetCount);
+
     }
 
   }
@@ -681,5 +693,22 @@ function fetchMemory() {
     thisTenty = getItem('tentY');
   }
 
+  if (getItem('apple') !== null) {
+    appleC = getItem('apple');
+  }
+
+  if (getItem('radioC') !== null) {
+    radioC = getItem('radioC');
+  }
+
+  if (getItem('book') !== null) {
+    bookC = getItem('book');
+  }
+  if (getItem('cherry') !== null) {
+    cherryC = getItem('cherry');
+  }
+  if (getItem('stinkyB') !== null) {
+    stinkyB = getItem('stinkyB');
+  }
 }
 

@@ -382,6 +382,7 @@ function tomNookshop() {
     if (isFunctioning && thisVillager === 3) {
         messageText(width / 80, 'orange', ':x' + friendshipPts, dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 3.5);
         messageText(width / 100, 'orange', "Welcome to Nook Cranny", dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 4.5);
+        messageText(width / 130, 50, "Interact with players to gain Friendship Pts \n so you can purchase items", dialougeBox.position.x, dialougeBox.position.y + nookCrannyw * 3 / 2);
         for (let y = 0; y < 2; y++) {
             for (let x = 0; x < nookCrannySize; x++) {
                 stroke(0);

@@ -40,14 +40,39 @@ function storageMenuFunction() {
         }
         displayStorage();
 
+        if (appleC > 0) {
+            displayNookCranItems(0, appleC);
+        }
+
+
+        if (bookC > 0) {
+            displayNookCranItems(1, bookC);
+        }
+
+        if (stinkyB > 0) {
+            displayNookCranItems(2, stinkyB);
+        }
+
+
+        if (cherryC > 0) {
+            displayNookCranItems(3, cherryC);
+        }
+
+
+        if (radioC > 0) {
+            displayNookCranItems(4, radioC);
+        }
+        drawSprites(nookCrannyItems);
+
+
     }
     if (mouseWentDown()) {
         isDisplayStorage = false;
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = false;
         }
-        // isUsable = false;
     }
+
     for (let i = 0; i < itemDisplayStorage.length; i++) {
         itemDisplayStorage[i].scale = width / 7000;
         itemDisplayStorage[i].position.x = playerFemale.position.x + playerFemale.width / 2 + cellStorageWidth / 2 + i * cellStorageWidth;
@@ -56,6 +81,20 @@ function storageMenuFunction() {
     drawSprites(itemDisplayStorage);
 }
 
+function displayNookCranItems(i, counter) {
+    nookCrannyItems[i].visible = true;
+    if (i < 2) {
+        nookCrannyItems[i].position.x = playerFemale.position.x + playerFemale.width / 2 + cellStorageWidth / 2 + (i + 2) * cellStorageWidth;
+        nookCrannyItems[i].position.y = playerFemale.position.y - cellStorageHeight - cellStorageHeight / 2;
+        messageText(width / 120, 0, counter, playerFemale.position.x + playerFemale.width / 2 + (i + 2) * cellStorageWidth, playerFemale.position.y - cellStorageHeight + 5);
+    }
+    else {
+        nookCrannyItems[i].position.x = playerFemale.position.x + playerFemale.width / 2 + cellStorageWidth / 2 + (i - 2) * cellStorageWidth;
+        nookCrannyItems[i].position.y = playerFemale.position.y - cellStorageHeight / 2;
+        messageText(width / 120, 0, counter, playerFemale.position.x + playerFemale.width / 2 + (i - 2) * cellStorageWidth, playerFemale.position.y + 5);
+
+    }
+}
 
 function buildSpaces() {
     if (gameState === "build") {
