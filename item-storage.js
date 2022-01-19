@@ -119,8 +119,8 @@ let villagersData = {
             }
         },
         function: {
-            0: 'A: Chat with her',
-            1: 'B: Ask for info',
+            0: 'A: Ask for info',
+            1: 'B: Chat with her',
         },
         instruct: {
             0: "Alright, down here is a list of things \n that you can do in our village",
@@ -178,8 +178,16 @@ let villagersData = {
             }
         },
         function: {
-            0: 'A: Tell stories',
-            1: "B: Buy items",
+            0: "A: Buy items",
+            1: 'B: Tell stories',
+        },
+        item: {
+            0: 10,
+            1: 10,
+            2: 10,
+            3: 10,
+            4: 10,
+            5: 10,
         }
     },
     4: {

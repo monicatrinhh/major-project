@@ -13,13 +13,12 @@
 
 
   trade fish and bugs with the owl, one trade time every hour
-  shop opens from 8am - 10pm
+  shop opens from 8am - midnight
 
   kk slider can play music
 
    if suddenly leave without finishing conversation, friendship pts went down.?
    friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship ots
-  inbox / notif box
   
   add music emotion for player
   different skin for player 
@@ -65,12 +64,12 @@ let theMinute, theSecond
 let capture;
 let acLogo;
 let isOpening = true;
-let dialougeBox;
+let dialougeBox, debtButton;
 let enterName = false, nameInput, fbInput;
-let fbExchange, friendshipPts;
+let fbExchange, friendshipPts = 0;
 let musicButton, radio, inputMusic, theSound, pauseButton;
 let kkSong1, kkSong2, kkSong3, kkSongList;
-let initialDebt, tent;
+let initialDebt, tent, nookCrannyItems, leafImg;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -109,6 +108,8 @@ function preload() {
   kkSong1 = loadSound('assets/sound/agentKK.mp3');
   kkSong2 = loadSound('assets/sound/djKK.mp3');
   kkSong3 = loadSound('assets/sound/farewellKK.mp3');
+
+  leafImg = loadImage('assets/nookCranny/leaf.png');
 
 }
 
@@ -240,7 +241,7 @@ function setup() {
   // add coins
   coins = new Group();
   //spawn coins
-  for (let i = 0; i < random(5, 15); i++) {
+  for (let i = 0; i < random(5, 10); i++) {
     let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
     coin.addAnimation('normal', 'assets/currency/BellCoin.png');
     coin.scale = width / 1500;
@@ -253,6 +254,16 @@ function setup() {
   dialougeBox.mouseActive = true;
   dialougeBox.scale = width / 800;
   dialougeBox.visible = false;
+
+  nookCrannyItems = new Group();
+  // nookCranny items
+  for (let i = 0; i < 6; i++) {
+    let theItem = createSprite(width / 2, height / 2);
+    theItem.addImage(loadImage('assets/nookCranny/' + i + '.png'));
+    theItem.scale = width / 4000;
+    theItem.mouseActive = true;
+    nookCrannyItems.add(theItem);
+  }
 
   // menu
   menu = new Group();
@@ -291,6 +302,11 @@ function setup() {
   purchaseButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
   purchaseButton.scale = width / 1500;
   purchaseButton.mouseActive = true;
+
+  debtButton = createSprite(width / 2, height / 2);
+  debtButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
+  debtButton.scale = width / 3000;
+  debtButton.mouseActive = true;
 
   // fishes & bugs
   fishes = new Group();
@@ -358,6 +374,7 @@ function setup() {
   settings.visible = false;
   menu.add(settings);
 
+  // game and buttons/dom set up
   gameState = "world";
   // walkingsfx.setVolume(0.5);
   nameInput = createInput();
@@ -371,6 +388,7 @@ function setup() {
 
   musicButton = createButton('Play');
   pauseButton = createButton('Pause');
+
 
 }
 
@@ -442,6 +460,8 @@ function draw() {
           tent.position.y = playerFemale.position.y;
           tent.scale = width / 10000;
           storeItem('placeable', placeable);
+          messageText(width / 125, 250, "Press 'P' to place the tent", tent.position.x, tent.position.y + tent.width / 15);
+
         }
         else {
           tent.visible = true;
@@ -452,6 +472,11 @@ function draw() {
           tent.position.x = thisTentx;
           tent.position.y = thisTenty;
           storeItem('placeable', placeable);
+
+          if (tent.mouseIsPressed) {
+            answerYN = "no";
+            gameState = "build";
+          }
         }
 
 
@@ -498,10 +523,10 @@ function draw() {
 
 }
 
-
+// spawn coins when press on trees
 function spawnCoins() {
   if (random(100) < 50) {
-    for (let i = 0; i < random(5); i++) {
+    for (let i = 0; i < random(4); i++) {
       let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
       coin.addAnimation('normal', 'assets/currency/BellCoin.png');
       coin.scale = width / 1500;
@@ -511,6 +536,7 @@ function spawnCoins() {
   }
 }
 
+// display time
 function timeCount() {
 
   if (hour() >= 12) {
@@ -537,6 +563,7 @@ function timeCount() {
 
 }
 
+// setitings to delete data or adjust volume
 function settingsButton() {
   if (settings.mouseIsPressed) {
     clearStorage();
@@ -548,6 +575,7 @@ function settingsButton() {
   }
 }
 
+// collect coin
 function coinCollect(collector, collected) {
   if (coinCount < 1000) {
     coinCount++;
@@ -569,9 +597,9 @@ function fetchMemory() {
       fishCount = 100;
       storeItem('fishCount', fishCount);
     }
-    else {
-      fishCount = 0;
-    }
+    // else {
+    //   fishCount = 0;
+    // }
   }
   if (getItem('bugCount') !== null) {
     bugCount = getItem('bugCount');
@@ -581,9 +609,9 @@ function fetchMemory() {
       bugCount = 100;
       storeItem('bugCount', bugCount);
     }
-    else {
-      bugCount = 0;
-    }
+    // else {
+    //   bugCount = 0;
+    // }
   }
   if (getItem('coinCount') !== null) {
     coinCount = getItem('coinCount');
@@ -593,10 +621,8 @@ function fetchMemory() {
       coinCount = 100;
       storeItem('coinCount', coinCount);
     }
-    else {
-      coinCount = 0;
-    }
   }
+
   if (getItem('fishRodCount') !== null) {
     fishRodCount = getItem('fishRodCount');
   }
@@ -604,10 +630,8 @@ function fetchMemory() {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       fishRodCount = 10;
     }
-    else {
-      fishRodCount = 0;
-    }
   }
+
   if (getItem('bugNetCount') !== null) {
     bugNetCount = getItem('bugNetCount');
   }
@@ -615,9 +639,7 @@ function fetchMemory() {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       bugNetCount = 10;
     }
-    else {
-      bugNetCount = 0;
-    }
+
   }
 
   if (getItem('friendshipPts') !== null) {
@@ -627,9 +649,6 @@ function fetchMemory() {
     if (playerName === "schellenberg" || playerName === "Schellenberg") {
       friendshipPts = 100;
       storeItem('friendshipPts', friendshipPts);
-    }
-    else {
-      friendshipPts = 0;
     }
   }
 

@@ -184,7 +184,9 @@ function shopMenuFunction() {
             shopping();
             drawSprite(closeButton);
         }
-        // a bubble text from player
+        else {
+            errorfx.play();
+        }
     }
 }
 
@@ -319,7 +321,7 @@ function drawRect(x, y, w, l, br1, br2, br3, br4, theColor) {
 
 function theMap() {
     // zoom in/out of the map
-    if (mapMenu.mouseIsPressed) {
+    if (mapMenu.mouseIsOver && mouseWentDown()) {
         zoomOut = true;
     }
     if (zoomOut) {

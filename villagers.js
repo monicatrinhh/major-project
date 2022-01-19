@@ -4,6 +4,8 @@ let choosingDirection = ['forward', 'left', 'right', 'backwards'];
 let thisVillager;
 let amountTrade;
 let isEnteringNum = true;
+let isPlayingMusic = false;
+let appleC = 0, bookC = 0, radioC = 0, cherryC = 0, stinkyB = 0;
 
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
@@ -167,7 +169,9 @@ function villagersDialouge() {
         if (conversationCounter > 3) {
             // opt into function mode
             if (!isFunctioning && thisVillager !== 4) {
+
                 messageText(width / 100, 50, "Press 'A' or 'B' to select", dialougeBox.position.x, dialougeBox.position.y);
+
                 drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
 
                 for (let i = 0; i < 2; i++) {
@@ -181,22 +185,56 @@ function villagersDialouge() {
             blathersTrade();
             isabelleV();
             kkMusic();
+            tomNookshop();
         }
     }
 
 }
 
 function chooseOption() {
+    if (thisVillager === 3 && initialDebt > 0) {
+        drawSprite(dialougeBox);
+        isStillTalking = false;
+        // pay debt button
+        debtButton.position.x = dialougeBox.position.x;
+        debtButton.position.y = dialougeBox.position.y + cellHeight / 4 + 20;
+        drawSprite(debtButton);
 
-    if (keyIsDown(65)) {
-        isFunctioning = true;
-        if (thisVillager === 0) {
-            isEnteringNum = true;
+        messageText(width / 100, 50, "Please pay your debt before \n you can access my abilities", dialougeBox.position.x, dialougeBox.position.y);
+        messageText(width / 80, 50, initialDebt + " bells", dialougeBox.position.x, dialougeBox.position.y + cellHeight / 4 + 20);
+
+        if (debtButton.mouseIsOver && mouseWentDown()) {
+            if (coinCount >= initialDebt) {
+                coinCount -= initialDebt;
+                initialDebt = 0;
+                chaChing.play();
+                storeItem('coinCount', coinCount);
+                storeItem('debt', initialDebt);
+            }
+            else {
+                errorfx.play();
+            }
         }
-        isStillTalking = true;
+
+        if (debtButton.mouseIsOver) {
+            debtButton.scale = width / 2500;
+        }
+        else {
+            debtButton.scale = width / 3000;
+        }
     }
-    else if (keyIsDown(66)) {
-        isStillTalking = true;
+    else {
+        if (keyIsDown(65)) {
+            isFunctioning = true;
+            if (thisVillager === 0) {
+                isEnteringNum = true;
+            }
+            isStillTalking = true;
+
+        }
+        else if (keyIsDown(66)) {
+            isStillTalking = true;
+        }
     }
 
 }
@@ -298,9 +336,9 @@ function kkMusic() {
                     if (!insertMusic) {
                         messageText(width / 100, 50, "Press hit Enter to Select", dialougeBox.position.x, dialougeBox.position.y + dialougeBox.height / 4);
                     }
-
-
-
+                    kkSong1.pause();
+                    kkSong2.pause();
+                    kkSong3.pause();
                 }
                 if (!isPlayingMusic && val === "KK's music") {
                     insertMusic = false;
@@ -337,8 +375,70 @@ function kkMusic() {
     }
 }
 
-let isPlayingMusic = false;
+// item: bell, apple, headgear,
+let nookCrannySize = 3;
+let nookCrannyw = 70;
+function tomNookshop() {
+    if (isFunctioning && thisVillager === 3) {
+        messageText(width / 80, 'orange', ':x' + friendshipPts, dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 3.5);
+        messageText(width / 100, 'orange', "Welcome to Nook Cranny", dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 4.5);
+        for (let y = 0; y < 2; y++) {
+            for (let x = 0; x < nookCrannySize; x++) {
+                stroke(0);
+                noFill();
+                rect(x * nookCrannyw + dialougeBox.position.x - dialougeBox.width / 5, y * nookCrannyw + dialougeBox.position.y - dialougeBox.height / 5, nookCrannyw, nookCrannyw);
 
+            }
+        }
+        drawSprites(nookCrannyItems);
+        for (let i = 0; i < nookCrannyItems.length; i++) {
+
+            nookCrannyItems[i].position.x = (i % 3) * nookCrannyw + dialougeBox.position.x - dialougeBox.width / 7;
+            nookCrannyItems[i].position.y = (i % 2) * nookCrannyw + dialougeBox.position.y - dialougeBox.height / 5.5 + nookCrannyw / 2;
+
+            if (nookCrannyItems[i].mouseIsOver) {
+                drawRect(nookCrannyItems[i].position.x - nookCrannyw / 2 + 5, nookCrannyItems[i].position.y - nookCrannyw / 4, nookCrannyw, nookCrannyw / 2, 10, 10, 10, 10, '#654321');
+                messageText(width / 110, 255, "x" + villagersData[3].item[i], nookCrannyItems[i].position.x, nookCrannyItems[i].position.y + 7);
+            }
+            if (nookCrannyItems[i].mouseIsOver && mouseWentDown()) {
+                if (friendshipPts >= villagersData[3].item[i]) {
+                    chaChing.play();
+                    friendshipPts -= villagersData[3].item[i];
+                    storeItem('friendshipPts', friendshipPts);
+
+                    if (i === 0) {
+                        appleC++;
+                        storeItem('apple', appleC);
+                    }
+                    else if (i === 1) {
+                        bookC++;
+                        storeItem('book', bookC);
+                    }
+                    else if (i == 2) {
+                        stinkyB++;
+                        storeItem('stinkyB', stinkyB);
+                    }
+
+                    else if (i == 3) {
+                        cherryC++;
+                        storeItem('cherry', cherryC);
+                    }
+                    else if (i == 4) {
+                        radioC++;
+                        storeItem('radioC', radioC);
+                    }
+                }
+                else {
+                    errorfx.play();
+                }
+            }
+        }
+        leafImg.resize(25, 25);
+        image(leafImg, dialougeBox.position.x - nookCrannyw / 1.4, dialougeBox.position.y - dialougeBox.height / 2.8);
+        isStillTalking = false;
+
+    }
+}
 function handleFile(file) {
     if (file.type === 'audio') {
         theSound = createAudio(file.data, '');
