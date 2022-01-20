@@ -423,8 +423,7 @@ function draw() {
     displayGrid();
 
     drawSprites(bg);
-    drawSprites(trees);
-    drawSprites(coins);
+
 
     if (isOpening) {
       image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
@@ -513,7 +512,8 @@ function draw() {
 
     playerMove();
     villagersMove();
-
+    drawSprites(trees);
+    drawSprites(coins);
     cursor(CROSS);
   }
 

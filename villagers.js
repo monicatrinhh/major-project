@@ -428,6 +428,10 @@ function tomNookshop() {
                         radioC++;
                         storeItem('radioC', radioC);
                     }
+                    else if (i == 5) {
+                        coinCount += floor(random(20, 80));
+                        storeItem('coinCount', coinCount);
+                    }
                 }
                 else {
                     errorfx.play();
