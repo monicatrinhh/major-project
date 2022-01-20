@@ -109,9 +109,9 @@ function showMenu() {
         theMap();
         buildMenuFunction();
         buildSpaces();
-        storageMenuFunction();
-    }
 
+    }
+    storageMenuFunction();
 }
 
 

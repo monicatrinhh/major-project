@@ -30,7 +30,7 @@ function cameraFunction() {
 }
 
 function storageMenuFunction() {
-    if (storageMenu.mouseIsPressed) {
+    if (storageMenu.mouseIsPressed || (!isFunctioning && playerFemale.mouseIsPressed && isTalking)) {
         isDisplayStorage = true;
     }
     if (isDisplayStorage) {
@@ -42,20 +42,50 @@ function storageMenuFunction() {
 
         if (appleC > 0) {
             displayNookCranItems(0, appleC);
-        }
+            if (nookCrannyItems[0].mouseIsPressed && isTalking) {
+                if (thisVillager !== 1) {
+                    appleC--;
+                    friendshipPts += floor(random(4));
+                    storeItem('friendShipPts', friendshipPts);
+                }
+                else {
+                    appleC--;
+                    friendshipPts += floor(random(5, 12));
+                    storeItem('friendShipPts', friendshipPts);
 
+                }
+            }
+        }
 
         if (bookC > 0) {
             displayNookCranItems(1, bookC);
+            if (nookCrannyItems[1].mouseIsPressed && isTalking) {
+                if (thisVillager !== 0) {
+                    bookC--;
+                    storeItem('book', bookC);
+                    friendshipPts += floor(random(4));
+                    chooseSound.play();
+                    storeItem('friendShipPts', friendshipPts);
+
+                }
+                else {
+                    friendshipPts += floor(random(5, 12));
+                    storeItem('friendShipPts', friendshipPts);
+
+                }
+            }
+
         }
 
         if (stinkyB > 0) {
             displayNookCranItems(2, stinkyB);
+
         }
 
 
         if (cherryC > 0) {
             displayNookCranItems(3, cherryC);
+
         }
 
 
@@ -66,7 +96,7 @@ function storageMenuFunction() {
 
 
     }
-    if (mouseWentDown()) {
+    if (mouseWentDown() && !isTalking) {
         isDisplayStorage = false;
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = false;
@@ -82,7 +112,12 @@ function storageMenuFunction() {
 }
 
 function displayNookCranItems(i, counter) {
-    nookCrannyItems[i].visible = true;
+    if (counter > 0) {
+        nookCrannyItems[i].visible = true;
+    }
+    else {
+        nookCrannyItems[i].visible = false;
+    }
     if (i < 2) {
         nookCrannyItems[i].position.x = playerFemale.position.x + playerFemale.width / 2 + cellStorageWidth / 2 + (i + 2) * cellStorageWidth;
         nookCrannyItems[i].position.y = playerFemale.position.y - cellStorageHeight - cellStorageHeight / 2;
@@ -326,7 +361,8 @@ function shopping() {
     }
 
 }
-
+let theHouse = false;
+let theMansion = false;
 function purchaseItem() {
     if (coinCount >= itemPurchase[itemDisplay.getFrame()].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame()].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame()].price[2]) {
         chaChing.play();
@@ -343,6 +379,18 @@ function purchaseItem() {
         else if (itemDisplay.getFrame() === 2) {
             fishRodCount++;
             storeItem('fishRodCount', fishRodCount);
+        }
+        else if (itemDisplay.getFrame() === 3) {
+            if (!theMansion && !theHouse) {
+                theHouse = true;
+                storeItem('house', theHouse);
+            }
+        }
+        else if (itemDisplay.getFrame() === 3) {
+            theMansion = true;
+            theHouse = false;
+            storeItem('mansion', theMansion);
+            storeItem('house', thehouse);
         }
     }
     else {

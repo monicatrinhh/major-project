@@ -6,6 +6,8 @@ let amountTrade;
 let isEnteringNum = true;
 let isPlayingMusic = false;
 let appleC = 0, bookC = 0, radioC = 0, cherryC = 0, stinkyB = 0;
+let nookCrannySize = 3;
+let nookCrannyw = 70;
 
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
@@ -60,6 +62,9 @@ function villagersMove() {
             functionCounter = 0;
             for (let i = 0; i < villagers.length; i++) {
                 villagers[i].visible = true;
+            }
+            for (let i = 0; i < nookCrannyItems.length; i++) {
+                nookCrannyItems[i].visible = false;
             }
             conversationCounter = -1;
             walkingsfx.loop();
@@ -375,9 +380,7 @@ function kkMusic() {
     }
 }
 
-// item: bell, apple, headgear,
-let nookCrannySize = 3;
-let nookCrannyw = 70;
+
 function tomNookshop() {
     if (isFunctioning && thisVillager === 3) {
         messageText(width / 80, 'orange', ':x' + friendshipPts, dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 3.5);
@@ -390,6 +393,9 @@ function tomNookshop() {
                 rect(x * nookCrannyw + dialougeBox.position.x - dialougeBox.width / 5, y * nookCrannyw + dialougeBox.position.y - dialougeBox.height / 5, nookCrannyw, nookCrannyw);
 
             }
+        }
+        for (let i = 0; i < nookCrannyItems.length; i++) {
+            nookCrannyItems[i].visible = true;
         }
         drawSprites(nookCrannyItems);
         for (let i = 0; i < nookCrannyItems.length; i++) {
@@ -428,10 +434,8 @@ function tomNookshop() {
                         radioC++;
                         storeItem('radioC', radioC);
                     }
-                    else if (i == 5) {
-                        coinCount += floor(random(20, 80));
-                        storeItem('coinCount', coinCount);
-                    }
+                    friendshipPts += floor(random(4));
+                    storeItem('friendshipPts', friendshipPts);
                 }
                 else {
                     errorfx.play();

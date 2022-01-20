@@ -72,6 +72,10 @@ let fbExchange, friendshipPts = 0;
 let musicButton, radio, inputMusic, theSound, pauseButton;
 let kkSong1, kkSong2, kkSong3, kkSongList;
 let initialDebt, tent, nookCrannyItems, leafImg;
+let placeable = true;
+let thisTenty;
+let thisTentx;
+
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -365,6 +369,8 @@ function setup() {
 
   tent = createSprite(width / 2, height / 2);
   tent.addAnimation('tent', 'assets/items/tent.png');
+  tent.addAnimation('house', 'assets/items/house.png');
+  tent.addAnimation('mansion', 'assets/items/5.png');
   tent.visible = false;
   tent.mouseActive = true;
   tent.setCollider('rectangle', 0, 0, 700, 700);
@@ -393,10 +399,6 @@ function setup() {
 
 
 }
-
-let placeable = true;
-let thisTenty;
-let thisTentx;
 
 function draw() {
 
@@ -475,6 +477,19 @@ function draw() {
           tent.position.x = thisTentx;
           tent.position.y = thisTenty;
           storeItem('placeable', placeable);
+
+          if (theHouse) {
+            tent.changeAnimation('house');
+            tent.scale = width / 500;
+            tent.setCollider('rectangle', 0, 0, width / 10, width / 12);
+
+          }
+          else if (theMansion) {
+            tent.changeAnimation('mansion');
+          }
+          else {
+            tent.changeAnimation('tent');
+          }
 
           if (tent.mouseIsPressed) {
             answerYN = "no";
@@ -709,6 +724,18 @@ function fetchMemory() {
   }
   if (getItem('stinkyB') !== null) {
     stinkyB = getItem('stinkyB');
+  }
+  if (getItem('house') !== null) {
+    theHouse = getItem('house');
+  }
+  else {
+    theHouse = false;
+  }
+  if (getItem('mansion') !== null) {
+    theMansion = getItem('mansion');
+  }
+  else {
+    theMansion = false;
   }
 }
 
