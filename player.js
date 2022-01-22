@@ -4,7 +4,7 @@ let isTalking = false;
 
 function playerMove() {
 
-    if (isTalking === false) {
+    if (!isTalking) {
         playerFemale.velocity.x = ((camera.mouseX - playerFemale.position.x) / 20);
         playerFemale.velocity.y = ((camera.mouseY - playerFemale.position.y) / 20);
     }
@@ -12,6 +12,7 @@ function playerMove() {
         playerFemale.velocity.x = 0;
         playerFemale.velocity.y = 0;
     }
+
 
     // set boundary for player
     if (playerFemale.position.x < -SCENE_W + cellWidth / 10) {
@@ -49,7 +50,6 @@ function playerMove() {
         playerFemale.changeAnimation('backward');
 
     }
-
     drawSprite(playerFemale);
     playerFemale.collide(trees);
 }
@@ -109,12 +109,9 @@ function showMenu() {
         theMap();
         buildMenuFunction();
         buildSpaces();
-
+        storageMenuFunction();
     }
-    storageMenuFunction();
 }
-
-
 
 function messageText(theTextSize, theColor, theMessage, x, y) {
     fill(theColor);
@@ -122,7 +119,6 @@ function messageText(theTextSize, theColor, theMessage, x, y) {
     textSize(theTextSize);
     text(theMessage, x, y);
 }
-
 
 
 

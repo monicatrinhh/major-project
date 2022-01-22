@@ -8,6 +8,12 @@ let isPlayingMusic = false;
 let appleC = 0, bookC = 0, radioC = 0, cherryC = 0, stinkyB = 0;
 let nookCrannySize = 3;
 let nookCrannyw = 70;
+let isStillTalking = false;
+let isChatting = false;
+let conversationCounter = -1;
+let functionCounter = 0;
+let isFunctioning = false;
+let chattingCounter = 0;
 
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
@@ -42,6 +48,10 @@ function villagersMove() {
                 isTalking = true;
                 thisVillager = i;
                 isStillTalking = true;
+
+                if (thisVillager === 4) {
+                    theQuestion = floor(random(2.9));
+                }
             }
 
             for (let i = 0; i < villagers.length; i++) {
@@ -59,6 +69,7 @@ function villagersMove() {
         if (!isPlayingMusic) {
             isTalking = false;
             isFunctioning = false;
+            isChatting = false;
             functionCounter = 0;
             for (let i = 0; i < villagers.length; i++) {
                 villagers[i].visible = true;
@@ -75,10 +86,10 @@ function villagersMove() {
             isPlayingMusic = false;
             fbInput.hide();
             radio.hide();
+            chattingInput.hide();
             musicButton.hide();
             pauseButton.hide();
             inputMusic.hide();
-
             // stop all music
             kkSong1.pause();
             kkSong2.pause();
@@ -130,20 +141,19 @@ function villagersDirection(i, speed) {
     }
 }
 
-let conversationCounter = -1;
-let functionCounter = 0;
-let isFunctioning = false;
-
 // if suddenly leave without finishing conversation, friendship pts deducted. 
 //friendship pts can exchange for items at Nook shop. Give stuff to villagers can exchange to frd ship pts
 function dialougeClicked() {
     if (isTalking) {
         if (mouseWentDown()) {
-            if (!isFunctioning) {
+            if (!isFunctioning && !isChatting) {
                 conversationCounter++;
             }
             else if (isFunctioning) {
                 functionCounter++;
+            }
+            else if (isChatting) {
+                chattingCounter++;
             }
         }
     }
@@ -168,15 +178,13 @@ function villagersDialouge() {
             }
             else {
                 messageText(width / 100, 50, villagersData[thisVillager].dialouge["default"][conversationCounter], dialougeBox.position.x, dialougeBox.position.y);
-
             }
         }
         if (conversationCounter > 3) {
             // opt into function mode
-            if (!isFunctioning && thisVillager !== 4) {
+            if (!isFunctioning && thisVillager !== 4 && !isChatting) {
 
                 messageText(width / 100, 50, "Press 'A' or 'B' to select", dialougeBox.position.x, dialougeBox.position.y);
-
                 drawRect(villagers[thisVillager].position.x - cellWidth / 1.5, villagers[thisVillager].position.y - cellHeight / 2, cellWidth / 2, cellHeight, 10, 10, 10, 10, "#EEE1C6");
 
                 for (let i = 0; i < 2; i++) {
@@ -186,7 +194,12 @@ function villagersDialouge() {
                     }
                 }
             }
+            else if (thisVillager === 4) {
+                isStillTalking = true;
+                isChatting = true;
+            }
             chooseOption();
+            chatWVillagers();
             blathersTrade();
             isabelleV();
             kkMusic();
@@ -229,7 +242,7 @@ function chooseOption() {
         }
     }
     else {
-        if (keyIsDown(65)) {
+        if (keyIsDown(65) && !isChatting) {
             isFunctioning = true;
             if (thisVillager === 0) {
                 isEnteringNum = true;
@@ -237,15 +250,55 @@ function chooseOption() {
             isStillTalking = true;
 
         }
-        else if (keyIsDown(66)) {
+        else if (keyIsDown(66) && !isFunctioning) {
             isStillTalking = true;
+            isChatting = true;
+            theQuestion = floor(random(2.9));
+            enterAnswer = true;
         }
     }
-
 }
 
-let isStillTalking = false;
+let theQuestion;
+let enterAnswer = false;
+function chatWVillagers() {
+    if (isChatting) {
+        messageText(width / 100, 50, villagersData[thisVillager].dialouge.chatting[chattingCounter], dialougeBox.position.x, dialougeBox.position.y);
+        if (chattingCounter < 5) {
+            enterAnswer = true;
+        }
+        if (chattingCounter > 5) {
+            if (enterAnswer) {
+                messageText(width / 100, 50, villagersData[thisVillager].dialouge.question[theQuestion], dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 5);
+                chattingInput.position(width / 2 - width / 20, height - height / 4);
+                chattingInput.show();
+            }
+            else {
+                messageText(width / 100, 50, villagersData[thisVillager].dialouge.answer[theQuestion], dialougeBox.position.x, dialougeBox.position.y);
+                chattingInput.hide();
 
+                if (mouseWentDown()) {
+                    isStillTalking = false;
+                    isTalking = false;
+                    chattingCounter = 0;
+                    for (let i = 0; i < villagers.length; i++) {
+                        villagers[i].visible = true;
+                    }
+                    walkingsfx.loop();
+                    friendshipPts += floor(random(2, 5));
+                    storeItem('friendshipPts', friendshipPts);
+                    chattingInput.value('');
+                    isChatting = false;
+
+                }
+            }
+            if (keyWentDown(13) && chattingInput.value() !== '') {
+                enterAnswer = false;
+            }
+        }
+
+    }
+}
 // trade fish and bug for coins, different exchange rate every time
 function blathersTrade() {
     if (isFunctioning && thisVillager === 0) {
@@ -287,7 +340,7 @@ function blathersTrade() {
                     conversationCounter = -1;
                     walkingsfx.loop();
                     friendshipPts += floor(random(2, 5));
-                    storeItem('friendshipPts', friendshipPts)
+                    storeItem('friendshipPts', friendshipPts);
                 }
             }
             // hit enter amount

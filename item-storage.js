@@ -79,13 +79,23 @@ let villagersData = {
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
-            info: {
-
+            chatting: {
+                0: "asdas",
+                1: "asdas",
+                2: "asdas",
+                3: "asdas",
+                4: "asdas",
             },
             question: {
-                0: "What is your profession?",
-                2: "Do you ",
-            }
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
+            answer: {
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
         },
         function: {
             0: "A: Trade F/B",
@@ -105,18 +115,23 @@ let villagersData = {
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
+            chatting: {
+                0: "asdas",
+                1: "asdas",
+                2: "asdas",
+                3: "asdas",
+                4: "asdas",
+            },
             question: {
-                0: {
-                    question: 'What are your hobbies?',
-                    answer: '',
-                    keyCode: '49',
-                },
-                1: {
-                    question: '',
-                    answer: '',
-                    keyCode: '50',
-                }
-            }
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
+            answer: {
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
         },
         function: {
             0: 'A: Ask for info',
@@ -145,10 +160,23 @@ let villagersData = {
                 2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
+            chatting: {
+                0: "asdas",
+                1: "asdas",
+                2: "asdas",
+                3: "asdas",
+                4: "asdas",
+            },
             question: {
-                0: "What is your profession?",
-                2: "Do you ",
-            }
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
+            answer: {
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
         },
         function: {
             0: "A: Play music",
@@ -172,10 +200,23 @@ let villagersData = {
                 3: "Alright, now tell me, \n what brings you here?",
             },
 
+            chatting: {
+                0: "asdas",
+                1: "asdas",
+                2: "asdas",
+                3: "asdas",
+                4: "asdas",
+            },
             question: {
-                0: "What is your profession?",
-                2: "Do you ",
-            }
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
+            answer: {
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
         },
         function: {
             0: "A: Buy items",
@@ -199,13 +240,23 @@ let villagersData = {
                 2: "I'm not the best at comforting but I'm \n decent of giving out brutally honest advices",
                 3: "so don't fret, cupcake, \n what can Marshal help you with?",
             },
-            info: {
-
+            chatting: {
+                0: "asdas",
+                1: "asdasdasd",
+                2: "asdasd",
+                3: "aasdasda",
+                4: "asdsssas",
             },
             question: {
-                0: "What is your profession?",
-                2: "Do you ",
-            }
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
+            answer: {
+                0: "What is your favourite animal?",
+                1: "What is your favourite book?",
+                2: "Do you like sitting near the window when it's rain?",
+            },
         },
 
     },

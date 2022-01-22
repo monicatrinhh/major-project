@@ -75,7 +75,7 @@ let initialDebt, tent, nookCrannyItems, leafImg;
 let placeable = true;
 let thisTenty;
 let thisTentx;
-
+let chattingInput;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -387,6 +387,7 @@ function setup() {
   // walkingsfx.setVolume(0.5);
   nameInput = createInput();
   fbInput = createInput();
+  chattingInput = createInput();
 
   radio = createRadio();
   radio.option("Choose my own Music");
@@ -470,7 +471,7 @@ function draw() {
           tent.visible = true;
           tent.scale = width / 4000;
           tent.collide(trees);
-          tent.collide(villagers);
+          tent.displace(villagers);
           playerFemale.collide(tent);
           tent.collide(trees);
           villagers.collide(tent);
@@ -525,10 +526,11 @@ function draw() {
       }
     }
 
-    playerMove();
-    villagersMove();
+
     drawSprites(trees);
     drawSprites(coins);
+    playerMove();
+    villagersMove();
     cursor(CROSS);
   }
 
@@ -721,6 +723,9 @@ function fetchMemory() {
   }
   if (getItem('cherry') !== null) {
     cherryC = getItem('cherry');
+  }
+  else {
+    cherryC = 0;
   }
   if (getItem('stinkyB') !== null) {
     stinkyB = getItem('stinkyB');

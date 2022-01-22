@@ -30,11 +30,11 @@ function cameraFunction() {
 }
 
 function storageMenuFunction() {
-    if (storageMenu.mouseIsPressed || (!isFunctioning && playerFemale.mouseIsPressed && isTalking)) {
+    if (storageMenu.mouseIsPressed) {
         isDisplayStorage = true;
     }
     if (isDisplayStorage) {
-
+        // messageText(width/120,50,"Press 'G' to give items to villagers",)
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = true;
         }
@@ -42,53 +42,18 @@ function storageMenuFunction() {
 
         if (appleC > 0) {
             displayNookCranItems(0, appleC);
-            if (nookCrannyItems[0].mouseIsPressed && isTalking) {
-                if (thisVillager !== 1) {
-                    appleC--;
-                    friendshipPts += floor(random(4));
-                    storeItem('friendShipPts', friendshipPts);
-                }
-                else {
-                    appleC--;
-                    friendshipPts += floor(random(5, 12));
-                    storeItem('friendShipPts', friendshipPts);
-
-                }
-            }
         }
 
         if (bookC > 0) {
             displayNookCranItems(1, bookC);
-            if (nookCrannyItems[1].mouseIsPressed && isTalking) {
-                if (thisVillager !== 0) {
-                    bookC--;
-                    storeItem('book', bookC);
-                    friendshipPts += floor(random(4));
-                    chooseSound.play();
-                    storeItem('friendShipPts', friendshipPts);
-
-                }
-                else {
-                    friendshipPts += floor(random(5, 12));
-                    storeItem('friendShipPts', friendshipPts);
-
-                }
-            }
-
         }
 
         if (stinkyB > 0) {
             displayNookCranItems(2, stinkyB);
-
         }
-
-
         if (cherryC > 0) {
             displayNookCranItems(3, cherryC);
-
         }
-
-
         if (radioC > 0) {
             displayNookCranItems(4, radioC);
         }
@@ -96,7 +61,7 @@ function storageMenuFunction() {
 
 
     }
-    if (mouseWentDown() && !isTalking) {
+    if (mouseWentDown()) {
         isDisplayStorage = false;
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = false;
@@ -109,6 +74,36 @@ function storageMenuFunction() {
         itemDisplayStorage[i].position.y = playerFemale.position.y - cellStorageHeight - cellStorageHeight / 2;
     }
     drawSprites(itemDisplayStorage);
+}
+
+let theItemChosen;
+let isGiven = false;
+function giveItems() {
+    if (!isTalking) {
+        walkingsfx.pause();
+        isUsable = false;
+
+        for (let i = 0; i < nookCrannyItems.length; i++) {
+            if (nookCrannyItems[i].mouseIsPressed && nookCrannyItems[i].visible) {
+                chooseSound.play();
+                theItemChosen = i;
+            }
+        }
+    }
+    giveItemsFriendship(appleC);
+}
+
+let counterStorage = ['apple', 'book', 'bug', 'stinkyB', 'cherry', 'radio'];
+function giveItemsFriendship(counter) {
+
+    // counter--;
+    // storeItem(counterStorage[theItemChosen], counter);
+    // friendshipPts += floor(random(5, 12));
+    // storeItem('friendShipPts', friendshipPts);
+    // isGiven = false;
+
+
+    // }
 }
 
 function displayNookCranItems(i, counter) {
