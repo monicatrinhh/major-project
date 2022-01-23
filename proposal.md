@@ -23,6 +23,7 @@ Player is set out to be a villager in their own islands where they can interact 
 
 ## Nice to Have List
 
+- villagers can move (✓)
 - loading screen (✓)
 - more villagers: Brewster, Daisy Mae, Cyrus and Marshal (✓ 1+)
 - village map (✓)
@@ -67,3 +68,5 @@ if suddenly leave without finishing conversation, friendship pts went down.)
 
 - scale furniture, move furniture around inside the house's spaces
 - sell items like apple,etc. in exchange for coins/bugs/fishes
+
+- some villagers can move

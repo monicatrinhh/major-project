@@ -39,7 +39,6 @@ let fishingRodMini, bugNetMini
 let bluePeriod, fishingRod, house, janeEyre, mansion, itemDisplay, itemDisplayStorage;
 let cellStorageHeight, cellStorageWidth;
 let theMinute, theSecond
-let capture;
 let acLogo;
 let isOpening = true;
 let dialougeBox, debtButton;
@@ -128,11 +127,8 @@ function setup() {
 
   angleMode(DEGREES);
 
+  // daily fish exchange rate
   fbExchange = floor(random(5, 10));
-  // capture = createCapture(VIDEO);
-  // capture.size(320, 240);
-  // capture.hide();
-
   // grid
   grid = createEmptyArray(gridSize, gridSize);
   homeGrid = createEmptyArray(homeGridSize, homeGridSize);
@@ -278,10 +274,6 @@ function setup() {
   buildMenu = createSprite(playerFemale.position.y - 10, playerFemale.position.y - (cellHeight * 1.5));
   buildMenu.addImage(loadImage('assets/functions/buildF.png'));
   menu.add(buildMenu);
-
-  cameraMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
-  cameraMenu.addImage(loadImage('assets/functions/cameraF.png'));
-  menu.add(cameraMenu);
 
   catchMenu = createSprite(SCENE_W / 2 + (cellWidth / 3), playerFemale.position.y - (cellHeight * 1.5));
   catchMenu.addImage(loadImage('assets/functions/catchF.png'));
@@ -511,8 +503,8 @@ function setup() {
   musicButton = createButton('Play');
   pauseButton = createButton('Pause');
 
-  bgSlider = createSlider(0, 1, 0.5, 0.1);
-  sfxSlider = createSlider(0, 1, 0.5, 0.1);
+  bgSlider = createSlider(0, 1, 0.3, 0.1);
+  sfxSlider = createSlider(0, 1, 0.7, 0.1);
 
 }
 
@@ -647,7 +639,6 @@ function draw() {
         drawSprites(coins);
       }
     }
-
     playerMove();
     villagersMove();
     cursor(CROSS);
@@ -655,13 +646,15 @@ function draw() {
 
   settingsButton();
 
-  shopping();
-  catchFish();
-  fishOrBug();
-  exitBox();
-  buildSpaces();
-  insideSpaces();
-  // cameraFunction();
+  if (isUsable) {
+    shopping();
+    catchFish();
+    fishOrBug();
+    exitBox();
+    buildSpaces();
+    insideSpaces();
+  }
+
 
   // set Volume
   walkingsfx.setVolume(sfxSlider.value());
@@ -682,7 +675,7 @@ function draw() {
 // spawn coins when press on trees
 function spawnCoins() {
   if (random(100) < 50) {
-    for (let i = 0; i < random(4); i++) {
+    for (let i = 0; i < random(10); i++) {
       let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
       coin.addAnimation('normal', 'assets/currency/BellCoin.png');
       coin.scale = width / 1500;
@@ -756,6 +749,8 @@ function settingsButton() {
     drawSprite(deleteDataB);
     textFont(digitalTech);
     messageText(width / 80, 255, "DELETE DATA", deleteDataB.position.x, deleteDataB.position.y);
+
+    messageText(width / 100, 50, "Find Isabelle and ask her about anything \n need help with (instructions,etc.)", width / 2, height - height / 5 - 20);
 
     if (deleteDataB.mouseIsPressed) {
       gameState = 'world';
@@ -876,7 +871,7 @@ function fetchMemory() {
       storeItem('debt', initialDebt);
     }
     else {
-      initialDebt = 50;
+      initialDebt = 20;
       storeItem('debt', initialDebt);
     }
   }

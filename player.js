@@ -96,12 +96,13 @@ function showMenu() {
         }
     }
     // hide menu
-    for (let i = 0; i < menu.length; i++) {
-        if (keyWentDown('x')) {
+    if (keyWentDown(88)) {
+        for (let i = 0; i < menu.length; i++) {
             menu[i].visible = false;
-            isUsable = false;
         }
+        isUsable = false;
     }
+
     if (isUsable) {
         catchFish();
         catchMenuFunction();
