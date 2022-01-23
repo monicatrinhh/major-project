@@ -1,29 +1,19 @@
 function catchMenuFunction() {
-    if (catchMenu.mouseIsPressed) {
+    if (catchMenu.mouseIsPressed && isUsable) {
         answerYN = "no";
         gameState = "selectFB";
     }
 }
 function buildMenuFunction() {
-    if (buildMenu.mouseIsPressed) {
+    if (buildMenu.mouseIsPressed && isUsable) {
         answerYN = "no";
         gameState = "build";
     }
 }
 
-function cameraFunction() {
-    // if (cameraMenu.mouseIsPressed) {
-    //     isCapturing = true;
-    // }
-    // if (isCapturing) {
-    //     camera.off();
-    //     gameState = "camera";
-    //     image(capture, width / 2, height / 2, 360, 240);
-    // }
-}
 
 function storageMenuFunction() {
-    if (storageMenu.mouseIsPressed) {
+    if (storageMenu.mouseIsPressed && isUsable) {
         isDisplayStorage = true;
         isUsable = false;
     }
@@ -74,6 +64,7 @@ function storageMenuFunction() {
     sellItemButton.position.y = playerFemale.position.y + cellStorageHeight * 1.8;
 
     drawSprite(sellItemButton);
+    
     if (isDisplayStorage) {
         textFont(digitalTech);
         messageText(width / 100, 255, "SELL", sellItemButton.position.x, sellItemButton.position.y);
@@ -356,7 +347,6 @@ function insideSpaces() {
         storeItem('isJaneE', isJaneE);
     }
 }
-let xMirror = false;
 let draggedSprite;
 function displayFurniture(theSet, bool) {
 
