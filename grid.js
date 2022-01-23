@@ -17,7 +17,7 @@ function displayHomeGrid() {
             rect((x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
             if (grid[y][x] === 2) {
                 fill(255);
-                image(tileSet[0], (x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
+                image(tileSet[tileCount], (x * cellHomeWidth) + widthBuffer, (y * cellHomeHeight) + heightBuffer, cellHomeWidth, cellHomeHeight);
             }
         }
     }

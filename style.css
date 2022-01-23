@@ -1,0 +1,18 @@
+@font-face {
+    font-family: digitaltech;
+    src: url(assets/background/digitalTech.ttf);
+  }
+  body {
+    /* set the background image to be a gif and position it in the center, taking up the full screen and not repeating */
+    background-image: url("assets/loading.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  h1{
+      font-family: digitaltech, sans-serif;
+      text-align: center;
+      color: white;
+  }
+  

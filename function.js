@@ -25,6 +25,7 @@ function cameraFunction() {
 function storageMenuFunction() {
     if (storageMenu.mouseIsPressed) {
         isDisplayStorage = true;
+        isUsable = false;
     }
     if (isDisplayStorage) {
         // messageText(width/120,50,"Press 'G' to give items to villagers",)
@@ -36,29 +37,83 @@ function storageMenuFunction() {
         if (appleC > 0) {
             displayNookCranItems(0, appleC);
         }
+        else {
+            appleC.visible = false;
+        }
 
         if (bookC > 0) {
             displayNookCranItems(1, bookC);
+        }
+        else {
+            bookC.visible = false;
         }
 
         if (stinkyB > 0) {
             displayNookCranItems(2, stinkyB);
         }
+        else {
+            stinkyB.visible = false;
+        }
         if (cherryC > 0) {
             displayNookCranItems(3, cherryC);
+        }
+        else {
+            cherryC.visible = false;
         }
         if (radioC > 0) {
             displayNookCranItems(4, radioC);
         }
+        else {
+            radioC.visible = false;
+        }
         drawSprites(nookCrannyItems);
+        sellItemButton.visible = true;
 
+    }
+    sellItemButton.position.x = playerFemale.position.x + cellStorageWidth * 2 + playerFemale.width / 2;
+    sellItemButton.position.y = playerFemale.position.y + cellStorageHeight * 1.8;
 
+    drawSprite(sellItemButton);
+    if (isDisplayStorage) {
+        textFont(digitalTech);
+        messageText(width / 100, 255, "SELL", sellItemButton.position.x, sellItemButton.position.y);
+    }
+    if (sellItemButton.mouseIsPressed) {
+        isDisplayStorage = true;
+        if (appleC > 0 && bookC > 0 && stinkyB > 0 && cherryC > 0 && radioC > 0) {
+            appleC--;
+            bookC--;
+            stinkyB--;
+            cherryC--;
+            radioC--;
+            chaChing.play();
+            coinCount += floor(random(30, 50));
+            fishCount += floor(random(30, 50));
+            bugCount += floor(random(30, 50));
+
+            for (let i = 0; i < nookCrannyItems.length; i++) {
+                nookCrannyItems[i].visible = false;
+            }
+            storeItem('apple', appleC);
+            storeItem('book', bookC);
+            storeItem('stinkyB', stinkyB);
+            storeItem('cherry', cherryC);
+            storeItem('radioC', radioC);
+            storeItem('coinCount', coinCount);
+            storeItem('fishCount', fishCount);
+            storeItem('bugCount', bugCount);
+        }
+        else {
+            errorfx.play();
+        }
     }
     if (mouseWentDown()) {
         isDisplayStorage = false;
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = false;
         }
+        isUsable = true;
+        sellItemButton.visible = false;
     }
 
     for (let i = 0; i < itemDisplayStorage.length; i++) {
@@ -256,12 +311,21 @@ function insideSpaces() {
 
         if (isVeneer) {
             veneerDisplay.visible = true;
+            if (veneerDisplay.mouseIsPressed) {
+                tileCount = 2;
+            }
         }
         if (isArgyle) {
             argyleDisplay.visible = true;
+            if (argyleDisplay.mouseIsPressed) {
+                tileCount = 1;
+            }
         }
         if (isHoneyComb) {
             honeyCDisplay.visible = true;
+            if (honeyCDisplay.mouseIsPressed) {
+                tileCount = 3;
+            }
         }
         // draw storage img
         drawSprites(houseDisplay);
@@ -496,7 +560,6 @@ function shopping() {
 }
 let theHouse = false;
 let theMansion = false;
-let tileCount = 0;
 function purchaseItem() {
     if (coinCount >= itemPurchase[itemDisplay.getFrame()].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame()].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame()].price[2]) {
         chaChing.play();

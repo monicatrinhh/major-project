@@ -68,7 +68,7 @@ function catchFish() {
         }
 
         // press "esc" / X button to escape
-        if (keyIsDown(27) || closeButton.mouseIsPressed) {
+        if (keyWentDown(27) || closeButton.mouseIsPressed) {
             gameState = "notif";
             tryToExit = true;
             exitBox();

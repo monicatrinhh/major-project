@@ -48,7 +48,7 @@ function villagersMove() {
                 isTalking = true;
                 thisVillager = i;
                 isStillTalking = true;
-
+                playerFemale.changeAnimation('normal');
                 if (thisVillager === 4) {
                     theQuestion = floor(random(2.9));
                 }
@@ -59,6 +59,7 @@ function villagersMove() {
             }
             villagers[i].visible = true;
             walkingsfx.pause();
+            villagerVoice.pause();
 
             villagers[i].position.x = playerFemale.position.x - dialougeBox.width / 4;
             villagers[i].position.y = playerFemale.position.y;
@@ -92,10 +93,13 @@ function villagersMove() {
             musicButton.hide();
             pauseButton.hide();
             inputMusic.hide();
+            villagerVoice.pause();
             // stop all music
             kkSong1.pause();
             kkSong2.pause();
             kkSong3.pause();
+
+            isUsable = true;
         }
 
     }
@@ -150,12 +154,21 @@ function dialougeClicked() {
         if (mouseWentDown()) {
             if (!isFunctioning && !isChatting) {
                 conversationCounter++;
+                if (!villagerVoice.isPlaying()) {
+                    villagerVoice.play();
+                }
             }
             else if (isFunctioning) {
                 functionCounter++;
+                if (!villagerVoice.isPlaying()) {
+                    villagerVoice.play();
+                }
             }
             else if (isChatting) {
                 chattingCounter++;
+                if (!villagerVoice.isPlaying()) {
+                    villagerVoice.play();
+                }
             }
         }
     }
@@ -163,6 +176,7 @@ function dialougeClicked() {
 
 function villagersDialouge() {
     if (isTalking) {
+
         isUsable = false;
         for (let i = 0; i < menu.length; i++) {
             menu[i].visible = false;
@@ -293,6 +307,8 @@ function chatWVillagers() {
                     isChatting = false;
                     functionCounter = 0;
                     conversationCounter = -1;
+                    villagerVoice.pause();
+
                 }
             }
             if (keyWentDown(13) && chattingInput.value() !== '') {
@@ -310,7 +326,6 @@ function blathersTrade() {
             messageText(width / 100, "orange", fbExchange + " fishes and bugs for 1 coin", dialougeBox.position.x, dialougeBox.position.y + width / 80);
         }
         if (functionCounter > 1 && thisVillager === 0) {
-
             if (isEnteringNum) {
                 isStillTalking = true;
                 messageText(width / 100, 50, "Please Enter the number of Fish \nand Bug you would like to trade", dialougeBox.position.x, dialougeBox.position.y - width / 80);
@@ -342,6 +357,8 @@ function blathersTrade() {
                     }
                     conversationCounter = -1;
                     walkingsfx.loop();
+                    villagerVoice.pause();
+
                     friendshipPts += floor(random(2, 5));
                     storeItem('friendshipPts', friendshipPts);
                 }
@@ -367,6 +384,7 @@ function isabelleV() {
             }
             conversationCounter = -1;
             walkingsfx.loop();
+            villagerVoice.pause();
             isStillTalking = false;
             functionCounter = 0;
         }

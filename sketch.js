@@ -2,29 +2,7 @@
 // Monica Trinh
 // November 16th, 2021
 
-/* key/functions available: 'x' to hide menu, click on player to show menu 
-  Certain items only appear at a certain time of the day
-  log in with name
 
-  change ocean/space func bg based on time 
-  Press on trees to spawn coins
-
-  add Golden Hour Text at 12 (double fishes and bugs)
-
-  trade fish and bugs with the owl, one trade time every hour
-  shop opens from 8am - midnight
-
-  kk slider can play music
-
-   if suddenly leave without finishing conversation, friendship pts went down.?
-   friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship pts
-  
-  add music emotion for player
-  different skin for player 
-
-  scale furniture
-  sell items like apple,etc.
-*/
 let settings;
 let fishRodCount = 0, bugNetCount = 0;
 let timeState;
@@ -86,6 +64,11 @@ let isArgyle = false, isVeneer = false, isHoneyComb = false;
 let isEmma = false, isJaneE = false, isBP = false;
 let argyleT, veneerT, honeyCombT, tileSet;
 let argyleDisplay, veneerDisplay, honeyCDisplay;
+let tileCount = 0;
+let villagerVoice;
+let morningMusic, aftMusic, nightMusic;
+let bgSlider, sfxSlider;
+let sellItemButton, deleteDataB;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -93,7 +76,6 @@ function preload() {
   coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
   catchFishSound = loadSound('assets/sound/waterSplash.wav');
-  // shopSelectSound = loadSound('assets/sound/shop.wav');
   chaChing = loadSound('assets/sound/cha-ching.mp3');
   errorfx = loadSound('assets/sound/windows_error.mp3');
   walkingsfx = loadSound('assets/sound/walking.mp3');
@@ -133,6 +115,10 @@ function preload() {
 
   tileSet = [woodTile, argyleT, veneerT, honeyCombT];
 
+  villagerVoice = loadSound('assets/sound/villager.mp3');
+  morningMusic = loadSound('assets/sound/morning.mp3');
+  aftMusic = loadSound('assets/sound/afternoon.mp3');
+  nightMusic = loadSound('assets/sound/night.mp3');
 }
 
 function setup() {
@@ -283,6 +269,7 @@ function setup() {
     theItem.addImage(loadImage('assets/nookCranny/' + i + '.png'));
     theItem.scale = width / 4000;
     theItem.mouseActive = true;
+    theItem.visible = false;
     nookCrannyItems.add(theItem);
   }
 
@@ -324,10 +311,24 @@ function setup() {
   purchaseButton.scale = width / 1500;
   purchaseButton.mouseActive = true;
 
+  // paying debt for nook
   debtButton = createSprite(width / 2, height / 2);
   debtButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
   debtButton.scale = width / 3000;
   debtButton.mouseActive = true;
+
+  // sell item purchase from nook
+  sellItemButton = createSprite(width / 2, height / 2);
+  sellItemButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
+  sellItemButton.scale = width / 2000;
+  sellItemButton.mouseActive = true;
+  sellItemButton.visible = false;
+
+  deleteDataB = createSprite(width / 2, height - height / 3);
+  deleteDataB.addImage(loadImage('assets/functions/purchaseLog.png'));
+  deleteDataB.scale = width / 1500;
+  deleteDataB.mouseActive = true;
+  deleteDataB.visible = false;
 
   // fishes & bugs
   fishes = new Group();
@@ -383,8 +384,6 @@ function setup() {
     furniture.setCollider('rectangle', 0, 0, 50, 50);
     bP.add(furniture);
   }
-
-
 
   for (let i = 0; i < 5; i++) {
     let furniture1 = createSprite(width / 2, height / 2);
@@ -512,6 +511,8 @@ function setup() {
   musicButton = createButton('Play');
   pauseButton = createButton('Pause');
 
+  bgSlider = createSlider(0, 1, 0.5, 0.1);
+  sfxSlider = createSlider(0, 1, 0.5, 0.1);
 
 }
 
@@ -540,8 +541,7 @@ function draw() {
     displayGrid();
 
     drawSprites(bg);
-    drawSprites(trees);
-    drawSprites(coins);
+
 
     if (isOpening) {
       image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
@@ -550,6 +550,15 @@ function draw() {
       if (keyIsDown(32)) {
         isOpening = false;
         walkingsfx.loop();
+        if (hour() <= 15 && hour() >= 7) {
+          morningMusic.loop();
+        }
+        else if (hour() > 15 && hour() < 21) {
+          aftMusic.loop();
+        }
+        else {
+          nightMusic.loop();
+        }
         fetchMemory();
         if (getItem("playerName") === null) {
           enterName = true;
@@ -633,19 +642,18 @@ function draw() {
         // messageText(width / 100, 0, friendshipPts, playerFemale.position.x - width / 5, playerFemale.position.y);
 
         // function in settings
-        if (isUsable) {
-          settingsButton();
-        }
 
+        drawSprites(trees);
+        drawSprites(coins);
       }
     }
-
-
 
     playerMove();
     villagersMove();
     cursor(CROSS);
   }
+
+  settingsButton();
 
   shopping();
   catchFish();
@@ -654,6 +662,20 @@ function draw() {
   buildSpaces();
   insideSpaces();
   // cameraFunction();
+
+  // set Volume
+  walkingsfx.setVolume(sfxSlider.value());
+  coinSound.setVolume(sfxSlider.value());
+  chooseSound.setVolume(sfxSlider.value());
+  catchFishSound.setVolume(sfxSlider.value());
+  chaChing.setVolume(sfxSlider.value());
+  errorfx.setVolume(sfxSlider.value());
+  villagerVoice.setVolume(sfxSlider.value());
+
+  morningMusic.setVolume(bgSlider.value());
+  aftMusic.setVolume(bgSlider.value());
+  nightMusic.setVolume(bgSlider.value());
+
 
 }
 
@@ -697,15 +719,66 @@ function timeCount() {
 
 }
 
+
 // setitings to delete data or adjust volume
 function settingsButton() {
-  if (settings.mouseIsPressed) {
-    clearStorage();
+  if (settings.mouseIsPressed && settings.visible) {
+    gameState = 'settings';
     walkingsfx.pause();
-    isOpening = true;
-    enterName = true;
-    playerName = "";
-    placeable = true;
+    isUsable = true;
+
+  }
+  if (gameState === "settings") {
+    camera.off();
+    drawRect(width / 3, height / 3, width / 3, height / 2, 50, 50, 50, 50, "beige");
+    textFont(digitalTech);
+    messageText(width / 30, 'orange', "SETTINGS", width / 2, height / 3 + heightBuffer);
+    messageText(width / 80, 50, "BG Music:", width / 3 + widthBuffer / 2, height / 2);
+    messageText(width / 80, 50, "SFX/ Villager:", width / 3 + widthBuffer / 2, height / 2 + heightBuffer / 2);
+
+    // value slider
+    bgSlider.position(width / 2, height / 2 - 10);
+    bgSlider.size(200);
+    sfxSlider.position(width / 2, height / 2 + heightBuffer / 2 - 10);
+    sfxSlider.size(200);
+
+    sfxSlider.show();
+    bgSlider.show();
+
+    if (deleteDataB.mouseIsOver) {
+      deleteDataB.scale = width / 1200;
+    }
+    else {
+      deleteDataB.scale = width / 1500;
+    }
+    // delete data
+    deleteDataB.visible = true;
+    drawSprite(deleteDataB);
+    textFont(digitalTech);
+    messageText(width / 80, 255, "DELETE DATA", deleteDataB.position.x, deleteDataB.position.y);
+
+    if (deleteDataB.mouseIsPressed) {
+      gameState = 'world';
+      clearStorage();
+      walkingsfx.pause();
+      isOpening = true;
+      enterName = true;
+      playerName = "";
+      placeable = true;
+
+      bgSlider.hide();
+      sfxSlider.hide();
+    }
+  }
+  if (keyWentDown(27)) {
+    gameState = "world";
+    isUsable = false;
+    sfxSlider.hide();
+    bgSlider.hide();
+    deleteDataB.visible = false;
+    if (!walkingsfx.isLooping()) {
+      walkingsfx.loop();
+    }
   }
 }
 
@@ -876,6 +949,14 @@ function fetchMemory() {
   if (getItem('isJEDisplay') !== null) {
     isJEDisplay = getItem('isJEDisplay');
   }
-
+  if (getItem('veneer') !== null) {
+    isVeneer = getItem('veneer');
+  }
+  if (getItem('argyle') !== null) {
+    isArgyle = getItem('argyle');
+  }
+  if (getItem('honeyComb') !== null) {
+    isHoneyComb = getItem('honeyComb');
+  }
 }
 

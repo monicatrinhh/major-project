@@ -109,8 +109,9 @@ function showMenu() {
         theMap();
         buildMenuFunction();
         buildSpaces();
-        storageMenuFunction();
     }
+    storageMenuFunction();
+
 }
 
 function messageText(theTextSize, theColor, theMessage, x, y) {

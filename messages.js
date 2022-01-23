@@ -30,7 +30,7 @@ function playerDialouge() {
     if (enterName) {
         textInput(nameDialouge);
     }
-    if (dialougeCounter > 7) {
+    if (dialougeCounter > 8) {
         dialougeBox.visible = false;
         dialougeCounter = 0;
         enterName = false;
