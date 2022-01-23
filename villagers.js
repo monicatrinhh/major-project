@@ -78,7 +78,9 @@ function villagersMove() {
                 nookCrannyItems[i].visible = false;
             }
             conversationCounter = -1;
-            walkingsfx.loop();
+            if (!walkingsfx.isPlaying()) {
+                walkingsfx.loop();
+            }
             if (isStillTalking || isPlayingMusic) {
                 friendshipPts--;
                 storeItem('friendshipPts', friendshipPts);
@@ -289,7 +291,8 @@ function chatWVillagers() {
                     storeItem('friendshipPts', friendshipPts);
                     chattingInput.value('');
                     isChatting = false;
-
+                    functionCounter = 0;
+                    conversationCounter = -1;
                 }
             }
             if (keyWentDown(13) && chattingInput.value() !== '') {

@@ -11,21 +11,17 @@
 
   add Golden Hour Text at 12 (double fishes and bugs)
 
-
   trade fish and bugs with the owl, one trade time every hour
   shop opens from 8am - midnight
 
   kk slider can play music
 
    if suddenly leave without finishing conversation, friendship pts went down.?
-   friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship ots
+   friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship pts
   
   add music emotion for player
   different skin for player 
 
-  trade item in tom nook store w friendship pts
-
-  erase items after store done
 */
 let settings;
 let fishRodCount = 0, bugNetCount = 0;
@@ -76,6 +72,7 @@ let placeable = true;
 let thisTenty;
 let thisTentx;
 let chattingInput;
+let emmaS, jeS, bP;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -332,6 +329,33 @@ function setup() {
 
   for (let i = 0; i < itemDisplayStorage.length; i++) {
     itemDisplayStorage[i].visible = false;
+  }
+
+
+  // house set
+  emmaS = new Group();
+  bP = new Group();
+  jeS = new Group();
+
+  for (let i = 0; i < 5; i++) {
+    let furniture = createSprite(loadImage('assets/set/bP/' + i + '.png'));
+    furniture.mouseActive = true;
+    furniture.visible = false;
+    bP.add(furniture);
+  }
+
+  for (let i = 0; i < 5; i++) {
+    let furniture = createSprite(loadImage('assets/set/emma/' + i + '.png'));
+    furniture.mouseActive = true;
+    furniture.visible = false;
+    emmaS.add(furniture);
+  }
+
+  for (let i = 0; i < 5; i++) {
+    let furniture = createSprite(loadImage('assets/set/janeE/' + i + '.png'));
+    furniture.mouseActive = true;
+    furniture.visible = false;
+    jeS.add(furniture);
   }
 
 

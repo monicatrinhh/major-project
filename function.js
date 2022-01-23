@@ -4,6 +4,7 @@ let bugCatchingTimeCount = 0;
 let isDisplayStorage = false;
 let isFishable = true, isBugable = true;
 let isCapturing = false;
+let isArgyle = false, isVeneer = false, isHoneyComb = false;
 
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
@@ -198,7 +199,9 @@ function insideSpaces() {
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
-            walkingsfx.loop();
+            if (!walkingsfx.isPlaying()) {
+                walkingsfx.loop();
+            }
             isUsable = false;
         }
     }
@@ -222,7 +225,9 @@ function fishOrBug() {
         }
         if (keyIsDown(27)) {
             gameState = "world";
-            walkingsfx.loop();
+            if (!walkingsfx.isPlaying()) {
+                walkingsfx.loop();
+            }
         }
         if (fishOrBugDisplay[0].mouseIsPressed) {
             chooseSound.play();
@@ -350,7 +355,9 @@ function shopping() {
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
             gameState = "world";
-            walkingsfx.loop();
+            if (!walkingsfx.isPlaying()) {
+                walkingsfx.loop();
+            }
             isUsable = false;
         }
     }
@@ -381,11 +388,24 @@ function purchaseItem() {
                 storeItem('house', theHouse);
             }
         }
-        else if (itemDisplay.getFrame() === 3) {
+        else if (itemDisplay.getFrame() === 5) {
             theMansion = true;
             theHouse = false;
             storeItem('mansion', theMansion);
             storeItem('house', thehouse);
+        }
+        else if (itemDisplay.getFrame() === 7) {
+            isArgyle = true;
+            storeItem('argyle', isArgyle);
+
+        }
+        else if (itemDisplay.getFrame() === 8) {
+            isVeneer = true;
+            storeItem('veneer', isVeneer);
+        }
+        else if (itemDisplay.getFrame() === 9) {
+            isHoneyComb = true;
+            storeItem('honeyComb', isHoneyComb);
         }
     }
     else {
