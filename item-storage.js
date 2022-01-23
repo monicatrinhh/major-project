@@ -74,17 +74,18 @@ let villagersData = {
         name: 'Blathers',
         dialouge: {
             default: {
-                0: "Oh! Here you are already, ",
-                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
-                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
-                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+                0: "Oh! I've been waiting for you, ",
+                1: "It's always a pleasure to have a chance \n to talk to you lovely young folks",
+                2: "You guys teach me wonder,... \n so don't hesitate to talk to me anytimes",
+                3: "But since you're here, seems like I can do something for you \n What can this old man lend a hand on?",
             },
             chatting: {
-                0: "asdas",
-                1: "asdas",
-                2: "asdas",
-                3: "asdas",
-                4: "asdas",
+                0: "Oh my, it's lovely that you are willing to chat with me",
+                1: "Not many people like hearing my thoughts lately",
+                2: "I've been doing this experiment on \n how to extract a special liquid \n from the bug for medicines",
+                3: "Everyone tells me that is a \n big waste of time, but I \n don't think so though,...",
+                4: "Anyways, I was really grateful for \n your support when you gave me the bugs ",
+                5: "But look at my manner here \n You let this old man ramble on again \n That's sweet of you, but let's talk about you too!"
             },
             question: {
                 0: "What is your favourite animal?",
@@ -92,9 +93,9 @@ let villagersData = {
                 2: "Do you like sitting near the window when it's rain?",
             },
             answer: {
-                0: "What is your favourite animal?",
-                1: "What is your favourite book?",
-                2: "Do you like sitting near the window when it's rain?",
+                0: "You sure have an interesting pick! \n I love inspecting insects more than anything. \n Those little crawlies are all wonderfully peculiar fellows",
+                1: "I am not suprised! You seem like \n an intellectual fellow \n My current favourite is Crime and Punishment \n by Dostoyevsky",
+                2: "Ah, for me, drinking a warm cup of coffee \n in my room full of the smell of books \n is the best feeling",
             },
         },
         function: {
@@ -103,7 +104,7 @@ let villagersData = {
         },
         trade: {
             0: "Alright then, today exchange rate is",
-            1: "Please enter the number of Fish/Bug you \n would like to trade, hit esc if you don't want to\n When done, hit Enter",
+            1: "Please enter the number of Fish/Bug you \n would like to trade, hit Esc if you don't want to\n When done, hit Enter",
         },
     },
     1: {
@@ -116,11 +117,12 @@ let villagersData = {
                 3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
             },
             chatting: {
-                0: "asdas",
-                1: "asdas",
-                2: "asdas",
-                3: "asdas",
-                4: "asdas",
+                0: "Yip Yip, you know that I love chatting with you, \n don't you?",
+                1: "I've been finishing the paperworks for the mayor, so \nI don't have much time to mess around lately",
+                2: "Haizz... I know what you're thinking \n I am overworking myself again,\n but what can I say?",
+                3: "I love helping people \n It makes me feel fuzzy in my woofy tummy",
+                4: "But I would love to have some time off \n to visit the neighboring islands too!",
+                4: "Yip Yip, enough about me \n It's not a conversation if I keep yappy yap"
             },
             question: {
                 0: "What is your favourite animal?",
@@ -128,9 +130,9 @@ let villagersData = {
                 2: "Do you like sitting near the window when it's rain?",
             },
             answer: {
-                0: "What is your favourite animal?",
-                1: "What is your favourite book?",
-                2: "Do you like sitting near the window when it's rain?",
+                0: "Yip Yip, don't you think dogs are lovely though? \n Our tails are fluffy fluff and we are so fun to play with!",
+                1: "Woahh! That's sound like an interesting book \n Mine current favourite is Charlotte's Web!",
+                2: "For me, I don't like rain that much though \n Going in the sun is so much more wonderful!",
             },
         },
         function: {
@@ -155,17 +157,18 @@ let villagersData = {
         name: "KK Slider",
         dialouge: {
             default: {
-                0: "Oh! Here you are already, ",
-                1: "At this counter, I can help you with both general issues\n and issues you may face with other residents.",
-                2: "We can delve into the details when specific concerns arise.\n No need to worry about that right now!",
-                3: "But since you're here, I may as well ask... \n Do you have any specific concerns at the moment?",
+                0: "Oh! Looky here, \n oh boy has it been a while, ",
+                1: "You and your busy schedule must have swallowed you whole,\n or else how could you have not spare time to talk with me?",
+                2: "Sshh, I know it all, don't worry\n You know that we will always be best buds",
+                3: "I'm so excited for today's bonding time now! \n What shall we do, you think?",
             },
             chatting: {
-                0: "asdas",
+                0: "Let's go, best bud! I know that \n you miss talking to me!",
                 1: "asdas",
                 2: "asdas",
                 3: "asdas",
                 4: "asdas",
+                5: "Now, best buddy exchange secrets! \n Let me ask you something too"
             },
             question: {
                 0: "What is your favourite animal?",
@@ -173,9 +176,9 @@ let villagersData = {
                 2: "Do you like sitting near the window when it's rain?",
             },
             answer: {
-                0: "What is your favourite animal?",
-                1: "What is your favourite book?",
-                2: "Do you like sitting near the window when it's rain?",
+                0: "Ah Hah! I know it already \n hahhaha, we are best buddy after all!",
+                1: "Hmph...I thought you like chewing on books like me \n not actually reading them...",
+                2: "It is so romantic to sing in the rain \n in fact, my newest girlfriend fall for me because \n I sing Elton John to her",
             },
         },
         function: {

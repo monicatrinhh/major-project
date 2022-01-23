@@ -490,6 +490,10 @@ function tomNookshop() {
                         radioC++;
                         storeItem('radioC', radioC);
                     }
+                    else if (i == 5) {
+                        coinCount += floor(random(30, 80));
+                        storeItem('coinCount', coinCount);
+                    }
                     friendshipPts += floor(random(4));
                     storeItem('friendshipPts', friendshipPts);
                 }

@@ -1,11 +1,3 @@
-let isItInside = true;
-let fishingTimeCount = 0;
-let bugCatchingTimeCount = 0;
-let isDisplayStorage = false;
-let isFishable = true, isBugable = true;
-let isCapturing = false;
-let isArgyle = false, isVeneer = false, isHoneyComb = false;
-
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed) {
         answerYN = "no";
@@ -151,27 +143,27 @@ function buildSpaces() {
         buildStorageDisplay();
     }
 }
-
+let isEmmaDisplay = false, isbPDisplay = false, isJEDisplay = false;
 function insideSpaces() {
     if (gameState === "build") {
 
         walkingsfx.pause();
         if (playerFemaleMini.position.x >= widthBuffer + cellHomeWidth / 2 && playerFemaleMini.position.y >= heightBuffer + cellHomeHeight / 0.9 && playerFemaleMini.position.x <= width - widthBuffer - cellHomeWidth / 2 && playerFemaleMini.position.y <= height - heightBuffer - cellHomeHeight / 0.8) {
-            if (keyIsDown(40)) { //down arrow 
+            if (keyIsDown(83)) { //down arrow 
 
                 playerFemaleMini.changeAnimation('forward');
                 playerFemaleMini.position.y += 2;
             }
-            else if (keyIsDown(38)) { // up arrow
+            else if (keyIsDown(87)) { // w arrow
                 playerFemaleMini.changeAnimation('backward');
                 playerFemaleMini.position.y -= 2;
             }
-            else if (keyIsDown(39)) { // -->
+            else if (keyIsDown(68)) { // -->
                 playerFemaleMini.changeAnimation('movingRL');
                 playerFemaleMini.mirrorX(-1);
                 playerFemaleMini.position.x += 2;
             }
-            else if (keyIsDown(37)) {// <---
+            else if (keyIsDown(65)) {// <---
                 playerFemaleMini.changeAnimation('movingRL');
                 playerFemaleMini.mirrorX(1);
                 playerFemaleMini.position.x -= 2;
@@ -194,7 +186,95 @@ function insideSpaces() {
                 playerFemaleMini.position.y -= 1;
             }
         }
+
+        for (let i = 0; i < houseDisplay.length; i++) {
+            houseDisplay[i].position.x = widthBuffer / 4 + cellStorageWidth / 2;
+            houseDisplay[i].position.y = heightBuffer + i * height / 5 + cellStorageHeight + cellStorageHeight / 2;
+        }
+
+        if (isBP) {
+            houseDisplay[0].visible = true;
+            if (houseDisplay[0].mouseIsPressed) {
+                isbPDisplay = true;
+                storeItem('isbPDisplay', isbPDisplay);
+                storeItem('isEmmaDisplay', isEmmaDisplay);
+            }
+        }
+        if (isbPDisplay) {
+            displayFurniture(bP);
+            isEmmaDisplay = false;
+            isJEDisplay = false;
+            for (let i = 0; i < bP.length; i++) {
+                bP[i].visible = true;
+            }
+        }
+        else {
+            for (let i = 0; i < bP.length; i++) {
+                bP[i].visible = false;
+            }
+        }
+        if (isEmma) {
+            houseDisplay[1].visible = true;
+            if (houseDisplay[1].mouseIsPressed) {
+                isEmmaDisplay = true;
+                storeItem('isEmmaDisplay', isEmmaDisplay);
+            }
+        }
+        if (isEmmaDisplay) {
+            displayFurniture(emmaS);
+            isbPDisplay = false;
+            isJEDisplay = false;
+            for (let i = 0; i < emmaS.length; i++) {
+                emmaS[i].visible = true;
+            }
+        }
+        else {
+            for (let i = 0; i < emmaS.length; i++) {
+                emmaS[i].visible = false;
+            }
+        }
+        if (isJaneE) {
+            houseDisplay[2].visible = true;
+            if (houseDisplay[2].mouseIsPressed) {
+                isJEDisplay = true;
+                storeItem('isJEDisplay', isJEDisplay);
+            }
+        }
+        if (isJEDisplay) {
+            displayFurniture(jeS);
+            isbPDisplay = false;
+            isEmmaDisplay = false;
+            for (let i = 0; i < jeS.length; i++) {
+                jeS[i].visible = true;
+            }
+        }
+        else {
+            for (let i = 0; i < jeS.length; i++) {
+                jeS[i].visible = false;
+            }
+        }
+
+        if (isVeneer) {
+            veneerDisplay.visible = true;
+        }
+        if (isArgyle) {
+            argyleDisplay.visible = true;
+        }
+        if (isHoneyComb) {
+            honeyCDisplay.visible = true;
+        }
+        // draw storage img
+        drawSprites(houseDisplay);
+
+        // draw furniture sets
+        drawSprites(emmaS);
+        drawSprites(bP);
+        drawSprites(jeS);
         drawSprite(playerFemaleMini);
+
+        drawSprite(veneerDisplay);
+        drawSprite(argyleDisplay);
+        drawSprite(honeyCDisplay);
 
 
         if (keyIsDown(27) || closeButton.mouseIsPressed) {
@@ -204,6 +284,57 @@ function insideSpaces() {
             }
             isUsable = false;
         }
+        storeItem('isbPDisplay', isbPDisplay);
+        storeItem('isEmmaDisplay', isEmmaDisplay);
+        storeItem('isJEDisplay', isJEDisplay);
+        storeItem('isEmma', isEmma);
+        storeItem('isBP', isBP);
+        storeItem('isJaneE', isJaneE);
+    }
+}
+let xMirror = false;
+let draggedSprite;
+function displayFurniture(theSet, bool) {
+
+    for (let i = 0; i < theSet.length; i++) {
+
+        // drag furniture to organize
+        theSet[i].onMousePressed = function () {
+            if (draggedSprite == null) {
+                draggedSprite = this;
+            }
+        };
+
+        theSet[i].onMouseReleased = function () {
+            if (draggedSprite == this) {
+                draggedSprite = null;
+            }
+        };
+
+        if (draggedSprite != null) {
+            if (draggedSprite.position.x >= widthBuffer + cellHomeWidth / 2 && draggedSprite.position.y >= heightBuffer + cellHomeHeight / 0.9 && draggedSprite.position.x <= width - widthBuffer - cellHomeWidth / 2 && draggedSprite.position.y <= height - heightBuffer - cellHomeHeight / 0.8) {
+                draggedSprite.position.x = mouseX;
+                draggedSprite.position.y = mouseY;
+            }
+            else {
+                draggedSprite.position.x = width / 2;
+                draggedSprite.position.y = height / 2;
+            }
+
+        }
+        // scale furniture
+        if (keyIsDown(38)) {
+            if (theSet[i].scale <= 1.5) {
+                theSet[i].scale += 0.005;
+            }
+        }
+        else if (keyIsDown(40)) {
+            if (theSet[i].scale >= 1) {
+                theSet[i].scale -= 0.005;
+            }
+        }
+
+        playerFemaleMini.collide(theSet);
     }
 }
 
@@ -365,6 +496,7 @@ function shopping() {
 }
 let theHouse = false;
 let theMansion = false;
+let tileCount = 0;
 function purchaseItem() {
     if (coinCount >= itemPurchase[itemDisplay.getFrame()].price[0] && fishCount >= itemPurchase[itemDisplay.getFrame()].price[1] && bugCount >= itemPurchase[itemDisplay.getFrame()].price[2]) {
         chaChing.play();
@@ -378,6 +510,10 @@ function purchaseItem() {
             bugNetCount++;
             storeItem('bugNetCount', bugNetCount);
         }
+        else if (itemDisplay.getFrame() === 0) {
+            isBP = true;
+            storeItem('isBP', isBP);
+        }
         else if (itemDisplay.getFrame() === 2) {
             fishRodCount++;
             storeItem('fishRodCount', fishRodCount);
@@ -388,16 +524,23 @@ function purchaseItem() {
                 storeItem('house', theHouse);
             }
         }
+        else if (itemDisplay.getFrame() === 4) {
+            isJaneE = true;
+            storeItem('isJaneE', isJaneE);
+        }
         else if (itemDisplay.getFrame() === 5) {
             theMansion = true;
             theHouse = false;
             storeItem('mansion', theMansion);
             storeItem('house', thehouse);
         }
+        else if (itemDisplay.getFrame() === 6) {
+            isEmma = true;
+            storeItem('isEmma', isEmma);
+        }
         else if (itemDisplay.getFrame() === 7) {
             isArgyle = true;
             storeItem('argyle', isArgyle);
-
         }
         else if (itemDisplay.getFrame() === 8) {
             isVeneer = true;
@@ -410,7 +553,6 @@ function purchaseItem() {
     }
     else {
         errorfx.play();
-        // appear message you don't have enough fund
     }
 
 }

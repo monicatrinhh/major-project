@@ -22,6 +22,8 @@
   add music emotion for player
   different skin for player 
 
+  scale furniture
+  sell items like apple,etc.
 */
 let settings;
 let fishRodCount = 0, bugNetCount = 0;
@@ -73,6 +75,17 @@ let thisTenty;
 let thisTentx;
 let chattingInput;
 let emmaS, jeS, bP;
+let emmaDisplay, janeDisplay, bPDisplay, houseDisplay;
+let isItInside = true;
+let fishingTimeCount = 0;
+let bugCatchingTimeCount = 0;
+let isDisplayStorage = false;
+let isFishable = true, isBugable = true;
+let isCapturing = false;
+let isArgyle = false, isVeneer = false, isHoneyComb = false;
+let isEmma = false, isJaneE = false, isBP = false;
+let argyleT, veneerT, honeyCombT, tileSet;
+let argyleDisplay, veneerDisplay, honeyCDisplay;
 
 function preload() {
   grass = loadImage("assets/background/grass.png");
@@ -113,6 +126,12 @@ function preload() {
   kkSong3 = loadSound('assets/sound/farewellKK.mp3');
 
   leafImg = loadImage('assets/nookCranny/leaf.png');
+
+  argyleT = loadImage('assets/items/7.png');
+  veneerT = loadImage('assets/items/8.png');
+  honeyCombT = loadImage('assets/items/9.png');
+
+  tileSet = [woodTile, argyleT, veneerT, honeyCombT];
 
 }
 
@@ -209,8 +228,7 @@ function setup() {
   playerFemale.addAnimation('fish', 'assets/player/female/player_female_fish.png');
 
   //load animation
-  playerFemaleMini = createSprite(widthBuffer + cellHomeWidth / 2, heightBuffer + cellHomeHeight / 0.9);
-  playerFemaleMini.setCollider('rectangle', 0, 0, playerFemaleMini.width, playerFemaleMini.height);
+  playerFemaleMini = createSprite(width / 2, height / 2);
 
   playerFemaleMini.mouseActive = true;
   playerFemaleMini.addAnimation('normal', 'assets/player/female/player_female.png');
@@ -218,7 +236,7 @@ function setup() {
   playerFemaleMini.addAnimation('backward', 'assets/player/femaleBack/femaleBack1.png', 'assets/player/femaleBack/femaleBack2.png', 'assets/player/femaleBack/femaleBack3.png', 'assets/player/femaleBack/femaleBack4.png');
   playerFemaleMini.addAnimation('movingRL', "assets/player/femaleLR/femaleLR1.png", "assets/player/femaleLR/femaleLR2.png");
 
-  playerFemaleMini.scale = homeGridSize / 35;
+  playerFemaleMini.scale = homeGridSize / 25;
 
   // fossils
   bg = new Group();
@@ -336,28 +354,100 @@ function setup() {
   emmaS = new Group();
   bP = new Group();
   jeS = new Group();
+  houseDisplay = new Group();
+
+  janeDisplay = createSprite(width / 2, height / 2);
+  janeDisplay.addImage(loadImage('assets/set/bP/0.png'));
+  houseDisplay.add(janeDisplay);
+
+  emmaDisplay = createSprite(width / width, height / 2);
+  emmaDisplay.addImage(loadImage('assets/set/emma/0.png'));
+  houseDisplay.add(emmaDisplay);
+
+  bPDisplay = createSprite(width / 2, height / 2);
+  bPDisplay.addImage(loadImage('assets/set/janeE/0.png'));
+  houseDisplay.add(bPDisplay);
+
+  for (let i = 0; i < houseDisplay.length; i++) {
+    houseDisplay[i].mouseActive = true;
+    houseDisplay[i].visible = false;
+    houseDisplay[i].scale = width / 3000;
+  }
 
   for (let i = 0; i < 5; i++) {
-    let furniture = createSprite(loadImage('assets/set/bP/' + i + '.png'));
+    let furniture = createSprite(width / 2, height / 2);
+    furniture.addImage(loadImage('assets/set/bP/' + i + '.png'));
     furniture.mouseActive = true;
     furniture.visible = false;
+    furniture.scale = width / 900;
+    furniture.setCollider('rectangle', 0, 0, 50, 50);
     bP.add(furniture);
   }
 
+
+
   for (let i = 0; i < 5; i++) {
-    let furniture = createSprite(loadImage('assets/set/emma/' + i + '.png'));
-    furniture.mouseActive = true;
-    furniture.visible = false;
-    emmaS.add(furniture);
+    let furniture1 = createSprite(width / 2, height / 2);
+    furniture1.addImage(loadImage('assets/set/emma/' + i + '.png'));
+    furniture1.mouseActive = true;
+    furniture1.visible = false;
+    furniture1.setCollider('rectangle', 0, 0, 50, 50);
+    furniture1.scale = width / 900;
+    emmaS.add(furniture1);
   }
 
   for (let i = 0; i < 5; i++) {
-    let furniture = createSprite(loadImage('assets/set/janeE/' + i + '.png'));
-    furniture.mouseActive = true;
-    furniture.visible = false;
-    jeS.add(furniture);
+    let furniture2 = createSprite(width / 2, height / 2);
+    furniture2.addImage(loadImage('assets/set/janeE/' + i + '.png'));
+    furniture2.mouseActive = true;
+    furniture2.visible = false;
+    furniture2.scale = width / 900;
+    furniture2.setCollider('rectangle', 0, 0, 50, 50);
+
+    jeS.add(furniture2);
   }
 
+  for (let i = 0; i < bP.length; i++) {
+    if (i < 3) {
+      bP[i].position.x = widthBuffer + i * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      bP[i].position.y = heightBuffer + 1.5 * cellHomeHeight;
+
+      emmaS[i].position.x = widthBuffer + i * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      emmaS[i].position.y = heightBuffer + 1.5 * cellHomeHeight;
+
+      jeS[i].position.x = widthBuffer + i * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      jeS[i].position.y = heightBuffer + 1.5 * cellHomeHeight;
+    }
+    else {
+      bP[i].position.x = widthBuffer + (i - 3) * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      bP[i].position.y = heightBuffer - 1.5 * cellHomeHeight + (cellHomeHeight * homeGridSize);
+
+      emmaS[i].position.x = widthBuffer + (i - 3) * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      emmaS[i].position.y = heightBuffer - 1.5 * cellHomeHeight + (cellHomeHeight * homeGridSize);
+
+      jeS[i].position.x = widthBuffer + (i - 3) * ((cellHomeWidth * homeGridSize) / 3) + 2 * cellHomeWidth;
+      jeS[i].position.y = heightBuffer - 1.5 * cellHomeHeight + (cellHomeHeight * homeGridSize);
+    }
+  }
+
+  // tile set
+  argyleDisplay = createSprite(width - (widthBuffer / 4 + cellStorageWidth / 1.3), heightBuffer + 1.5 * cellStorageHeight);
+  argyleDisplay.addImage(loadImage('assets/items/7.png'));
+  argyleDisplay.scale = width / 3000;
+  argyleDisplay.mouseActive = true;
+  argyleDisplay.visible = false;
+
+  veneerDisplay = createSprite(width - (widthBuffer / 4 + cellStorageWidth / 1.3), heightBuffer + height / 5 + cellStorageHeight + cellStorageHeight / 2); //i * height / 5 + cellStorageHeight
+  veneerDisplay.scale = width / 3000;
+  veneerDisplay.addImage(loadImage('assets/items/8.png'));
+  veneerDisplay.mouseActive = true;
+  veneerDisplay.visible = false;
+
+  honeyCDisplay = createSprite(width - (widthBuffer / 4 + cellStorageWidth / 1.3), heightBuffer + 2 * height / 5 + cellStorageHeight + cellStorageHeight / 2); //i * height / 5 + cellStorageHeight
+  honeyCDisplay.addImage(loadImage('assets/items/9.png'));
+  honeyCDisplay.scale = width / 3000;
+  honeyCDisplay.mouseActive = true;
+  honeyCDisplay.visible = false;
 
   //villagers sprites
   villagers = new Group();
@@ -450,7 +540,8 @@ function draw() {
     displayGrid();
 
     drawSprites(bg);
-
+    drawSprites(trees);
+    drawSprites(coins);
 
     if (isOpening) {
       image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
@@ -497,7 +588,6 @@ function draw() {
           tent.collide(trees);
           tent.displace(villagers);
           playerFemale.collide(tent);
-          tent.collide(trees);
           villagers.collide(tent);
           tent.position.x = thisTentx;
           tent.position.y = thisTenty;
@@ -551,8 +641,7 @@ function draw() {
     }
 
 
-    drawSprites(trees);
-    drawSprites(coins);
+
     playerMove();
     villagersMove();
     cursor(CROSS);
@@ -766,5 +855,27 @@ function fetchMemory() {
   else {
     theMansion = false;
   }
+
+  if (getItem('isEmma') !== null) {
+    isEmma = getItem('isEmma');
+  }
+  if (getItem('isEmmaDisplay') !== null) {
+    isEmmaDisplay = getItem('isEmmaDisplay');
+  }
+
+  if (getItem('isBP') !== null) {
+    isBP = getItem('isBP');
+  }
+  if (getItem('isbPDisplay') !== null) {
+    isbPDisplay = getItem('isbPDisplay');
+  }
+
+  if (getItem('isJaneE') !== null) {
+    isJaneE = getItem('isJaneE');
+  }
+  if (getItem('isJEDisplay') !== null) {
+    isJEDisplay = getItem('isJEDisplay');
+  }
+
 }
 
