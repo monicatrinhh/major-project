@@ -528,7 +528,7 @@ function draw() {
       timeState = "night";
     }
 
-  
+
     camera.zoom = 1;
     //set the camera position to the player position
     camera.position.x = playerFemale.position.x;
@@ -568,7 +568,7 @@ function draw() {
         }
       }
     }
-    else { 
+    else {
       if (enterName) { // first time log in , enter w name
         playerDialouge();
         fetchMemory(); // fetch data from local storage
@@ -634,9 +634,9 @@ function draw() {
         drawSprite(tent);
         for (let i = 0; i < trees.length; i++) {
           if (trees[i].mouseIsOver && mouseWentDown()) {
-            if (coinCount <= 5) {
-              spawnCoins();
-            }
+
+            spawnCoins();
+
           }
         }
         messageText(width / 100, 255, playerName, playerFemale.position.x, playerFemale.position.y - playerFemale.height / 2 - 5);
@@ -684,7 +684,7 @@ function draw() {
 // spawn coins when press on trees
 function spawnCoins() {
   if (random(100) < 50) {
-    for (let i = 0; i < random(10); i++) {
+    for (let i = 0; i < random(8); i++) {
       let coin = createSprite(random(-SCENE_W + cellWidth / 2, SCENE_W - cellWidth / 2), random(-SCENE_H + cellHeight / 2, SCENE_H - cellHeight / 2 - cellHeight * 1.5));
       coin.addAnimation('normal', 'assets/currency/BellCoin.png');
       coin.scale = width / 1500;
