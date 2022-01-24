@@ -30,7 +30,6 @@ let currentTime, timeMode;
 let fishingHook;
 let fishDisplay, butterflyDisplay;
 let goldenHour = 12;
-let transitionScreen;
 let mpcBox, readBox, nameBox;
 let fishOrBugDisplay;
 let nookCrannyImg;
@@ -72,6 +71,7 @@ let sellItemButton, deleteDataB;
 function preload() {
   grass = loadImage("assets/background/grass.png");
 
+  // load sounds
   coinSound = loadSound('assets/sound/coinsfx.wav');
   chooseSound = loadSound('assets/sound/choose.wav');
   catchFishSound = loadSound('assets/sound/waterSplash.wav');
@@ -79,9 +79,16 @@ function preload() {
   errorfx = loadSound('assets/sound/windows_error.mp3');
   walkingsfx = loadSound('assets/sound/walking.mp3');
 
+  kkSong1 = loadSound('assets/sound/agentKK.mp3');
+  kkSong2 = loadSound('assets/sound/djKK.mp3');
+  kkSong3 = loadSound('assets/sound/farewellKK.mp3');
+
+  // load fonts
   penmanship = loadFont('assets/background/penmanship.ttf');
   acFont = loadFont('assets/background/AC.ttf');
   digitalTech = loadFont('assets/background/digitalTech.ttf');
+
+  // load display imgs
   fishDisplay = loadImage('assets/functions/carp_fish.png');
   butterflyDisplay = loadImage('assets/functions/purpleButterfly.png');
   coinDisplay = loadImage('assets/currency/BellCoin.png');
@@ -92,28 +99,21 @@ function preload() {
   bgAfternoon = loadImage('assets/background/afternoon.jpeg');
   bgAfternoon = loadImage('assets/background/afternoon.jpeg');
   grassCatch = loadImage('assets/background/grass-catch.png');
-
-  transitionScreen = createVideo("assets/background/transition.mov");
-  transitionScreen.size(width);
-  transitionScreen.position(0, 0);
-
   acLogo = loadImage('assets/ac-logo.png');
+  leafImg = loadImage('assets/nookCranny/leaf.png');
 
+  // load DOM elements
   inputMusic = createFileInput(handleFile);
   inputMusic.hide();
 
-  kkSong1 = loadSound('assets/sound/agentKK.mp3');
-  kkSong2 = loadSound('assets/sound/djKK.mp3');
-  kkSong3 = loadSound('assets/sound/farewellKK.mp3');
-
-  leafImg = loadImage('assets/nookCranny/leaf.png');
-
+  // load bg
   argyleT = loadImage('assets/items/7.png');
   veneerT = loadImage('assets/items/8.png');
   honeyCombT = loadImage('assets/items/9.png');
 
   tileSet = [woodTile, argyleT, veneerT, honeyCombT];
 
+  // load more muisc :)
   villagerVoice = loadSound('assets/sound/villager.mp3');
   morningMusic = loadSound('assets/sound/morning.mp3');
   aftMusic = loadSound('assets/sound/afternoon.mp3');
@@ -127,7 +127,7 @@ function setup() {
 
   angleMode(DEGREES);
 
-  // daily fish exchange rate
+  // daily fish exchange rate, change every log in time
   fbExchange = floor(random(5, 10));
   // grid
   grid = createEmptyArray(gridSize, gridSize);
@@ -252,6 +252,7 @@ function setup() {
     coins.add(coin);
   }
 
+  // dialouge Box for villagers
   dialougeBox = createSprite(width / 2, height / 2);
   dialougeBox.addAnimation('normal', 'assets/dialouge-box.png');
   dialougeBox.mouseActive = true;
@@ -259,7 +260,7 @@ function setup() {
   dialougeBox.visible = false;
 
   nookCrannyItems = new Group();
-  // nookCranny items
+  // nookCranny items (available w Tom Nook)
   for (let i = 0; i < 6; i++) {
     let theItem = createSprite(width / 2, height / 2);
     theItem.addImage(loadImage('assets/nookCranny/' + i + '.png'));
@@ -298,6 +299,7 @@ function setup() {
     menu[i].mouseActive = true;
   }
 
+  // purchase items in the shop
   purchaseButton = createSprite(width / 2, height / 2);
   purchaseButton.addAnimation('normal', 'assets/functions/purchaseLog.png');
   purchaseButton.scale = width / 1500;
@@ -316,6 +318,7 @@ function setup() {
   sellItemButton.mouseActive = true;
   sellItemButton.visible = false;
 
+  // delete data in settings
   deleteDataB = createSprite(width / 2, height - height / 3);
   deleteDataB.addImage(loadImage('assets/functions/purchaseLog.png'));
   deleteDataB.scale = width / 1500;
@@ -472,6 +475,7 @@ function setup() {
   isabelle.scale = width / 7000;
   tomNook.scale = width / 25000;
 
+  // tent and its upgrade
   tent = createSprite(width / 2, height / 2);
   tent.addAnimation('tent', 'assets/items/tent.png');
   tent.addAnimation('house', 'assets/items/house.png');
@@ -505,12 +509,11 @@ function setup() {
 
   bgSlider = createSlider(0, 1, 0.3, 0.1);
   sfxSlider = createSlider(0, 1, 0.7, 0.1);
-
 }
 
 function draw() {
 
-
+  // different background depending the time of the day
   if (gameState === "world") {
     if (hour() <= 15 && hour() >= 7) {
       background("#73daef");
@@ -525,6 +528,7 @@ function draw() {
       timeState = "night";
     }
 
+  
     camera.zoom = 1;
     //set the camera position to the player position
     camera.position.x = playerFemale.position.x;
@@ -534,14 +538,18 @@ function draw() {
 
     drawSprites(bg);
 
-
+    // opening screen
     if (isOpening) {
       image(acLogo, playerFemale.position.x - acLogo.width / 2, playerFemale.position.y - 3 * cellHeight);
       textFont(digitalTech);
       messageText(width / 50, 255, "Press Space to Start", playerFemale.position.x, playerFemale.position.y + cellHeight * 1.5);
+
+      // when hit space
       if (keyIsDown(32)) {
         isOpening = false;
         walkingsfx.loop();
+
+        // different music triggered base on time period
         if (hour() <= 15 && hour() >= 7) {
           morningMusic.loop();
         }
@@ -560,19 +568,19 @@ function draw() {
         }
       }
     }
-    else {
-      if (enterName) {
+    else { 
+      if (enterName) { // first time log in , enter w name
         playerDialouge();
-        fetchMemory();
+        fetchMemory(); // fetch data from local storage
       }
-      else {
+      else { // into the game
         drawSprites(menu);
         showMenu();
-        timeCount();
+        timeCount(); // display real time
         playerFemale.overlap(coins, coinCollect);
         coins.collide(trees);
 
-
+        // start w placing the tent
         if (placeable) {
           tent.changeAnimation('tent');
           tent.visible = true;
@@ -583,7 +591,7 @@ function draw() {
           messageText(width / 125, 250, "Press 'P' to place the tent", tent.position.x, tent.position.y + tent.width / 15);
 
         }
-        else {
+        else { // set tent position
           tent.visible = true;
           tent.scale = width / 4000;
           tent.collide(trees);
@@ -594,6 +602,7 @@ function draw() {
           tent.position.y = thisTenty;
           storeItem('placeable', placeable);
 
+          // upgrade tent
           if (theHouse) {
             tent.changeAnimation('house');
             tent.scale = width / 500;
@@ -646,6 +655,7 @@ function draw() {
 
   settingsButton();
 
+  // player function
   if (isUsable) {
     shopping();
     catchFish();
@@ -668,7 +678,6 @@ function draw() {
   morningMusic.setVolume(bgSlider.value());
   aftMusic.setVolume(bgSlider.value());
   nightMusic.setVolume(bgSlider.value());
-
 
 }
 

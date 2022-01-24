@@ -10,6 +10,7 @@ function displayGrid() {
     }
 }
 
+// grid for home
 function displayHomeGrid() {
     for (let y = 0; y < homeGridSize; y++) {
         for (let x = 0; x < homeGridSize; x++) {
@@ -23,6 +24,7 @@ function displayHomeGrid() {
     }
 }
 
+// grid for item's storage
 function displayStorage() {
     stroke(0);
     for (let y = 0; y < floor(storageSize * 3 / 4); y++) {

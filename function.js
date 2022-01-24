@@ -1,3 +1,7 @@
+let draggedSprite;
+let theItemChosen;
+let isEmmaDisplay = false, isbPDisplay = false, isJEDisplay = false;
+
 function catchMenuFunction() {
     if (catchMenu.mouseIsPressed && isUsable) {
         answerYN = "no";
@@ -18,7 +22,6 @@ function storageMenuFunction() {
         isUsable = false;
     }
     if (isDisplayStorage) {
-        // messageText(width/120,50,"Press 'G' to give items to villagers",)
         for (let i = 0; i < itemDisplayStorage.length; i++) {
             itemDisplayStorage[i].visible = true;
         }
@@ -64,7 +67,7 @@ function storageMenuFunction() {
     sellItemButton.position.y = playerFemale.position.y + cellStorageHeight * 1.8;
 
     drawSprite(sellItemButton);
-    
+
     if (isDisplayStorage) {
         textFont(digitalTech);
         messageText(width / 100, 255, "SELL", sellItemButton.position.x, sellItemButton.position.y);
@@ -85,7 +88,7 @@ function storageMenuFunction() {
             for (let i = 0; i < nookCrannyItems.length; i++) {
                 nookCrannyItems[i].visible = false;
             }
-            storeItem('apple', appleC);
+            storeItem('apple', appleC); // I realize I could have call this on sketch instead of doing it here but oh well
             storeItem('book', bookC);
             storeItem('stinkyB', stinkyB);
             storeItem('cherry', cherryC);
@@ -115,8 +118,6 @@ function storageMenuFunction() {
     drawSprites(itemDisplayStorage);
 }
 
-let theItemChosen;
-let isGiven = false;
 function giveItems() {
     if (!isTalking) {
         walkingsfx.pause();
@@ -130,19 +131,6 @@ function giveItems() {
         }
     }
     giveItemsFriendship(appleC);
-}
-
-let counterStorage = ['apple', 'book', 'bug', 'stinkyB', 'cherry', 'radio'];
-function giveItemsFriendship(counter) {
-
-    // counter--;
-    // storeItem(counterStorage[theItemChosen], counter);
-    // friendshipPts += floor(random(5, 12));
-    // storeItem('friendShipPts', friendshipPts);
-    // isGiven = false;
-
-
-    // }
 }
 
 function displayNookCranItems(i, counter) {
@@ -189,7 +177,8 @@ function buildSpaces() {
         buildStorageDisplay();
     }
 }
-let isEmmaDisplay = false, isbPDisplay = false, isJEDisplay = false;
+
+// make player move inside the space
 function insideSpaces() {
     if (gameState === "build") {
 
@@ -233,6 +222,7 @@ function insideSpaces() {
             }
         }
 
+        // change furniture set
         for (let i = 0; i < houseDisplay.length; i++) {
             houseDisplay[i].position.x = widthBuffer / 4 + cellStorageWidth / 2;
             houseDisplay[i].position.y = heightBuffer + i * height / 5 + cellStorageHeight + cellStorageHeight / 2;
@@ -347,7 +337,9 @@ function insideSpaces() {
         storeItem('isJaneE', isJaneE);
     }
 }
-let draggedSprite;
+
+
+// dragged furniture position
 function displayFurniture(theSet, bool) {
 
     for (let i = 0; i < theSet.length; i++) {

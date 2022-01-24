@@ -115,6 +115,7 @@ function showMenu() {
 
 }
 
+// mostly text styling
 function messageText(theTextSize, theColor, theMessage, x, y) {
     fill(theColor);
     textAlign(CENTER);

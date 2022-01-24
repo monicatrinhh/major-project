@@ -45,13 +45,14 @@ https://animalcrossing.fandom.com/wiki/Animal_Crossing_Wiki
 - place a tent (and upgrade it to house -> mansion)
 
 - change ocean/space bg based on world's real time 
+- bg music changes on different time of the day
 - Press on trees to spawn coins
 
 - Double fish and Bug at 12
 
 - trade fish and bugs with Blather
 
-- kk slider can play music
+- kk slider can play music (upload your own music as well)
 
 - Pay off debt to Tom Nook and buy Item with friendship Points
 (friendship pts can exchange for items at Nook shop. give stuff to villagers can exchange to frd ship pts
@@ -63,8 +64,6 @@ if suddenly leave without finishing conversation, friendship pts went down.)
 1, Koi/Pink Orchid only appear from 4-9PM
 2, Golden hour is at noon, every item/coins you received double!
 3, Shop opens from 8am - midnight
-
-- different skin for player 
 
 - scale furniture, move furniture around inside the house's spaces
 - sell items like apple,etc. in exchange for coins/bugs/fishes

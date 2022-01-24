@@ -1,6 +1,3 @@
-// Bitterling and Carp fish appears all day, Koi fish only appears from 4-9PM
-
-
 function catchFish() {
     if (gameState === "catch") {
         // draw bg
@@ -95,6 +92,7 @@ function catchFish() {
     }
 }
 
+// draw fish and fishing hook
 function whileFishing() {
     noStroke();
     noCursor();
@@ -145,8 +143,7 @@ function whileFishing() {
 
 }
 
-
-
+// make fish and fishing hook interact
 function carpFish() {
     // generate andcatch fish
     for (let i = fishes.length - 1; i >= 0; i--) {
@@ -209,6 +206,7 @@ function carpFish() {
 
 }
 
+// spawn fish everytime the function is used
 function generateFishes() {
     let numberOfFishes = random(5, 20);
     for (let i = numberOfFishes; i >= 0; i--) {

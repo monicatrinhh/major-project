@@ -14,7 +14,9 @@ let conversationCounter = -1;
 let functionCounter = 0;
 let isFunctioning = false;
 let chattingCounter = 0;
+let insertMusic = false;
 
+// villagers function in general
 function villagersMove() {
     for (let i = 0; i < villagers.length; i++) {
         if (!isTalking) {
@@ -66,6 +68,8 @@ function villagersMove() {
 
         }
     }
+
+    // if esc is hit, exit talking w villagers
     if (keyWentDown(27)) {
         if (!isPlayingMusic) {
             isTalking = false;
@@ -114,6 +118,7 @@ function villagersMove() {
 
 }
 
+// make villagers move
 function whatDirection() {
     if (theDirect === "forward" && millis() > lastTimeSwitched + random(5000, 10000)) {
         theDirect = choosingDirection[floor(random(0, 3.9))];
@@ -132,6 +137,8 @@ function whatDirection() {
         lastTimeSwitched = millis();
     }
 }
+
+// dictate direction randomly
 function villagersDirection(i, speed) {
     if (theDirect === "forward") {
         villagers[i].position.y += speed;
@@ -174,6 +181,7 @@ function dialougeClicked() {
     }
 }
 
+// talk w villagers 
 function villagersDialouge() {
     if (isTalking) {
 
@@ -225,6 +233,7 @@ function villagersDialouge() {
 
 }
 
+// choose between a and b opts
 function chooseOption() {
     if (thisVillager === 3 && initialDebt > 0) {
         drawSprite(dialougeBox);
@@ -277,6 +286,8 @@ function chooseOption() {
 
 let theQuestion;
 let enterAnswer = false;
+
+// function b: chatting
 function chatWVillagers() {
     if (isChatting) {
         messageText(width / 100, 50, villagersData[thisVillager].dialouge.chatting[chattingCounter], dialougeBox.position.x, dialougeBox.position.y);
@@ -371,6 +382,7 @@ function blathersTrade() {
     }
 }
 
+// isabelle instruction
 function isabelleV() {
     if (isFunctioning && thisVillager === 1) {
         messageText(width / 100, 50, villagersData[1].instruct[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
@@ -391,7 +403,8 @@ function isabelleV() {
     }
 
 }
-let insertMusic = false;
+
+// player can choose their own music or let kk play sth for them
 function kkMusic() {
     if (isFunctioning && thisVillager === 2) {
         messageText(width / 100, 50, villagersData[2].music[functionCounter], dialougeBox.position.x, dialougeBox.position.y);
@@ -411,7 +424,7 @@ function kkMusic() {
                         inputMusic.position(width / 2 - width / 15, height - height / 5.5);
                         insertMusic = true;
                     }
-                    // disable texr when open file
+                    // disable text when open file
                     if (!insertMusic) {
                         messageText(width / 100, 50, "Press hit Enter to Select", dialougeBox.position.x, dialougeBox.position.y + dialougeBox.height / 4);
                     }
@@ -419,6 +432,8 @@ function kkMusic() {
                     kkSong2.pause();
                     kkSong3.pause();
                 }
+
+                // spawn random music
                 if (!isPlayingMusic && val === "KK's music") {
                     insertMusic = false;
                     musicButton.hide();
@@ -454,12 +469,14 @@ function kkMusic() {
     }
 }
 
-
+// shop w tom nook
 function tomNookshop() {
     if (isFunctioning && thisVillager === 3) {
         messageText(width / 80, 'orange', ':x' + friendshipPts, dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 3.5);
         messageText(width / 100, 'orange', "Welcome to Nook Cranny", dialougeBox.position.x, dialougeBox.position.y - dialougeBox.height / 4.5);
         messageText(width / 130, 50, "Interact with players to gain Friendship Pts \n so you can purchase items", dialougeBox.position.x, dialougeBox.position.y + nookCrannyw * 3 / 2);
+        
+        // set item position
         for (let y = 0; y < 2; y++) {
             for (let x = 0; x < nookCrannySize; x++) {
                 stroke(0);
@@ -481,6 +498,8 @@ function tomNookshop() {
                 drawRect(nookCrannyItems[i].position.x - nookCrannyw / 2 + 5, nookCrannyItems[i].position.y - nookCrannyw / 4, nookCrannyw, nookCrannyw / 2, 10, 10, 10, 10, '#654321');
                 messageText(width / 110, 255, "x" + villagersData[3].item[i], nookCrannyItems[i].position.x, nookCrannyItems[i].position.y + 7);
             }
+
+            // buy and store item
             if (nookCrannyItems[i].mouseIsOver && mouseWentDown()) {
                 if (friendshipPts >= villagersData[3].item[i]) {
                     chaChing.play();
@@ -526,6 +545,8 @@ function tomNookshop() {
 
     }
 }
+
+// handle input file
 function handleFile(file) {
     if (file.type === 'audio') {
         theSound = createAudio(file.data, '');
@@ -534,8 +555,8 @@ function handleFile(file) {
     pauseButton.position(width / 2 - kk.width + 50, height / 2 - kk.width / 1.5);
 }
 
+// play and pause
 function togglePlaying() {
-
     theSound.play();
     isPlayingMusic = true;
 }

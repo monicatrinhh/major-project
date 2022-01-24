@@ -3,6 +3,7 @@ let dialougeCounter = 0;
 let isEnteringName = false;
 let playerName;
 
+// exit for catch and fish
 function exitBox() {
     if (gameState === "notif") {
         camera.off();
@@ -26,6 +27,7 @@ function exitBox() {
 
 }
 
+// opening dialouge for first time player
 function playerDialouge() {
     if (enterName) {
         textInput(nameDialouge);
