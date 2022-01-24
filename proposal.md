@@ -20,7 +20,6 @@ Player is set out to be a villager in their own islands where they can interact 
 - music and sfx (✓)
 - give items to villagers in exchange for friendship points (✓)
 
-
 ## Nice to Have List
 
 - villagers can move (✓)
@@ -48,10 +47,11 @@ https://animalcrossing.fandom.com/wiki/Animal_Crossing_Wiki
 - bg music changes on different time of the day
 - Press on trees to spawn coins
 
-- Double fish and Bug at 12
+- Double fish and Bug at 12 (goldden hour)
 
+Beside from chatting with all of the villagers, you can:
 - trade fish and bugs with Blather
-
+- buy items from Nook chat
 - kk slider can play music (upload your own music as well)
 
 - Pay off debt to Tom Nook and buy Item with friendship Points
