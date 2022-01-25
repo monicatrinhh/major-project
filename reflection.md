@@ -9,4 +9,4 @@
     Yes, I completed all of my Needs to Have list though given that I also tweak it a bit after changing my mind a few times about the direction of my game. I also completed 2/3 of my Nice to Have List.
  
  ## What are you Most Proud of?
-    I think what I'm proud of is not necessary due to how complex and fancy my codes are but to my personal preferences. I'm most proud of KK Slider playing music function and time changing aspect of my game(as certain functions and items only appear at a certain time). Other than that, I'm proud of myself for managing my time wisely and finish this large scale project timely!s
+    I think what I'm proud of is not necessary due to how complex and fancy my codes are but to my personal preferences. I'm most proud of KK Slider playing music function and the time changing aspect of my game(as certain functions and items only appear at a certain time). Other than that, I'm proud of myself for managing my time wisely and finish this large scale project timely!
